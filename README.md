@@ -1,2 +1,2 @@
 # FactroApiClient
-.NET Client for the REST API of Factro
+.NET Client to interact with the REST API of Factro.

@@ -1,0 +1,78 @@
+name: FactroApiClient CI
+
+on:
+  push:
+    branches:
+      - "*"
+      - "*/*"
+
+env:
+  CI_TOOLS_VERSION: "3.2.0-beta.2"
+
+jobs:
+  build-sources:
+    env:
+      DOTNET_NOLOGO: true
+      DOTNET_CLI_TELEMETRY_OPTOUT: 1
+    name: Build Sources
+    runs-on: ubuntu-18.04
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Setup .NET Core 3.1.x
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.300
+
+      - name: Restore dependencies
+        run: dotnet restore ./FactroApiClient.sln
+
+      - name: Install CI-Tools
+        run: sudo npm install -g @process-engine/ci_tools@${{ env.CI_TOOLS_VERSION }}
+
+      - name: Prepare version
+        run: ci_tools prepare-version --allow-dirty-workdir --mode dotnet
+        working-directory: ./src/FactroApiClient
+
+      - name: Build sources
+        run: dotnet build -c Release --no-restore
+
+      - name: Test sources
+        run: dotnet test -c Release --no-restore --no-build
+
+      - name: Set git config
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/beta' || github.ref == 'refs/heads/develop'
+        run: |
+          git config user.name "${{ secrets.CI_USER_NAME }}"
+          git config user.email "${{ secrets.CI_USER_EMAIL }}"
+
+      - name: Commit & tag version
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/beta' || github.ref == 'refs/heads/develop'
+        env:
+          GH_USER: ${{ secrets.CI_USER_NAME }}
+          GH_TOKEN: ${{ secrets.CI_USER_TOKEN }}
+        run: |
+          git add *.csproj
+          ci_tools commit-and-tag-version --only-on-primary-branches --mode dotnet
+        working-directory: ./src/FactroApiClient
+
+      - name: Create github release
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/beta' || github.ref == 'refs/heads/develop'
+        env:
+          GH_USER: ${{ secrets.CI_USER_NAME }}
+          GH_TOKEN: ${{ secrets.CI_USER_TOKEN }}
+        run: ci_tools update-github-release --only-on-primary-branches --use-title-and-text-from-git-tag --mode dotnet
+        working-directory: ./src/FactroApiClient
+
+      - name: Push NuGet packages
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/beta' || github.ref == 'refs/heads/develop'
+        run: |
+          mkdir -p artifacts/nuget
+          find ./src -name '*.nupkg' -exec cp {} ./artifacts/nuget \;
+
+          for nugetFile in ./artifacts/nuget/*.nupkg; do
+            echo "Pushing $nugetFile ...";
+            dotnet nuget push $nugetFile --source "${{ secrets.NUGET_PUSH_SOURCE }}" -k "${{ secrets.NUGET_PASSWORD }}" --skip-duplicate
+          done

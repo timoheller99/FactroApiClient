@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Version>1.0.0</Version>
+    <RootNamespace>FactroApiClient.Integration</RootNamespace>
+    <AssemblyName>FactroApiClient.Integration</AssemblyName>
+    <Product>FactroApiClient.Integration</Product>
+    <Authors>Timo Heller</Authors>
+    <Company>www.5minds.de</Company>
+    <Description>Project to test the integration of the package.</Description>
+    <Copyright>(C) 5Minds IT-Solutions GmbH &amp; Co. KG</Copyright>
+    <PackageProjectUrl>https://github.com/timoheller99/FactroApiClient</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/timoheller99/FactroApiClient</RepositoryUrl>
+    <CodeAnalysisRuleSet>../../analyzer.ruleset</CodeAnalysisRuleSet>
+    <LangVersion>8</LangVersion>
+    <NoWarn>NU5105</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Meziantou.Analyzer" />
+    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" />
+    <PackageReference Include="StyleCop.Analyzers" />
+  </ItemGroup>
+
+</Project>
