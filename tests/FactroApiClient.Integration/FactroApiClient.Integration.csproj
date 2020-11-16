@@ -20,8 +20,16 @@
 
   <ItemGroup>
     <PackageReference Include="Meziantou.Analyzer" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" />
+    <PackageReference Include="Serilog.Extensions.Logging" />
+    <PackageReference Include="Serilog.Sinks.Console" />
+    <PackageReference Include="Serilog.Sinks.File" />
     <PackageReference Include="StyleCop.Analyzers" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\FactroApiClient\FactroApiClient.csproj" />
   </ItemGroup>
 
 </Project>
