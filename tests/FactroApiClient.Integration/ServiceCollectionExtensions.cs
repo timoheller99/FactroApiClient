@@ -10,6 +10,8 @@ namespace FactroApiClient.Integration
     {
         public static void AddSerilogServices(this IServiceCollection services, LoggerConfiguration configuration)
         {
+            services.AddLogging(builder => builder.AddSerilog());
+
             Log.Logger = configuration.CreateLogger();
             AppDomain.CurrentDomain.ProcessExit += (s, e) => Log.CloseAndFlush();
 
@@ -18,7 +20,6 @@ namespace FactroApiClient.Integration
 
         public static void RegisterServices(this IServiceCollection services)
         {
-            services.AddFactroApiClientServices();
         }
     }
 }

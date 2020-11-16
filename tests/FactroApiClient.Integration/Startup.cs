@@ -2,72 +2,49 @@ namespace FactroApiClient.Integration
 {
     using System;
 
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
 
     using Serilog;
-    using Serilog.Events;
     using Serilog.Sinks.SystemConsole.Themes;
 
     public static class Startup
     {
         public static IServiceCollection ConfigureServices(IServiceCollection services)
         {
-            services.AddLogging(builder =>
-            {
-                builder.ClearProviders();
-                builder.AddSerilog();
-            });
+            services.AddLogging(builder => builder.ClearProviders());
 
             var loggerConfig = GetLoggerConfiguration();
 
             services.AddSerilogServices(loggerConfig);
+            services.RegisterServices();
 
-            if (Log.IsEnabled(LogEventLevel.Verbose))
-            {
-                Log.Verbose("Verbose logging enabled.");
-            }
+            var configurationRoot = CreateConfigurationRoot();
+            services.AddSingleton(configurationRoot);
 
-            RegisterServices(services);
-
+            services.AddFactroApiClientServices(configurationRoot);
             return services;
         }
 
-        private static LoggerConfiguration GetLoggerConfiguration()
+        public static LoggerConfiguration GetLoggerConfiguration()
         {
-            var dateTimeString = $"{DateTime.Now.ToLongDateString()}";
-            var logFilePath = $"HellCi-{dateTimeString}.log";
-
             const string logMessageFormatting = "[{Timestamp:HH:mm:ss} {Level} {SourceContext}]: {Message:lj}{Exception}{NewLine}";
             var config = new LoggerConfiguration();
 
             config.WriteTo.Console(outputTemplate: logMessageFormatting, theme: SystemConsoleTheme.Colored);
-            config.WriteTo.File(logFilePath, outputTemplate: logMessageFormatting);
 
             config.MinimumLevel.Verbose();
 
             return config;
         }
 
-        private static void RegisterServices(IServiceCollection services)
+        private static IConfigurationRoot CreateConfigurationRoot()
         {
-            var serviceStartCount = services.Count;
-            Log.Debug("Starting service registration");
-
-            services.RegisterServices();
-
-            var serviceEndCount = services.Count;
-
-            var serviceCount = serviceEndCount - serviceStartCount;
-
-            if (serviceCount > 0)
-            {
-                Log.Debug("{ServiceCount} Service(s) registered successfully", serviceCount);
-            }
-            else
-            {
-                Log.Debug("No services to register.");
-            }
+            return new ConfigurationBuilder()
+                .AddJsonFile("config.json", optional: false, reloadOnChange: true)
+                .AddEnvironmentVariables()
+                .Build();
         }
     }
 }
