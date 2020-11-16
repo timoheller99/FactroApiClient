@@ -16,9 +16,7 @@
 
                 var serviceProvider = Startup.ConfigureServices(serviceCollection).BuildServiceProvider();
 
-                var testService = serviceProvider.GetRequiredService<TestService>();
-
-                testService.TestMethod();
+                // var testService = serviceProvider.GetRequiredService<TestService>();
             }
             catch (Exception ex)
             {
