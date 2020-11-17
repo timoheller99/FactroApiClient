@@ -2,9 +2,12 @@ namespace FactroApiClient
 {
     using System;
     using System.Net.Http.Headers;
+    using System.Net.Mime;
 
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+
+    using Newtonsoft.Json;
 
     public static class ServiceCollectionExtensions
     {
@@ -23,6 +26,16 @@ namespace FactroApiClient
             {
                 throw new Exception($"Could not find Factro API token in '{configSection.Path}'.");
             }
+
+            var jsonSerializerSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore,
+                DefaultValueHandling = DefaultValueHandling.Ignore,
+                ContractResolver = new CamelCaseContractResolver(),
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc,
+            };
+
+            serviceCollection.AddSingleton(jsonSerializerSettings);
 
             serviceCollection.AddHttpClient(
                 "BaseClient",
