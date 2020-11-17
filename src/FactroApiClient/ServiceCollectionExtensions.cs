@@ -4,6 +4,8 @@ namespace FactroApiClient
     using System.Net.Http.Headers;
     using System.Net.Mime;
 
+    using FactroApiClient.Appointment;
+
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
 
@@ -15,7 +17,7 @@ namespace FactroApiClient
         {
             serviceCollection.RegisterHttpClient(configurationRoot);
 
-            // serviceCollection.AddTransient<ITestService, TestService>();
+            serviceCollection.AddTransient<IAppointmentApi, AppointmentApi>();
         }
 
         private static void RegisterHttpClient(this IServiceCollection serviceCollection, IConfigurationRoot configurationRoot)
