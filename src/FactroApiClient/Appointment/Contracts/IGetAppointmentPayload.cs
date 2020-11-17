@@ -4,7 +4,7 @@ namespace FactroApiClient.Appointment.Contracts
 
     public interface IGetAppointmentPayload
     {
-        public string ChangeDate { get; set; }
+        public DateTime ChangeDate { get; set; }
 
         public DateTime CreationDate { get; set; }
 
