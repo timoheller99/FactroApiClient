@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <Version>1.0.0-alpha.4</Version>
+    <Version>1.0.0-alpha.5</Version>
     <RootNamespace>FactroApiClient</RootNamespace>
     <AssemblyName>FactroApiClient</AssemblyName>
     <Product>FactroApiClient</Product>
