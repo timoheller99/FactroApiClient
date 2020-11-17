@@ -42,9 +42,8 @@ namespace FactroApiClient
                 (provider, client) =>
             {
                 client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Add("authorization", apiToken);
-                client.BaseAddress = new Uri("https://cloud.factro.com/api/core");
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(apiToken);
             });
         }
     }
