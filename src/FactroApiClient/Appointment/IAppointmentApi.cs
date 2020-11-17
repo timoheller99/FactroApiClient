@@ -14,17 +14,17 @@ namespace FactroApiClient.Appointment
     public interface IAppointmentApi
     {
         /// <summary>
-        /// Fetches the appointments visible to the requesting user.
-        /// </summary>
-        /// <returns>Returns a list of all appointments that are visible to the requesting user.</returns>
-        public Task<IEnumerable<GetAppointmentPayload>> GetAppointmentsAsync();
-
-        /// <summary>
         /// Creates an appointment.
         /// </summary>
         /// <param name="createAppointmentRequest">The request model to create a new appointment.</param>
         /// <returns>Returns the created appointment.</returns>
         public Task<CreateAppointmentResponse> CreateAppointmentAsync(CreateAppointmentRequest createAppointmentRequest);
+
+        /// <summary>
+        /// Fetches the appointments visible to the requesting user.
+        /// </summary>
+        /// <returns>Returns a list of all appointments that are visible to the requesting user.</returns>
+        public Task<IEnumerable<GetAppointmentPayload>> GetAppointmentsAsync();
 
         /// <summary>
         /// Fetches the appointment with the given appointment id.
