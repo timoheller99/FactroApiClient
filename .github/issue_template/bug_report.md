@@ -3,6 +3,7 @@ name: Bug Report
 about: Use this template for tracking bugs
 title: ""
 labels: bug
+
 ---
 
 **Describe the bug**
