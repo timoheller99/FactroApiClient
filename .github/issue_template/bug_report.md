@@ -1,8 +1,9 @@
 ---
-name: Bug Report
-about: Use this template for tracking bugs
-title: ""
+name: Bug report
+about: Issue related to a bug
+title: ''
 labels: bug
+assignees: timoheller99
 
 ---
 
@@ -36,7 +37,7 @@ labels: bug
 
 **System information (please complete the following information):**
  - OS: [e.g. iOS]
- - Version [e.g. 22]
+ - Version: [e.g. 22]
 
 **Additional context**
 

@@ -1,8 +1,9 @@
 ---
-name: Feature Request
-about: Use this template for requesting new features
-title: ""
-labels: feature request
+name: Feature request
+about: Issue related to a feature request
+title: ''
+labels: enhancement
+assignees: timoheller99
 
 ---
 
