@@ -24,11 +24,11 @@ namespace FactroApiClient.Appointment
 
         private readonly JsonSerializerSettings jsonSerializerSettings;
 
-        public AppointmentApi(ILogger<AppointmentApi> logger, IHttpClientFactory httpClientFactory, JsonSerializerSettings jsonSerializerSettings)
+        public AppointmentApi(ILogger<AppointmentApi> logger, IHttpClientFactory httpClientFactory)
         {
             this.logger = logger;
             this.httpClientFactory = httpClientFactory;
-            this.jsonSerializerSettings = jsonSerializerSettings;
+            this.jsonSerializerSettings = SerializerSettings.JsonSerializerSettings;
         }
 
         /// <inheritdoc/>

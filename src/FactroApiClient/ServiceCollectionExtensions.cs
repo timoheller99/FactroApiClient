@@ -29,16 +29,6 @@ namespace FactroApiClient
                 throw new Exception($"Could not find Factro API token in '{configSection.Path}'.");
             }
 
-            var jsonSerializerSettings = new JsonSerializerSettings
-            {
-                NullValueHandling = NullValueHandling.Ignore,
-                DefaultValueHandling = DefaultValueHandling.Ignore,
-                ContractResolver = new CamelCaseContractResolver(),
-                DateTimeZoneHandling = DateTimeZoneHandling.Utc,
-            };
-
-            serviceCollection.AddSingleton(jsonSerializerSettings);
-
             serviceCollection.AddHttpClient(
                 "BaseClient",
                 (provider, client) =>
