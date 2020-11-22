@@ -45,6 +45,11 @@ namespace FactroApiClient.Appointment
                 throw new ArgumentNullException(nameof(createAppointmentRequest), $"{nameof(createAppointmentRequest.EmployeeId)} can not be null, empty or whitespace.");
             }
 
+            if (createAppointmentRequest.Subject == null)
+            {
+                throw new ArgumentNullException(nameof(createAppointmentRequest), $"{nameof(createAppointmentRequest.Subject)} can not be null.");
+            }
+
             using (var client = this.httpClientFactory.CreateClient(BaseClientName))
             {
                 const string requestRoute = ApiEndpoints.Appointment.Create;
