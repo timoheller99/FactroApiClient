@@ -39,7 +39,7 @@ namespace FactroApiClient.IntegrationTests.Setup
         private static IConfigurationRoot CreateConfigurationRoot()
         {
             return new ConfigurationBuilder()
-                .AddJsonFile("config.json", optional: false, reloadOnChange: true)
+                .AddJsonFile("config.json", optional: true, reloadOnChange: true)
                 .AddEnvironmentVariables()
                 .Build();
         }
