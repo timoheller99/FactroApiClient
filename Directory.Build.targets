@@ -1,33 +1,43 @@
 <Project>
 
   <ItemGroup>
+    <PackageReference Update="coverlet.collector" Version="1.2.0" />
+
+    <PackageReference Update="FluentAssertions" Version="5.10.3" />
     <PackageReference Update="FluentAssertions.Analyzers" Version="0.11.4" />
-    <PackageReference Update="Microsoft.VisualStudio.Threading.Analyzers" Version="16.8.51" />
-    <PackageReference Update="xunit.analyzers" Version="0.10.0" />
-    <PackageReference Update="StyleCop.Analyzers" Version="1.1.118">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+
     <PackageReference Update="Meziantou.Analyzer" Version="1.0.592">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
 
-    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="16.5.0" />
-    <PackageReference Update="xunit" Version="2.4.0" />
-    <PackageReference Update="xunit.runner.visualstudio" Version="2.4.0" />
-    <PackageReference Update="coverlet.collector" Version="1.2.0" />
-    <PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
-    <PackageReference Update="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
+    <PackageReference Update="Microsoft.Extensions.Configuration" Version="5.0.0" />
+    <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0" />
+    <PackageReference Update="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="5.0.0" />
+    <PackageReference Update="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
     <PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="5.0.0" />
+    <PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
+    <PackageReference Update="Microsoft.Extensions.Http" Version="5.0.0" />
+    <PackageReference Update="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
+    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+    <PackageReference Update="Microsoft.VisualStudio.Threading.Analyzers" Version="16.8.51" />
+
+    <PackageReference Update="Moq" Version="4.15.1" />
+
+    <PackageReference Update="Newtonsoft.Json" Version="12.0.3" />
+
     <PackageReference Update="Serilog.Extensions.Logging" Version="3.0.1" />
     <PackageReference Update="Serilog.Sinks.Console" Version="3.1.1" />
     <PackageReference Update="Serilog.Sinks.File" Version="4.1.0" />
-    <PackageReference Update="Microsoft.Extensions.Configuration" Version="5.0.0" />
-    <PackageReference Update="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="5.0.0" />
-    <PackageReference Update="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
-    <PackageReference Update="Microsoft.Extensions.Http" Version="5.0.0" />
-    <PackageReference Update="Newtonsoft.Json" Version="12.0.3" />
+
+    <PackageReference Update="StyleCop.Analyzers" Version="1.1.118">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+
+    <PackageReference Update="xunit" Version="2.4.0" />
+    <PackageReference Update="xunit.analyzers" Version="0.10.0" />
+    <PackageReference Update="xunit.runner.visualstudio" Version="2.4.0" />
   </ItemGroup>
 
 </Project>
