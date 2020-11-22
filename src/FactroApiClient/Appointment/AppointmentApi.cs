@@ -32,7 +32,7 @@ namespace FactroApiClient.Appointment
         }
 
         /// <inheritdoc/>
-        /// <exception cref="ArgumentNullException"><paramref name="createAppointmentRequest"/> is null or EmployeeId is null, empty or whitespace</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="createAppointmentRequest"/> is null or EmployeeId or Subject is null, empty or whitespace</exception>
         public async Task<CreateAppointmentResponse> CreateAppointmentAsync(CreateAppointmentRequest createAppointmentRequest)
         {
             if (createAppointmentRequest == null)
