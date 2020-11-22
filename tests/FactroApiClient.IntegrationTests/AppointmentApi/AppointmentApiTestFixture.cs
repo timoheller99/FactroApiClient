@@ -6,7 +6,7 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
 
     using FactroApiClient.Appointment;
 
-    public class AppointmentApiTestFixture : BaseTestFixture
+    public sealed class AppointmentApiTestFixture : BaseTestFixture, IDisposable
     {
         public static IEnumerable<object[]> InvalidEmployeeIds { get; } = new[]
         {
