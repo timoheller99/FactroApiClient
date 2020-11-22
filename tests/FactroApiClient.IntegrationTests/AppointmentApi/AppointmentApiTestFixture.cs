@@ -33,7 +33,7 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
 
         private async Task ClearAppointmentsAsync()
         {
-            var service = this.GetService<AppointmentApi>();
+            var service = this.GetService<IAppointmentApi>();
 
             var appointments = await service.GetAppointmentsAsync();
 
