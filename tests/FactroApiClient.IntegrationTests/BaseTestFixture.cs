@@ -1,11 +1,15 @@
-namespace FactroApiClient.IntegrationTests.Setup
+namespace FactroApiClient.IntegrationTests
 {
     using System;
+
+    using FactroApiClient.IntegrationTests.Setup;
 
     using Microsoft.Extensions.DependencyInjection;
 
     public class BaseTestFixture
     {
+        public const string ApiUserId = "5d82d596-308e-4df1-b199-9b62ae7458f2";
+
         private readonly IServiceProvider serviceProvider;
 
         public BaseTestFixture()
