@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>FactroApiClient.UnitTests</RootNamespace>
+    <AssemblyName>FactroApiClient.UnitTests</AssemblyName>
+    <Product>FactroApiClient.UnitTests</Product>
+    <Authors>Timo Heller</Authors>
+    <Company>www.5minds.de</Company>
+    <Description>Project to test the components of the package.</Description>
+    <Copyright>(C) 5Minds IT-Solutions GmbH &amp; Co. KG</Copyright>
+    <PackageProjectUrl>https://github.com/timoheller99/FactroApiClient</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/timoheller99/FactroApiClient</RepositoryUrl>
+    <CodeAnalysisRuleSet>../../analyzer.ruleset</CodeAnalysisRuleSet>
+    <LangVersion>8</LangVersion>
+    <NoWarn>NU5105</NoWarn>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="5.10.3" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+    <PackageReference Include="Moq" Version="4.15.1" />
+    <PackageReference Include="Serilog.Extensions.Logging" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
+    <PackageReference Include="xunit" Version="2.4.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
+    <PackageReference Include="coverlet.collector" Version="1.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="config.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\FactroApiClient\FactroApiClient.csproj" />
+  </ItemGroup>
+
+</Project>
