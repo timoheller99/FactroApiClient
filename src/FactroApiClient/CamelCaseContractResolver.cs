@@ -6,7 +6,7 @@ namespace FactroApiClient
 
     using static System.Char;
 
-    internal class CamelCaseContractResolver : DefaultContractResolver
+    internal sealed class CamelCaseContractResolver : DefaultContractResolver
     {
         protected override string ResolvePropertyName(string propertyName)
         {
