@@ -11,6 +11,8 @@ namespace FactroApiClient.IntegrationTests
     {
         public const string ApiUserId = "5d82d596-308e-4df1-b199-9b62ae7458f2";
 
+        public const string TestPrefix = "AUTOTEST_";
+
         private readonly IServiceProvider serviceProvider;
 
         public BaseTestFixture()
