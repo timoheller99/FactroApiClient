@@ -46,6 +46,8 @@ jobs:
       - name: Test sources (Integration Tests)
         run: dotnet test -c Release --no-restore --no-build
         working-directory: ./tests/FactroApiClient.IntegrationTests
+        env:
+          FactroApiClient__ApiToken: ${{ secrets.FACTRO_API_TOKEN }}
 
       - name: Set git config
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/beta' || github.ref == 'refs/heads/develop'
