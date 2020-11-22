@@ -9,8 +9,6 @@ namespace FactroApiClient
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
 
-    using Newtonsoft.Json;
-
     public static class ServiceCollectionExtensions
     {
         public static void AddFactroApiClientServices(this IServiceCollection serviceCollection, IConfigurationRoot configurationRoot)
