@@ -2,6 +2,9 @@ namespace FactroApiClient
 {
     using System;
     using System.Net.Http.Headers;
+    using System.Net.Mime;
+
+    using FactroApiClient.Appointment;
 
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -12,7 +15,7 @@ namespace FactroApiClient
         {
             serviceCollection.RegisterHttpClient(configurationRoot);
 
-            // serviceCollection.AddTransient<ITestService, TestService>();
+            serviceCollection.AddTransient<IAppointmentApi, AppointmentApi>();
         }
 
         private static void RegisterHttpClient(this IServiceCollection serviceCollection, IConfigurationRoot configurationRoot)
@@ -29,9 +32,9 @@ namespace FactroApiClient
                 (provider, client) =>
             {
                 client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Add("authorization", apiToken);
-                client.BaseAddress = new Uri("https://cloud.factro.com/api/core");
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(apiToken);
+                client.BaseAddress = new Uri("https://cloud.factro.com/api/core/");
             });
         }
     }

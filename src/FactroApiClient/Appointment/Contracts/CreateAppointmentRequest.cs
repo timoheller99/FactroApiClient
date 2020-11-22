@@ -4,11 +4,12 @@ namespace FactroApiClient.Appointment.Contracts
 
     public class CreateAppointmentRequest
     {
-        public CreateAppointmentRequest(string employeeId, DateTime startDate, DateTime endDate)
+        public CreateAppointmentRequest(string employeeId, DateTime startDate, DateTime endDate, string subject)
         {
             this.EmployeeId = employeeId;
             this.StartDate = startDate;
             this.EndDate = endDate;
+            this.Subject = subject;
         }
 
         public string EmployeeId { get; set; }
