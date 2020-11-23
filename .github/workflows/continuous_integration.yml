@@ -44,6 +44,7 @@ jobs:
         working-directory: ./tests/FactroApiClient.UnitTests
 
       - name: Test sources (Integration Tests)
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/beta' || github.ref == 'refs/heads/develop'
         run: dotnet test -c Release --no-restore --no-build
         working-directory: ./tests/FactroApiClient.IntegrationTests
         env:
