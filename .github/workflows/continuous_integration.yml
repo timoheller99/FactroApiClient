@@ -33,6 +33,7 @@ jobs:
         run: sudo npm install -g @process-engine/ci_tools@${{ env.CI_TOOLS_VERSION }}
 
       - name: Prepare version
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/beta' || github.ref == 'refs/heads/develop'
         run: ci_tools prepare-version --allow-dirty-workdir --mode dotnet
         working-directory: ./src/FactroApiClient
 
