@@ -1,7 +1,6 @@
 namespace FactroApiClient.IntegrationTests.AppointmentApi
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -13,13 +12,6 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
         {
             this.ClearFactroInstanceAsync().GetAwaiter().GetResult();
         }
-
-        public static IEnumerable<object[]> InvalidEmployeeIds { get; } = new[]
-        {
-            new object[] { null },
-            new object[] { string.Empty },
-            new object[] { " " },
-        };
 
         public override async Task ClearFactroInstanceAsync()
         {
