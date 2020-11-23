@@ -31,7 +31,7 @@ namespace FactroApiClient.Appointment
         /// </summary>
         /// <param name="appointmentId">The id of the appointment that should be fetched.</param>
         /// <returns>Returns the fetched appointment.</returns>
-        public Task<GetAppointmentByIdResponse> GetAppointmentAsync(string appointmentId);
+        public Task<GetAppointmentByIdResponse> GetAppointmentByIdAsync(string appointmentId);
 
         /// <summary>
         /// Updates the appointment with the given appointment id.

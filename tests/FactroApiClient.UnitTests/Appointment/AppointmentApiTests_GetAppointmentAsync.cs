@@ -39,7 +39,7 @@ namespace FactroApiClient.UnitTests.Appointment
             var result = new GetAppointmentByIdResponse();
 
             // Act
-            Func<Task> act = async () => result = await appointmentApi.GetAppointmentAsync(appointmentId);
+            Func<Task> act = async () => result = await appointmentApi.GetAppointmentByIdAsync(appointmentId);
 
             // Assert
             await act.Should().NotThrowAsync();
@@ -55,7 +55,7 @@ namespace FactroApiClient.UnitTests.Appointment
             var appointmentApi = this.fixture.GetAppointmentApi();
 
             // Act
-            Func<Task> act = async () => await appointmentApi.GetAppointmentAsync(appointmentId);
+            Func<Task> act = async () => await appointmentApi.GetAppointmentByIdAsync(appointmentId);
 
             // Assert
             await act.Should().ThrowAsync<ArgumentNullException>();
@@ -78,7 +78,7 @@ namespace FactroApiClient.UnitTests.Appointment
             var result = new GetAppointmentByIdResponse();
 
             // Act
-            Func<Task> act = async () => result = await appointmentApi.GetAppointmentAsync(Guid.NewGuid().ToString());
+            Func<Task> act = async () => result = await appointmentApi.GetAppointmentByIdAsync(Guid.NewGuid().ToString());
 
             // Assert
             await act.Should().NotThrowAsync();

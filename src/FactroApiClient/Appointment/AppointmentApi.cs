@@ -112,7 +112,7 @@ namespace FactroApiClient.Appointment
 
         /// <inheritdoc/>
         /// <exception cref="ArgumentNullException"><paramref name="appointmentId"/> is null, empty or whitespace.</exception>
-        public async Task<GetAppointmentByIdResponse> GetAppointmentAsync(string appointmentId)
+        public async Task<GetAppointmentByIdResponse> GetAppointmentByIdAsync(string appointmentId)
         {
             if (string.IsNullOrWhiteSpace(appointmentId))
             {
