@@ -3,6 +3,8 @@
   <ItemGroup>
     <PackageReference Update="coverlet.collector" Version="1.2.0" />
 
+    <PackageReference Update="FactroApiClient" Version="1.0.0-alpha.12" />
+
     <PackageReference Update="FluentAssertions" Version="5.10.3" />
     <PackageReference Update="FluentAssertions.Analyzers" Version="0.11.4" />
 
