@@ -30,9 +30,11 @@ jobs:
         run: dotnet restore ./FactroApiClient.sln
 
       - name: Install CI-Tools
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/beta' || github.ref == 'refs/heads/develop'
         run: sudo npm install -g @process-engine/ci_tools@${{ env.CI_TOOLS_VERSION }}
 
       - name: Prepare version
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/beta' || github.ref == 'refs/heads/develop'
         run: ci_tools prepare-version --allow-dirty-workdir --mode dotnet
         working-directory: ./src/FactroApiClient
 
@@ -42,6 +44,13 @@ jobs:
       - name: Test sources (Unit Tests)
         run: dotnet test -c Release --no-restore --no-build
         working-directory: ./tests/FactroApiClient.UnitTests
+
+      - name: Test sources (Integration Tests)
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/beta' || github.ref == 'refs/heads/develop'
+        run: dotnet test -c Release --no-restore --no-build
+        working-directory: ./tests/FactroApiClient.IntegrationTests
+        env:
+          FactroApiClient__ApiToken: ${{ secrets.FACTRO_API_TOKEN }}
 
       - name: Set git config
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/beta' || github.ref == 'refs/heads/develop'
