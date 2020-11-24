@@ -1,4 +1,4 @@
-namespace FactroApiClient.Company.Contracts
+namespace FactroApiClient.Company
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
