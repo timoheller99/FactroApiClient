@@ -55,7 +55,7 @@ namespace FactroApiClient.Appointment
                 const string requestRoute = ApiEndpoints.Appointment.Create;
 
                 var requestString = JsonConvert.SerializeObject(createAppointmentRequest, this.jsonSerializerSettings);
-                var requestContent = GetStringContent(requestString);
+                var requestContent = ApiHelpers.GetStringContent(requestString);
 
                 var response = await client.PostAsync(requestRoute, requestContent);
 
@@ -162,7 +162,7 @@ namespace FactroApiClient.Appointment
                 var requestRoute = string.Format(CultureInfo.InvariantCulture, ApiEndpoints.Appointment.Update, appointmentId);
 
                 var requestString = JsonConvert.SerializeObject(updateAppointmentRequest, this.jsonSerializerSettings);
-                var requestContent = GetStringContent(requestString);
+                var requestContent = ApiHelpers.GetStringContent(requestString);
 
                 var response = await client.PutAsync(requestRoute, requestContent);
 
@@ -225,11 +225,6 @@ namespace FactroApiClient.Appointment
 
                 return result;
             }
-        }
-
-        private static StringContent GetStringContent(string content)
-        {
-            return new StringContent(content, Encoding.UTF8, MediaTypeNames.Application.Json);
         }
     }
 }
