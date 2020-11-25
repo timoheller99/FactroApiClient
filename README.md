@@ -5,6 +5,14 @@
 # FactroApiClient
 The **FactroApiClient** is a simple API wrapper written in C# to interact with the [Factro REST API][factro-api-url].
 
+**Disclaimer:**
+This project is in a very early stage of development.
+That means that some features are not (completely) implemented yet.
+
+You may visit the [Milestones][milestones-url] page to get more information on the progress.
+Each milestone summarizes tasks, activities and the progress of its functionality.
+The [AppointmentAPI milestone](https://github.com/timoheller99/FactroApiClient/milestone/1) contains everything related to the `Appointment API`.
+
 ## General info
 [Factro][factro-url] is a project management software by [Schuchert Managementberatung GmbH & Co. KG][schuchert-url].
 
