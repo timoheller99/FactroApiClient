@@ -27,7 +27,9 @@ jobs:
           dotnet-version: 3.1.300
 
       - name: Restore dependencies
-        run: dotnet restore ./FactroApiClient.sln
+        run: |
+          dotnet nuget add source "${{ secrets.NUGET_PUSH_SOURCE }}" -n "github" -u "${{ secrets.PACKAGES_USER }}" -p "${{ secrets.PACKAGES_TOKEN }}" --store-password-in-clear-text
+          dotnet restore ./FactroApiClient.sln
 
       - name: Install CI-Tools
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/beta' || github.ref == 'refs/heads/develop'
