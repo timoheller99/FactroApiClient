@@ -13,7 +13,7 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
     public partial class AppointmentApiTests
     {
         [Fact]
-        public async Task DeleteAppointmentAsync_ExistingAppointment_ShouldDeleteAppointment()
+        public async Task DeleteAppointmentAsync_ExistingAppointment_ShouldDeleteExistingAppointment()
         {
             // Arrange
             var appointmentApi = this.fixture.GetService<IAppointmentApi>();
@@ -38,7 +38,7 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
         }
 
         [Fact]
-        public async Task DeleteAppointmentAsync_NotExistingAppointment_ShouldDeleteAppointment()
+        public async Task DeleteAppointmentAsync_NotExistingAppointment_ShouldReturnNull()
         {
             // Arrange
             var appointmentApi = this.fixture.GetService<IAppointmentApi>();

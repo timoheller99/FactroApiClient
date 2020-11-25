@@ -13,7 +13,7 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
     public partial class AppointmentApiTests
     {
         [Fact]
-        public async Task GetAppointmentAsync_ExistingAppointment_ShouldFetchAppointment()
+        public async Task GetAppointmentAsync_ExistingAppointment_ShouldReturnExpectedAppointment()
         {
             // Arrange
             var appointmentApi = this.fixture.GetService<IAppointmentApi>();
