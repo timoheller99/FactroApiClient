@@ -24,17 +24,18 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
             var subject = $"{BaseTestFixture.TestPrefix}{Guid.NewGuid().ToString()}";
 
             var createAppointmentRequest = new CreateAppointmentRequest(employeeId, startDate, endDate, subject);
+
             var existingAppointment = await appointmentApi.CreateAppointmentAsync(createAppointmentRequest);
 
-            var fetchedAppointment = new GetAppointmentByIdResponse();
+            var getAppointmentByIdResponse = new GetAppointmentByIdResponse();
 
             // Act
-            Func<Task> act = async () => fetchedAppointment = await appointmentApi.GetAppointmentByIdAsync(existingAppointment.Id);
+            Func<Task> act = async () => getAppointmentByIdResponse = await appointmentApi.GetAppointmentByIdAsync(existingAppointment.Id);
 
             // Assert
             await act.Should().NotThrowAsync();
 
-            fetchedAppointment.Should().BeEquivalentTo(existingAppointment);
+            getAppointmentByIdResponse.Should().BeEquivalentTo(existingAppointment);
         }
 
         [Fact]
@@ -43,15 +44,15 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
             // Arrange
             var appointmentApi = this.fixture.GetService<IAppointmentApi>();
 
-            var fetchedAppointment = new GetAppointmentByIdResponse();
+            var getAppointmentByIdResponse = new GetAppointmentByIdResponse();
 
             // Act
-            Func<Task> act = async () => fetchedAppointment = await appointmentApi.GetAppointmentByIdAsync(Guid.NewGuid().ToString());
+            Func<Task> act = async () => getAppointmentByIdResponse = await appointmentApi.GetAppointmentByIdAsync(Guid.NewGuid().ToString());
 
             // Assert
             await act.Should().NotThrowAsync();
 
-            fetchedAppointment.Should().BeNull();
+            getAppointmentByIdResponse.Should().BeNull();
         }
     }
 }

@@ -24,17 +24,18 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
             var subject = $"{BaseTestFixture.TestPrefix}{Guid.NewGuid().ToString()}";
 
             var createAppointmentRequest = new CreateAppointmentRequest(employeeId, startDate, endDate, subject);
+
             var existingAppointment = await appointmentApi.CreateAppointmentAsync(createAppointmentRequest);
 
-            var deletedAppointment = new DeleteAppointmentResponse();
+            var deleteAppointmentResponse = new DeleteAppointmentResponse();
 
             // Act
-            Func<Task> act = async () => deletedAppointment = await appointmentApi.DeleteAppointmentAsync(existingAppointment.Id);
+            Func<Task> act = async () => deleteAppointmentResponse = await appointmentApi.DeleteAppointmentAsync(existingAppointment.Id);
 
             // Assert
             await act.Should().NotThrowAsync();
 
-            deletedAppointment.Should().BeEquivalentTo(existingAppointment);
+            deleteAppointmentResponse.Should().BeEquivalentTo(existingAppointment);
         }
 
         [Fact]
@@ -43,15 +44,15 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
             // Arrange
             var appointmentApi = this.fixture.GetService<IAppointmentApi>();
 
-            var deletedAppointment = new DeleteAppointmentResponse();
+            var deleteAppointmentResponse = new DeleteAppointmentResponse();
 
             // Act
-            Func<Task> act = async () => deletedAppointment = await appointmentApi.DeleteAppointmentAsync(Guid.NewGuid().ToString());
+            Func<Task> act = async () => deleteAppointmentResponse = await appointmentApi.DeleteAppointmentAsync(Guid.NewGuid().ToString());
 
             // Assert
             await act.Should().NotThrowAsync();
 
-            deletedAppointment.Should().BeNull();
+            deleteAppointmentResponse.Should().BeNull();
         }
     }
 }
