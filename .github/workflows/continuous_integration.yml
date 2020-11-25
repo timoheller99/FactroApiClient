@@ -27,7 +27,6 @@ jobs:
           dotnet-version: 3.1.300
 
       - name: Restore dependencies
-        env:
         run: |
           dotnet nuget add source $NUGET_PUSH_SOURCE -n "github" -u ${{ secrets.PACKAGES_USER }} -p ${{ secrets.PACKAGES_TOKEN }} --store-password-in-clear-text
           dotnet restore ./FactroApiClient.sln
