@@ -19,6 +19,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FactroApiClient" />
+    
     <PackageReference Include="Meziantou.Analyzer" />
 
     <PackageReference Include="Microsoft.Extensions.Configuration" />
@@ -38,10 +40,6 @@
     <None Update="config.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\FactroApiClient\FactroApiClient.csproj" />
   </ItemGroup>
 
 </Project>

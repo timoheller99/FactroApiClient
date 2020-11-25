@@ -29,10 +29,8 @@ jobs:
       - name: Restore dependencies
         env:
           GITHUB_USER: ${{ secrets.PACKAGES_USER }}
-          GITHUB_TOKEN: ${{ secrets.PACKAGES_TOKEN }}
-        run: |
-          echo $GITHUB_USER
-          dotnet restore ./FactroApiClient.sln
+          GITHUB_PACKAGES_TOKEN: ${{ secrets.PACKAGES_TOKEN }}
+        run: dotnet restore ./FactroApiClient.sln
 
       - name: Install CI-Tools
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/beta' || github.ref == 'refs/heads/develop'
