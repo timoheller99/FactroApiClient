@@ -28,8 +28,7 @@ jobs:
 
       - name: Restore dependencies
         env:
-          GITHUB_USER: ${{ secrets.PACKAGES_USER }}
-          GITHUB_PACKAGES_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          dotnet nuget add source $NUGET_PUSH_SOURCE -n "github" -u ${{ secrets.PACKAGES_USER }} -p ${{ secrets.PACKAGES_TOKEN }} --store-password-in-clear-text
         run: dotnet restore ./FactroApiClient.sln
 
       - name: Install CI-Tools
