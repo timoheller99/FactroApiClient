@@ -28,7 +28,7 @@ jobs:
 
       - name: Restore dependencies
         run: |
-          dotnet nuget add source $NUGET_PUSH_SOURCE -n "github" -u ${{ secrets.PACKAGES_USER }} -p ${{ secrets.PACKAGES_TOKEN }} --store-password-in-clear-text
+          dotnet nuget add source "${{ secrets.NUGET_PUSH_SOURCE }}" -n "github" -u "${{ secrets.PACKAGES_USER }}" -p "${{ secrets.PACKAGES_TOKEN }}" --store-password-in-clear-text
           dotnet restore ./FactroApiClient.sln
 
       - name: Install CI-Tools
