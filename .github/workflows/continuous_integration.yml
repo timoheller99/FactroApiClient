@@ -28,8 +28,9 @@ jobs:
 
       - name: Restore dependencies
         env:
+        run: |
           dotnet nuget add source $NUGET_PUSH_SOURCE -n "github" -u ${{ secrets.PACKAGES_USER }} -p ${{ secrets.PACKAGES_TOKEN }} --store-password-in-clear-text
-        run: dotnet restore ./FactroApiClient.sln
+          dotnet restore ./FactroApiClient.sln
 
       - name: Install CI-Tools
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/beta' || github.ref == 'refs/heads/develop'
