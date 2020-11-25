@@ -19,32 +19,30 @@ namespace FactroApiClient.UnitTests.Appointment
         public async Task GetAppointmentAsync_ValidId_ShouldReturnExpectedAppointment()
         {
             // Arrange
-            var appointment = new GetAppointmentPayload
+            var existingAppointment = new GetAppointmentPayload
             {
                 Id = Guid.NewGuid().ToString(),
             };
 
-            var expectedContent =
-                new StringContent(JsonConvert.SerializeObject(appointment, this.fixture.JsonSerializerSettings));
+            var expectedResponseContent =
+                new StringContent(JsonConvert.SerializeObject(existingAppointment, this.fixture.JsonSerializerSettings));
 
-            var response = new HttpResponseMessage
+            var expectedResponse = new HttpResponseMessage
             {
-                Content = expectedContent,
+                Content = expectedResponseContent,
             };
 
-            var appointmentApi = this.fixture.GetAppointmentApi(response);
+            var appointmentApi = this.fixture.GetAppointmentApi(expectedResponse);
 
-            var appointmentId = appointment.Id;
-
-            var result = new GetAppointmentByIdResponse();
+            var getAppointmentByIdResponse = new GetAppointmentByIdResponse();
 
             // Act
-            Func<Task> act = async () => result = await appointmentApi.GetAppointmentByIdAsync(appointmentId);
+            Func<Task> act = async () => getAppointmentByIdResponse = await appointmentApi.GetAppointmentByIdAsync(existingAppointment.Id);
 
             // Assert
             await act.Should().NotThrowAsync();
 
-            result.Id.Should().Be(appointment.Id);
+            getAppointmentByIdResponse.Id.Should().Be(existingAppointment.Id);
         }
 
         [Theory]
@@ -65,25 +63,28 @@ namespace FactroApiClient.UnitTests.Appointment
         public async Task GetAppointmentAsync_UnsuccessfulRequest_ShouldReturnNull()
         {
             // Arrange
-            var response = new HttpResponseMessage(HttpStatusCode.BadRequest)
+            var appointmentId = Guid.NewGuid().ToString();
+
+            var expectedResponse = new HttpResponseMessage
             {
+                StatusCode = HttpStatusCode.BadRequest,
                 RequestMessage = new HttpRequestMessage
                 {
                     RequestUri = new Uri("http://www.mock-web-address.com"),
                 },
             };
 
-            var appointmentApi = this.fixture.GetAppointmentApi(response);
+            var appointmentApi = this.fixture.GetAppointmentApi(expectedResponse);
 
-            var result = new GetAppointmentByIdResponse();
+            var getAppointmentByIdResponse = new GetAppointmentByIdResponse();
 
             // Act
-            Func<Task> act = async () => result = await appointmentApi.GetAppointmentByIdAsync(Guid.NewGuid().ToString());
+            Func<Task> act = async () => getAppointmentByIdResponse = await appointmentApi.GetAppointmentByIdAsync(appointmentId);
 
             // Assert
             await act.Should().NotThrowAsync();
 
-            result.Should().BeNull();
+            getAppointmentByIdResponse.Should().BeNull();
         }
     }
 }
