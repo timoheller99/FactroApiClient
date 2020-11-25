@@ -16,7 +16,7 @@ namespace FactroApiClient.UnitTests.Appointment
     public partial class AppointmentApiTests
     {
         [Fact]
-        public async Task GetAppointmentAsync_ValidId_ShouldReturnDeletedAppointment()
+        public async Task GetAppointmentAsync_ValidId_ShouldReturnExpectedAppointment()
         {
             // Arrange
             var appointment = new GetAppointmentPayload
@@ -62,7 +62,7 @@ namespace FactroApiClient.UnitTests.Appointment
         }
 
         [Fact]
-        public async Task GetAppointmentAsync_UnsuccessfulRequest_ResultShouldBeNull()
+        public async Task GetAppointmentAsync_UnsuccessfulRequest_ShouldReturnNull()
         {
             // Arrange
             var response = new HttpResponseMessage(HttpStatusCode.BadRequest)

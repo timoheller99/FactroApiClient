@@ -77,7 +77,7 @@ namespace FactroApiClient.UnitTests.Appointment
         }
 
         [Fact]
-        public async Task UpdateAppointmentAsync_UnsuccessfulRequest_ResultShouldBeNull()
+        public async Task UpdateAppointmentAsync_UnsuccessfulRequest_ShouldReturnNull()
         {
             // Arrange
             var appointmentId = Guid.NewGuid().ToString();

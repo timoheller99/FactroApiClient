@@ -18,7 +18,7 @@ namespace FactroApiClient.UnitTests.Appointment
     public partial class AppointmentApiTests
     {
         [Fact]
-        public async Task GetAppointmentsAsync_ValidRequest_ShouldReturnAppointmentList()
+        public async Task GetAppointmentsAsync_ValidRequest_ShouldReturnAppointments()
         {
             // Arrange
             var appointmentList = new List<GetAppointmentPayload>
@@ -54,7 +54,7 @@ namespace FactroApiClient.UnitTests.Appointment
         }
 
         [Fact]
-        public async Task GetAppointmentsAsync_UnsuccessfulRequest_ResultShouldBeNull()
+        public async Task GetAppointmentsAsync_UnsuccessfulRequest_ShouldReturnNull()
         {
             // Arrange
             var response = new HttpResponseMessage(HttpStatusCode.BadRequest)

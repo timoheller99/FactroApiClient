@@ -62,7 +62,7 @@ namespace FactroApiClient.UnitTests.Appointment
         }
 
         [Fact]
-        public async Task DeleteAppointmentAsync_UnsuccessfulRequest_ResultShouldBeNull()
+        public async Task DeleteAppointmentAsync_UnsuccessfulRequest_ShouldReturnNull()
         {
             // Arrange
             var response = new HttpResponseMessage(HttpStatusCode.BadRequest)

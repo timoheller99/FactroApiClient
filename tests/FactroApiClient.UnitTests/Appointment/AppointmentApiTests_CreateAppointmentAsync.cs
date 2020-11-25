@@ -16,7 +16,7 @@ namespace FactroApiClient.UnitTests.Appointment
     public partial class AppointmentApiTests
     {
         [Fact]
-        public async Task CreateAppointment_ValidModel_ShouldReceiveExpectedAppointment()
+        public async Task CreateAppointment_ValidModel_ShouldReturnCreatedAppointment()
         {
             // Arrange
             var appointmentToBeCreated = new CreateAppointmentRequest(Guid.NewGuid().ToString(), DateTime.UtcNow, DateTime.UtcNow.AddHours(1), "TestSubject");
@@ -90,7 +90,7 @@ namespace FactroApiClient.UnitTests.Appointment
         }
 
         [Fact]
-        public async Task CreateAppointment_UnsuccessfulRequest_ResultShouldBeNull()
+        public async Task CreateAppointment_UnsuccessfulRequest_ShouldReturnNull()
         {
             // Arrange
             var appointmentToBeCreated = new CreateAppointmentRequest(Guid.NewGuid().ToString(), DateTime.UtcNow, DateTime.UtcNow.AddHours(1), "TestSubject");
