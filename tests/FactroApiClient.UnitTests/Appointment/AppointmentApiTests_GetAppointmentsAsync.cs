@@ -18,10 +18,10 @@ namespace FactroApiClient.UnitTests.Appointment
     public partial class AppointmentApiTests
     {
         [Fact]
-        public async Task GetAppointmentsAsync_ValidRequest_ShouldReturnAppointmentList()
+        public async Task GetAppointmentsAsync_ValidRequest_ShouldReturnAppointments()
         {
             // Arrange
-            var appointmentList = new List<GetAppointmentPayload>
+            var existingAppointmentsList = new List<GetAppointmentPayload>
             {
                 new GetAppointmentPayload
                 {
@@ -33,49 +33,50 @@ namespace FactroApiClient.UnitTests.Appointment
                 },
             };
 
-            var expectedContent = new StringContent(JsonConvert.SerializeObject(appointmentList, this.fixture.JsonSerializerSettings));
+            var expectedResponseContent = new StringContent(JsonConvert.SerializeObject(existingAppointmentsList, this.fixture.JsonSerializerSettings));
 
-            var response = new HttpResponseMessage
+            var expectedResponse = new HttpResponseMessage
             {
-                Content = expectedContent,
+                Content = expectedResponseContent,
             };
 
-            var appointmentApi = this.fixture.GetAppointmentApi(response);
+            var appointmentApi = this.fixture.GetAppointmentApi(expectedResponse);
 
-            var result = new List<GetAppointmentPayload>();
+            var getAppointmentsResponse = new List<GetAppointmentPayload>();
 
             // Act
-            Func<Task> act = async () => result = (await appointmentApi.GetAppointmentsAsync()).ToList();
+            Func<Task> act = async () => getAppointmentsResponse = (await appointmentApi.GetAppointmentsAsync()).ToList();
 
             // Assert
             await act.Should().NotThrowAsync();
 
-            result.Should().HaveCount(appointmentList.Count);
+            getAppointmentsResponse.Should().HaveCount(existingAppointmentsList.Count);
         }
 
         [Fact]
-        public async Task GetAppointmentsAsync_UnsuccessfulRequest_ResultShouldBeNull()
+        public async Task GetAppointmentsAsync_UnsuccessfulRequest_ShouldReturnNull()
         {
             // Arrange
-            var response = new HttpResponseMessage(HttpStatusCode.BadRequest)
+            var expectedResponse = new HttpResponseMessage
             {
+                StatusCode = HttpStatusCode.BadRequest,
                 RequestMessage = new HttpRequestMessage
                 {
                     RequestUri = new Uri("http://www.mock-web-address.com"),
                 },
             };
 
-            var appointmentApi = this.fixture.GetAppointmentApi(response);
+            var appointmentApi = this.fixture.GetAppointmentApi(expectedResponse);
 
-            var result = new List<GetAppointmentPayload>();
+            var getAppointmentsResponse = new List<GetAppointmentPayload>();
 
             // Act
-            Func<Task> act = async () => result = (await appointmentApi.GetAppointmentsAsync())?.ToList();
+            Func<Task> act = async () => getAppointmentsResponse = (await appointmentApi.GetAppointmentsAsync())?.ToList();
 
             // Assert
             await act.Should().NotThrowAsync();
 
-            result.Should().BeNull();
+            getAppointmentsResponse.Should().BeNull();
         }
     }
 }

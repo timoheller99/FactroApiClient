@@ -27,7 +27,7 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
 
             var createAppointmentRequest = new CreateAppointmentRequest(employeeId, startDate, endDate, subject);
 
-            var createAppointmentResponse = await appointmentApi.CreateAppointmentAsync(createAppointmentRequest);
+            var existingAppointment = await appointmentApi.CreateAppointmentAsync(createAppointmentRequest);
 
             var updatedSubject = $"{BaseTestFixture.TestPrefix}{Guid.NewGuid().ToString()}";
             var updateAppointmentRequest = new UpdateAppointmentRequest
@@ -38,7 +38,7 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
             var updateAppointmentResponse = new UpdateAppointmentResponse();
 
             // Act
-            Func<Task> act = async () => updateAppointmentResponse = await appointmentApi.UpdateAppointmentAsync(createAppointmentResponse.Id, updateAppointmentRequest);
+            Func<Task> act = async () => updateAppointmentResponse = await appointmentApi.UpdateAppointmentAsync(existingAppointment.Id, updateAppointmentRequest);
 
             // Assert
             await act.Should().NotThrowAsync();
@@ -50,7 +50,7 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
 
                 appointments.Should().ContainEquivalentOf(updateAppointmentResponse);
 
-                appointments.Single(x => x.Id == createAppointmentResponse.Id).Subject.Should().Be(updatedSubject);
+                appointments.Single(x => x.Id == existingAppointment.Id).Subject.Should().Be(updatedSubject);
             }
         }
 
@@ -67,7 +67,7 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
 
             var createAppointmentRequest = new CreateAppointmentRequest(employeeId, startDate, endDate, subject);
 
-            var createAppointmentResponse = await appointmentApi.CreateAppointmentAsync(createAppointmentRequest);
+            var existingAppointment = await appointmentApi.CreateAppointmentAsync(createAppointmentRequest);
 
             const string updatedSubject = null;
             var updateAppointmentRequest = new UpdateAppointmentRequest
@@ -76,7 +76,7 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
             };
 
             // Act
-            Func<Task> act = async () => await appointmentApi.UpdateAppointmentAsync(createAppointmentResponse.Id, updateAppointmentRequest);
+            Func<Task> act = async () => await appointmentApi.UpdateAppointmentAsync(existingAppointment.Id, updateAppointmentRequest);
 
             // Assert
             await act.Should().NotThrowAsync();
@@ -86,12 +86,12 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
                 var appointments = (await appointmentApi.GetAppointmentsAsync())
                     .Where(x => x.Subject.StartsWith(BaseTestFixture.TestPrefix)).ToList();
 
-                appointments.Single(x => x.Id == createAppointmentResponse.Id).Should().BeEquivalentTo(createAppointmentResponse);
+                appointments.Single(x => x.Id == existingAppointment.Id).Should().BeEquivalentTo(existingAppointment);
             }
         }
 
         [Fact]
-        public async Task UpdateAppointmentAsync_NotExistingAppointmentId_ShouldReturnUpdatedAppointment()
+        public async Task UpdateAppointmentAsync_NotExistingAppointmentId_ShouldReturnNull()
         {
             // Arrange
             var appointmentApi = this.fixture.GetService<IAppointmentApi>();

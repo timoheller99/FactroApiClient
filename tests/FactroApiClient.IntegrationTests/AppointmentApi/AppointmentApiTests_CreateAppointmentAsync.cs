@@ -45,7 +45,7 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
         }
 
         [Fact]
-        public async Task CreateAppointmentAsync_NotExistingEmployeeId_ResponseShouldBeNull()
+        public async Task CreateAppointmentAsync_NotExistingEmployeeId_ShouldReturnNull()
         {
             // Arrange
             var appointmentApi = this.fixture.GetService<IAppointmentApi>();
@@ -107,7 +107,7 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
         }
 
         [Fact]
-        public async Task CreateAppointmentAsync_EndTimeBeforeStartTime_ResponseShouldBeNull()
+        public async Task CreateAppointmentAsync_EndTimeBeforeStartTime_ShouldNotStoreAppointmentAndReturnNull()
         {
             // Arrange
             var appointmentApi = this.fixture.GetService<IAppointmentApi>();

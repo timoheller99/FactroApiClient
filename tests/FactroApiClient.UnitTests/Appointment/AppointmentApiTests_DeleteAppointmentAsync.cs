@@ -19,32 +19,30 @@ namespace FactroApiClient.UnitTests.Appointment
         public async Task DeleteAppointmentAsync_ValidId_ShouldReturnDeletedAppointment()
         {
             // Arrange
-            var appointment = new GetAppointmentPayload
+            var existingAppointment = new GetAppointmentPayload
             {
                 Id = Guid.NewGuid().ToString(),
             };
 
-            var expectedContent =
-                new StringContent(JsonConvert.SerializeObject(appointment, this.fixture.JsonSerializerSettings));
+            var expectedResponseContent =
+                new StringContent(JsonConvert.SerializeObject(existingAppointment, this.fixture.JsonSerializerSettings));
 
-            var response = new HttpResponseMessage
+            var expectedResponse = new HttpResponseMessage
             {
-                Content = expectedContent,
+                Content = expectedResponseContent,
             };
 
-            var appointmentApi = this.fixture.GetAppointmentApi(response);
+            var appointmentApi = this.fixture.GetAppointmentApi(expectedResponse);
 
-            var appointmentId = appointment.Id;
-
-            var deletedAppointment = new DeleteAppointmentResponse();
+            var deleteAppointmentResponse = new DeleteAppointmentResponse();
 
             // Act
-            Func<Task> act = async () => deletedAppointment = await appointmentApi.DeleteAppointmentAsync(appointmentId);
+            Func<Task> act = async () => deleteAppointmentResponse = await appointmentApi.DeleteAppointmentAsync(existingAppointment.Id);
 
             // Assert
             await act.Should().NotThrowAsync();
 
-            deletedAppointment.Id.Should().Be(appointment.Id);
+            deleteAppointmentResponse.Id.Should().Be(existingAppointment.Id);
         }
 
         [Theory]
@@ -62,28 +60,29 @@ namespace FactroApiClient.UnitTests.Appointment
         }
 
         [Fact]
-        public async Task DeleteAppointmentAsync_UnsuccessfulRequest_ResultShouldBeNull()
+        public async Task DeleteAppointmentAsync_UnsuccessfulRequest_ShouldReturnNull()
         {
             // Arrange
-            var response = new HttpResponseMessage(HttpStatusCode.BadRequest)
+            var expectedResponse = new HttpResponseMessage
             {
+                StatusCode = HttpStatusCode.BadRequest,
                 RequestMessage = new HttpRequestMessage
                 {
                     RequestUri = new Uri("http://www.mock-web-address.com"),
                 },
             };
 
-            var appointmentApi = this.fixture.GetAppointmentApi(response);
+            var appointmentApi = this.fixture.GetAppointmentApi(expectedResponse);
 
-            var result = new DeleteAppointmentResponse();
+            var deleteAppointmentResponse = new DeleteAppointmentResponse();
 
             // Act
-            Func<Task> act = async () => result = await appointmentApi.DeleteAppointmentAsync(Guid.NewGuid().ToString());
+            Func<Task> act = async () => deleteAppointmentResponse = await appointmentApi.DeleteAppointmentAsync(Guid.NewGuid().ToString());
 
             // Assert
             await act.Should().NotThrowAsync();
 
-            result.Should().BeNull();
+            deleteAppointmentResponse.Should().BeNull();
         }
     }
 }

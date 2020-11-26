@@ -363,3 +363,4 @@ MigrationBackup/
 
 # Config file
 config.json
+nuget.config
