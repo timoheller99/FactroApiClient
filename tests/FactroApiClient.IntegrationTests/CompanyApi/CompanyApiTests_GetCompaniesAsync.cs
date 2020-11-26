@@ -24,11 +24,9 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
 
             const int companyCount = 5;
 
-            var createCompanyRequest = new CreateCompanyRequest(name: null);
             for (var i = 0; i < companyCount; i++)
             {
-                createCompanyRequest.Name = $"{BaseTestFixture.TestPrefix}{Guid.NewGuid().ToString()}";
-                existingCompanies.Add(await companyApi.CreateCompanyAsync(createCompanyRequest));
+                existingCompanies.Add(await this.fixture.CreateTestCompanyAsync(companyApi));
             }
 
             var getCompaniesResponse = new List<GetCompanyPayload>();

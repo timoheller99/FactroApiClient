@@ -5,6 +5,7 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
     using System.Threading.Tasks;
 
     using FactroApiClient.Company;
+    using FactroApiClient.Company.Contracts.Basic;
 
     public sealed class CompanyApiTestFixture : BaseTestFixture, IDisposable
     {
@@ -21,6 +22,17 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
         public void Dispose()
         {
             this.ClearFactroInstanceAsync().GetAwaiter().GetResult();
+        }
+
+        public async Task<CreateCompanyResponse> CreateTestCompanyAsync(ICompanyApi companyApi)
+        {
+            var name = $"{TestPrefix}{Guid.NewGuid().ToString()}";
+
+            var createCompanyRequest = new CreateCompanyRequest(name);
+
+            var createCompanyResponse = await companyApi.CreateCompanyAsync(createCompanyRequest);
+
+            return createCompanyResponse;
         }
 
         private async Task ClearCompaniesAsync()
