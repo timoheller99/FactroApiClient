@@ -20,29 +20,31 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
             // Arrange
             var appointmentApi = this.fixture.GetService<IAppointmentApi>();
 
-            const string employeeId = BaseTestFixture.ValidEmployeeId;
-
             var existingAppointments = new List<CreateAppointmentResponse>();
 
             const int appointmentCount = 5;
-            var createAppointmentRequest = new CreateAppointmentRequest(employeeId, DateTime.Now, DateTime.Now.AddHours(1), $"{BaseTestFixture.TestPrefix}{Guid.NewGuid().ToString()}");
+
+            const string employeeId = BaseTestFixture.ValidEmployeeId;
+            var startDate = DateTime.Now;
+            var endDate = startDate.AddHours(1);
+            var createAppointmentRequest = new CreateAppointmentRequest(employeeId, startDate, endDate, subject: null);
             for (var i = 0; i < appointmentCount; i++)
             {
                 createAppointmentRequest.Subject = $"{BaseTestFixture.TestPrefix}{Guid.NewGuid().ToString()}";
                 existingAppointments.Add(await appointmentApi.CreateAppointmentAsync(createAppointmentRequest));
             }
 
-            var result = new List<GetAppointmentPayload>();
+            var getAppointmentsResponse = new List<GetAppointmentPayload>();
 
             // Act
-            Func<Task> act = async () => result = (await appointmentApi.GetAppointmentsAsync()).ToList();
+            Func<Task> act = async () => getAppointmentsResponse = (await appointmentApi.GetAppointmentsAsync()).ToList();
 
             // Assert
             await act.Should().NotThrowAsync();
 
             foreach (var existingAppointment in existingAppointments)
             {
-                result.Should().ContainEquivalentOf(existingAppointment);
+                getAppointmentsResponse.Should().ContainEquivalentOf(existingAppointment);
             }
         }
     }
