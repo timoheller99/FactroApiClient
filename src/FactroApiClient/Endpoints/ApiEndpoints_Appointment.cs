@@ -1,44 +1,32 @@
 namespace FactroApiClient.Endpoints
 {
-    using System.Globalization;
-
     internal static partial class ApiEndpoints
     {
         internal static class Appointment
         {
-            private const string CreateRoute = "appointments";
-
-            private const string GetAllRoute = "appointments";
-
-            private const string GetByIdRoute = "appointments/{0}";
-
-            private const string UpdateRoute = "appointments/{0}";
-
-            private const string DeleteRoute = "appointments/{0}";
-
             public static string Create()
             {
-                return CreateRoute;
+                return "appointments";
             }
 
             public static string GetAll()
             {
-                return GetAllRoute;
+                return "appointments";
             }
 
-            public static string GetById(string id)
+            public static string GetById(string appointmentId)
             {
-                return string.Format(CultureInfo.InvariantCulture, GetByIdRoute, id);
+                return $"appointments/{appointmentId}";
             }
 
-            public static string Update(string id)
+            public static string Update(string appointmentId)
             {
-                return string.Format(CultureInfo.InvariantCulture, UpdateRoute, id);
+                return $"appointments/{appointmentId}";
             }
 
-            public static string Delete(string id)
+            public static string Delete(string appointmentId)
             {
-                return string.Format(CultureInfo.InvariantCulture, DeleteRoute, id);
+                return $"appointments/{appointmentId}";
             }
         }
     }
