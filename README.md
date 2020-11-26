@@ -46,6 +46,7 @@ Bugs can be reported by creating an issue from the [bug report template][bug-rep
 Features can be requestd by creating an issue from the [feature request template][feature-request-issue-template-url].
 
 ## Getting started
+To get an example of how the package can be consumed, you may take a look at the [FactroApiClient.Integration](https://github.com/timoheller99/FactroApiClient/tree/develop/tests/FactroApiClient.Integration) project.
 
 ### Setup NuGet feed
 To install the package, the custom feed is needed.
