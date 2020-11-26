@@ -1,4 +1,4 @@
-namespace FactroApiClient.UnitTests.Appointment
+namespace FactroApiClient.UnitTests.AppointmentApi
 {
     using System;
     using System.Net;
@@ -16,7 +16,7 @@ namespace FactroApiClient.UnitTests.Appointment
     public partial class AppointmentApiTests
     {
         [Fact]
-        public async Task DeleteAppointmentAsync_ValidId_ShouldReturnDeletedAppointment()
+        public async Task GetAppointmentAsync_ValidId_ShouldReturnExpectedAppointment()
         {
             // Arrange
             var existingAppointment = new GetAppointmentPayload
@@ -34,35 +34,37 @@ namespace FactroApiClient.UnitTests.Appointment
 
             var appointmentApi = this.fixture.GetAppointmentApi(expectedResponse);
 
-            var deleteAppointmentResponse = new DeleteAppointmentResponse();
+            var getAppointmentByIdResponse = new GetAppointmentByIdResponse();
 
             // Act
-            Func<Task> act = async () => deleteAppointmentResponse = await appointmentApi.DeleteAppointmentAsync(existingAppointment.Id);
+            Func<Task> act = async () => getAppointmentByIdResponse = await appointmentApi.GetAppointmentByIdAsync(existingAppointment.Id);
 
             // Assert
             await act.Should().NotThrowAsync();
 
-            deleteAppointmentResponse.Id.Should().Be(existingAppointment.Id);
+            getAppointmentByIdResponse.Id.Should().Be(existingAppointment.Id);
         }
 
         [Theory]
         [MemberData(nameof(AppointmentApiTestFixture.InvalidAppointmentIds), MemberType = typeof(AppointmentApiTestFixture))]
-        public async Task DeleteAppointmentAsync_InvalidAppointmentId_ShouldThrowArgumentNullException(string appointmentId)
+        public async Task GetAppointmentAsync_InvalidAppointmentId_ShouldThrowArgumentNullException(string appointmentId)
         {
             // Arrange
             var appointmentApi = this.fixture.GetAppointmentApi();
 
             // Act
-            Func<Task> act = async () => await appointmentApi.DeleteAppointmentAsync(appointmentId);
+            Func<Task> act = async () => await appointmentApi.GetAppointmentByIdAsync(appointmentId);
 
             // Assert
             await act.Should().ThrowAsync<ArgumentNullException>();
         }
 
         [Fact]
-        public async Task DeleteAppointmentAsync_UnsuccessfulRequest_ShouldReturnNull()
+        public async Task GetAppointmentAsync_UnsuccessfulRequest_ShouldReturnNull()
         {
             // Arrange
+            var appointmentId = Guid.NewGuid().ToString();
+
             var expectedResponse = new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.BadRequest,
@@ -74,15 +76,15 @@ namespace FactroApiClient.UnitTests.Appointment
 
             var appointmentApi = this.fixture.GetAppointmentApi(expectedResponse);
 
-            var deleteAppointmentResponse = new DeleteAppointmentResponse();
+            var getAppointmentByIdResponse = new GetAppointmentByIdResponse();
 
             // Act
-            Func<Task> act = async () => deleteAppointmentResponse = await appointmentApi.DeleteAppointmentAsync(Guid.NewGuid().ToString());
+            Func<Task> act = async () => getAppointmentByIdResponse = await appointmentApi.GetAppointmentByIdAsync(appointmentId);
 
             // Assert
             await act.Should().NotThrowAsync();
 
-            deleteAppointmentResponse.Should().BeNull();
+            getAppointmentByIdResponse.Should().BeNull();
         }
     }
 }

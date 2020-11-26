@@ -20,14 +20,7 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
             // Arrange
             var appointmentApi = this.fixture.GetService<IAppointmentApi>();
 
-            const string employeeId = BaseTestFixture.ValidEmployeeId;
-            var startDate = DateTime.Now;
-            var endDate = startDate.AddHours(1);
-            var subject = $"{BaseTestFixture.TestPrefix}{Guid.NewGuid().ToString()}";
-
-            var createAppointmentRequest = new CreateAppointmentRequest(employeeId, startDate, endDate, subject);
-
-            var existingAppointment = await appointmentApi.CreateAppointmentAsync(createAppointmentRequest);
+            var existingAppointment = await this.fixture.CreateTestAppointmentAsync(appointmentApi);
 
             var updatedSubject = $"{BaseTestFixture.TestPrefix}{Guid.NewGuid().ToString()}";
             var updateAppointmentRequest = new UpdateAppointmentRequest
@@ -60,14 +53,7 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
             // Arrange
             var appointmentApi = this.fixture.GetService<IAppointmentApi>();
 
-            const string employeeId = BaseTestFixture.ValidEmployeeId;
-            var startDate = DateTime.Now;
-            var endDate = startDate.AddHours(1);
-            var subject = $"{BaseTestFixture.TestPrefix}{Guid.NewGuid().ToString()}";
-
-            var createAppointmentRequest = new CreateAppointmentRequest(employeeId, startDate, endDate, subject);
-
-            var existingAppointment = await appointmentApi.CreateAppointmentAsync(createAppointmentRequest);
+            var existingAppointment = await this.fixture.CreateTestAppointmentAsync(appointmentApi);
 
             const string updatedSubject = null;
             var updateAppointmentRequest = new UpdateAppointmentRequest

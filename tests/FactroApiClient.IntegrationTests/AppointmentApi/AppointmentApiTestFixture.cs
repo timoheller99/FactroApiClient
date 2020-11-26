@@ -5,6 +5,7 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
     using System.Threading.Tasks;
 
     using FactroApiClient.Appointment;
+    using FactroApiClient.Appointment.Contracts;
 
     public sealed class AppointmentApiTestFixture : BaseTestFixture, IDisposable
     {
@@ -21,6 +22,20 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
         public void Dispose()
         {
             this.ClearFactroInstanceAsync().GetAwaiter().GetResult();
+        }
+
+        public async Task<CreateAppointmentResponse> CreateTestAppointmentAsync(IAppointmentApi appointmentApi)
+        {
+            const string employeeId = ValidEmployeeId;
+            var startDate = DateTime.Now;
+            var endDate = startDate.AddHours(1);
+            var subject = $"{TestPrefix}{Guid.NewGuid().ToString()}";
+
+            var createAppointmentRequest = new CreateAppointmentRequest(employeeId, startDate, endDate, subject);
+
+            var createAppointmentResponse = await appointmentApi.CreateAppointmentAsync(createAppointmentRequest);
+
+            return createAppointmentResponse;
         }
 
         private async Task ClearAppointmentsAsync()

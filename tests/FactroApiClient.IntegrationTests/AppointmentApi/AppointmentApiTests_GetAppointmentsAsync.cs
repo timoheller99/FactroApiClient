@@ -24,14 +24,9 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
 
             const int appointmentCount = 5;
 
-            const string employeeId = BaseTestFixture.ValidEmployeeId;
-            var startDate = DateTime.Now;
-            var endDate = startDate.AddHours(1);
-            var createAppointmentRequest = new CreateAppointmentRequest(employeeId, startDate, endDate, subject: null);
             for (var i = 0; i < appointmentCount; i++)
             {
-                createAppointmentRequest.Subject = $"{BaseTestFixture.TestPrefix}{Guid.NewGuid().ToString()}";
-                existingAppointments.Add(await appointmentApi.CreateAppointmentAsync(createAppointmentRequest));
+                existingAppointments.Add(await this.fixture.CreateTestAppointmentAsync(appointmentApi));
             }
 
             var getAppointmentsResponse = new List<GetAppointmentPayload>();

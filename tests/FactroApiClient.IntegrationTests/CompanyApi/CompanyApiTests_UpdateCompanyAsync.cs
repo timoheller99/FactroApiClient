@@ -20,11 +20,7 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
             // Arrange
             var companyApi = this.fixture.GetService<ICompanyApi>();
 
-            var name = $"{BaseTestFixture.TestPrefix}{Guid.NewGuid().ToString()}";
-
-            var createCompanyRequest = new CreateCompanyRequest(name);
-
-            var existingCompany = await companyApi.CreateCompanyAsync(createCompanyRequest);
+            var existingCompany = await this.fixture.CreateTestCompanyAsync(companyApi);
 
             var updatedName = $"{BaseTestFixture.TestPrefix}{Guid.NewGuid().ToString()}";
             var updateCompanyRequest = new UpdateCompanyRequest
@@ -57,11 +53,7 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
             // Arrange
             var companyApi = this.fixture.GetService<ICompanyApi>();
 
-            var name = $"{BaseTestFixture.TestPrefix}{Guid.NewGuid().ToString()}";
-
-            var createCompanyRequest = new CreateCompanyRequest(name);
-
-            var existingCompany = await companyApi.CreateCompanyAsync(createCompanyRequest);
+            var existingCompany = await this.fixture.CreateTestCompanyAsync(companyApi);
 
             const string updatedName = null;
             var updateCompanyRequest = new UpdateCompanyRequest
