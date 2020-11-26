@@ -1,4 +1,4 @@
-namespace FactroApiClient.UnitTests.Company
+namespace FactroApiClient.UnitTests.CompanyApi
 {
     using System;
     using System.Net;
@@ -16,7 +16,7 @@ namespace FactroApiClient.UnitTests.Company
     public partial class CompanyApiTests
     {
         [Fact]
-        public async Task DeleteCompanyAsync_ValidId_ShouldReturnDeletedCompany()
+        public async Task GetCompanyAsync_ValidId_ShouldReturnExpectedCompany()
         {
             // Arrange
             var existingCompany = new GetCompanyPayload
@@ -34,36 +34,36 @@ namespace FactroApiClient.UnitTests.Company
 
             var companyApi = this.fixture.GetCompanyApi(expectedResponse);
 
-            var deleteCompanyResponse = new DeleteCompanyResponse();
+            var getCompanyByIdResponse = new GetCompanyByIdResponse();
 
             // Act
-            Func<Task> act = async () => deleteCompanyResponse = await companyApi.DeleteCompanyAsync(existingCompany.Id);
+            Func<Task> act = async () => getCompanyByIdResponse = await companyApi.GetCompanyByIdAsync(existingCompany.Id);
 
             // Assert
             await act.Should().NotThrowAsync();
 
-            deleteCompanyResponse.Id.Should().Be(existingCompany.Id);
+            getCompanyByIdResponse.Id.Should().Be(existingCompany.Id);
         }
 
         [Theory]
         [MemberData(nameof(CompanyApiTestFixture.InvalidCompanyIds), MemberType = typeof(CompanyApiTestFixture))]
-        public async Task DeleteCompanyAsync_InvalidCompanyId_ShouldThrowArgumentNullException(string companyId)
+        public async Task GetCompanyAsync_InvalidCompanyId_ShouldThrowArgumentNullException(string companyId)
         {
             // Arrange
             var companyApi = this.fixture.GetCompanyApi();
 
             // Act
-            Func<Task> act = async () => await companyApi.DeleteCompanyAsync(companyId);
+            Func<Task> act = async () => await companyApi.GetCompanyByIdAsync(companyId);
 
             // Assert
             await act.Should().ThrowAsync<ArgumentNullException>();
         }
 
         [Fact]
-        public async Task DeleteCompanyAsync_UnsuccessfulRequest_ShouldReturnNull()
+        public async Task GetCompanyAsync_UnsuccessfulRequest_ShouldReturnNull()
         {
             // Arrange
-            var response = new HttpResponseMessage
+            var expectedResponse = new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.BadRequest,
                 RequestMessage = new HttpRequestMessage
@@ -72,17 +72,17 @@ namespace FactroApiClient.UnitTests.Company
                 },
             };
 
-            var companyApi = this.fixture.GetCompanyApi(response);
+            var companyApi = this.fixture.GetCompanyApi(expectedResponse);
 
-            var deleteCompanyResponse = new DeleteCompanyResponse();
+            var getCompanyByIdResponse = new GetCompanyByIdResponse();
 
             // Act
-            Func<Task> act = async () => deleteCompanyResponse = await companyApi.DeleteCompanyAsync(Guid.NewGuid().ToString());
+            Func<Task> act = async () => getCompanyByIdResponse = await companyApi.GetCompanyByIdAsync(Guid.NewGuid().ToString());
 
             // Assert
             await act.Should().NotThrowAsync();
 
-            deleteCompanyResponse.Should().BeNull();
+            getCompanyByIdResponse.Should().BeNull();
         }
     }
 }

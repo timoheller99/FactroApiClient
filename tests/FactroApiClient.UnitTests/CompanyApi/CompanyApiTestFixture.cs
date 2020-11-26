@@ -1,4 +1,4 @@
-namespace FactroApiClient.UnitTests.Company
+namespace FactroApiClient.UnitTests.CompanyApi
 {
     using System;
     using System.Collections.Generic;

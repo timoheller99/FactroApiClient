@@ -1,4 +1,4 @@
-namespace FactroApiClient.UnitTests.Appointment
+namespace FactroApiClient.UnitTests.AppointmentApi
 {
     using System;
     using System.Collections.Generic;
