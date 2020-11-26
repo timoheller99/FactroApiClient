@@ -25,7 +25,7 @@ namespace FactroApiClient.Integration
             return services;
         }
 
-        public static LoggerConfiguration GetLoggerConfiguration()
+        private static LoggerConfiguration GetLoggerConfiguration()
         {
             const string logMessageFormatting = "[{Timestamp:HH:mm:ss} {Level} {SourceContext}]: {Message:lj}{Exception}{NewLine}";
             var config = new LoggerConfiguration();
