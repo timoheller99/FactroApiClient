@@ -19,6 +19,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FactroApiClient" />
+    
     <PackageReference Include="Meziantou.Analyzer" />
 
     <PackageReference Include="Microsoft.Extensions.Configuration" />
@@ -32,10 +34,6 @@
     <PackageReference Include="Serilog.Sinks.File" />
 
     <PackageReference Include="StyleCop.Analyzers" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\FactroApiClient\FactroApiClient.csproj" />
   </ItemGroup>
 
   <ItemGroup>

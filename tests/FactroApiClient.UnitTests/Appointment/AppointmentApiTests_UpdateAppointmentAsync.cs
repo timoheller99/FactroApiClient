@@ -37,26 +37,29 @@ namespace FactroApiClient.UnitTests.Appointment
                 Subject = updateAppointmentRequest.Subject,
             };
 
-            var expectedContent = new StringContent(JsonConvert.SerializeObject(expectedUpdatedAppointment, this.fixture.JsonSerializerSettings));
-            var response = new HttpResponseMessage
-            {
-                Content = expectedContent,
-            };
-            var appointmentApi = this.fixture.GetAppointmentApi(response);
+            var expectedResponseContent =
+                new StringContent(JsonConvert.SerializeObject(expectedUpdatedAppointment, this.fixture.JsonSerializerSettings));
 
-            var updatedAppointment = new UpdateAppointmentResponse();
+            var expectedResponse = new HttpResponseMessage
+            {
+                Content = expectedResponseContent,
+            };
+
+            var appointmentApi = this.fixture.GetAppointmentApi(expectedResponse);
+
+            var updateAppointmentResponse = new UpdateAppointmentResponse();
 
             // Act
             Func<Task> act = async () =>
-                updatedAppointment = await appointmentApi.UpdateAppointmentAsync(existingAppointment.Id, updateAppointmentRequest);
+                updateAppointmentResponse = await appointmentApi.UpdateAppointmentAsync(existingAppointment.Id, updateAppointmentRequest);
 
             // Assert
             await act.Should().NotThrowAsync();
 
             using (new AssertionScope())
             {
-                updatedAppointment.Id.Should().Be(existingAppointment.Id);
-                updatedAppointment.Subject.Should().Be(expectedUpdatedAppointment.Subject);
+                updateAppointmentResponse.Id.Should().Be(existingAppointment.Id);
+                updateAppointmentResponse.Subject.Should().Be(expectedUpdatedAppointment.Subject);
             }
         }
 
@@ -77,31 +80,33 @@ namespace FactroApiClient.UnitTests.Appointment
         }
 
         [Fact]
-        public async Task UpdateAppointmentAsync_UnsuccessfulRequest_ResultShouldBeNull()
+        public async Task UpdateAppointmentAsync_UnsuccessfulRequest_ShouldReturnNull()
         {
             // Arrange
             var appointmentId = Guid.NewGuid().ToString();
+
             var updateAppointmentRequest = new UpdateAppointmentRequest();
 
-            var response = new HttpResponseMessage(HttpStatusCode.BadRequest)
+            var expectedResponse = new HttpResponseMessage
             {
+                StatusCode = HttpStatusCode.BadRequest,
                 RequestMessage = new HttpRequestMessage
                 {
                     RequestUri = new Uri("http://www.mock-web-address.com"),
                 },
             };
 
-            var appointmentApi = this.fixture.GetAppointmentApi(response);
+            var appointmentApi = this.fixture.GetAppointmentApi(expectedResponse);
 
-            var result = new UpdateAppointmentResponse();
+            var updateAppointmentResponse = new UpdateAppointmentResponse();
 
             // Act
-            Func<Task> act = async () => result = await appointmentApi.UpdateAppointmentAsync(appointmentId, updateAppointmentRequest);
+            Func<Task> act = async () => updateAppointmentResponse = await appointmentApi.UpdateAppointmentAsync(appointmentId, updateAppointmentRequest);
 
             // Assert
             await act.Should().NotThrowAsync();
 
-            result.Should().BeNull();
+            updateAppointmentResponse.Should().BeNull();
         }
     }
 }
