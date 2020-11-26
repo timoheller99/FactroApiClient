@@ -2,11 +2,11 @@ namespace FactroApiClient.Appointment
 {
     using System;
     using System.Collections.Generic;
-    using System.Globalization;
     using System.Net.Http;
     using System.Threading.Tasks;
 
     using FactroApiClient.Appointment.Contracts;
+    using FactroApiClient.Endpoints;
 
     using Microsoft.Extensions.Logging;
 
@@ -50,7 +50,7 @@ namespace FactroApiClient.Appointment
 
             using (var client = this.httpClientFactory.CreateClient(BaseClientName))
             {
-                const string requestRoute = ApiEndpoints.Appointment.Create;
+                var requestRoute = ApiEndpoints.Appointment.Create();
 
                 var requestString = JsonConvert.SerializeObject(createAppointmentRequest, this.jsonSerializerSettings);
                 var requestContent = ApiHelpers.GetStringContent(requestString);
@@ -84,7 +84,9 @@ namespace FactroApiClient.Appointment
         {
             using (var client = this.httpClientFactory.CreateClient(BaseClientName))
             {
-                var response = await client.GetAsync(ApiEndpoints.Appointment.GetAll);
+                var requestRoute = ApiEndpoints.Appointment.GetAll();
+
+                var response = await client.GetAsync(requestRoute);
 
                 if (!response.IsSuccessStatusCode)
                 {
@@ -119,7 +121,7 @@ namespace FactroApiClient.Appointment
 
             using (var client = this.httpClientFactory.CreateClient(BaseClientName))
             {
-                var requestRoute = string.Format(CultureInfo.InvariantCulture, ApiEndpoints.Appointment.GetById, appointmentId);
+                var requestRoute = ApiEndpoints.Appointment.GetById(appointmentId);
 
                 var response = await client.GetAsync(requestRoute);
 
@@ -157,7 +159,7 @@ namespace FactroApiClient.Appointment
 
             using (var client = this.httpClientFactory.CreateClient(BaseClientName))
             {
-                var requestRoute = string.Format(CultureInfo.InvariantCulture, ApiEndpoints.Appointment.Update, appointmentId);
+                var requestRoute = ApiEndpoints.Appointment.Update(appointmentId);
 
                 var requestString = JsonConvert.SerializeObject(updateAppointmentRequest, this.jsonSerializerSettings);
                 var requestContent = ApiHelpers.GetStringContent(requestString);
@@ -198,7 +200,7 @@ namespace FactroApiClient.Appointment
 
             using (var client = this.httpClientFactory.CreateClient(BaseClientName))
             {
-                var requestRoute = string.Format(CultureInfo.InvariantCulture, ApiEndpoints.Appointment.Delete, appointmentId);
+                var requestRoute = ApiEndpoints.Appointment.Delete(appointmentId);
 
                 var response = await client.DeleteAsync(requestRoute);
 
