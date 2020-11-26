@@ -4,8 +4,6 @@ namespace FactroApiClient.Appointment
     using System.Collections.Generic;
     using System.Globalization;
     using System.Net.Http;
-    using System.Net.Mime;
-    using System.Text;
     using System.Threading.Tasks;
 
     using FactroApiClient.Appointment.Contracts;
