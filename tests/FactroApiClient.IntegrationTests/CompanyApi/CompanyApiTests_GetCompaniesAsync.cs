@@ -6,7 +6,6 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
     using System.Threading.Tasks;
 
     using FactroApiClient.Company;
-    using FactroApiClient.Company.Contracts;
     using FactroApiClient.Company.Contracts.Basic;
 
     using FluentAssertions;
@@ -24,24 +23,25 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
             var existingCompanies = new List<CreateCompanyResponse>();
 
             const int companyCount = 5;
-            var createCompanyRequest = new CreateCompanyRequest($"{BaseTestFixture.TestPrefix}{Guid.NewGuid().ToString()}");
+
+            var createCompanyRequest = new CreateCompanyRequest(name: null);
             for (var i = 0; i < companyCount; i++)
             {
                 createCompanyRequest.Name = $"{BaseTestFixture.TestPrefix}{Guid.NewGuid().ToString()}";
                 existingCompanies.Add(await companyApi.CreateCompanyAsync(createCompanyRequest));
             }
 
-            var result = new List<GetCompanyPayload>();
+            var getCompaniesResponse = new List<GetCompanyPayload>();
 
             // Act
-            Func<Task> act = async () => result = (await companyApi.GetCompaniesAsync()).ToList();
+            Func<Task> act = async () => getCompaniesResponse = (await companyApi.GetCompaniesAsync()).ToList();
 
             // Assert
             await act.Should().NotThrowAsync();
 
             foreach (var existingCompany in existingCompanies)
             {
-                result.Should().ContainEquivalentOf(existingCompany);
+                getCompaniesResponse.Should().ContainEquivalentOf(existingCompany);
             }
         }
     }

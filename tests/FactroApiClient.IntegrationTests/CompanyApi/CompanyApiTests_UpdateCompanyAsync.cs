@@ -5,7 +5,6 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
     using System.Threading.Tasks;
 
     using FactroApiClient.Company;
-    using FactroApiClient.Company.Contracts;
     using FactroApiClient.Company.Contracts.Basic;
 
     using FluentAssertions;
@@ -25,7 +24,7 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
 
             var createCompanyRequest = new CreateCompanyRequest(name);
 
-            var createCompanyResponse = await companyApi.CreateCompanyAsync(createCompanyRequest);
+            var existingCompany = await companyApi.CreateCompanyAsync(createCompanyRequest);
 
             var updatedName = $"{BaseTestFixture.TestPrefix}{Guid.NewGuid().ToString()}";
             var updateCompanyRequest = new UpdateCompanyRequest
@@ -36,7 +35,7 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
             var updateCompanyResponse = new UpdateCompanyResponse();
 
             // Act
-            Func<Task> act = async () => updateCompanyResponse = await companyApi.UpdateCompanyAsync(createCompanyResponse.Id, updateCompanyRequest);
+            Func<Task> act = async () => updateCompanyResponse = await companyApi.UpdateCompanyAsync(existingCompany.Id, updateCompanyRequest);
 
             // Assert
             await act.Should().NotThrowAsync();
@@ -48,7 +47,7 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
 
                 companies.Should().ContainEquivalentOf(updateCompanyResponse);
 
-                companies.Single(x => x.Id == createCompanyResponse.Id).Name.Should().Be(updatedName);
+                companies.Single(x => x.Id == existingCompany.Id).Name.Should().Be(updatedName);
             }
         }
 
@@ -62,7 +61,7 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
 
             var createCompanyRequest = new CreateCompanyRequest(name);
 
-            var createCompanyResponse = await companyApi.CreateCompanyAsync(createCompanyRequest);
+            var existingCompany = await companyApi.CreateCompanyAsync(createCompanyRequest);
 
             const string updatedName = null;
             var updateCompanyRequest = new UpdateCompanyRequest
@@ -71,7 +70,7 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
             };
 
             // Act
-            Func<Task> act = async () => await companyApi.UpdateCompanyAsync(createCompanyResponse.Id, updateCompanyRequest);
+            Func<Task> act = async () => await companyApi.UpdateCompanyAsync(existingCompany.Id, updateCompanyRequest);
 
             // Assert
             await act.Should().NotThrowAsync();
@@ -81,12 +80,12 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
                 var companies = (await companyApi.GetCompaniesAsync())
                     .Where(x => x.Name.StartsWith(BaseTestFixture.TestPrefix)).ToList();
 
-                companies.Single(x => x.Id == createCompanyResponse.Id).Should().BeEquivalentTo(createCompanyResponse);
+                companies.Single(x => x.Id == existingCompany.Id).Should().BeEquivalentTo(existingCompany);
             }
         }
 
         [Fact]
-        public async Task UpdateCompanyAsync_NotExistingCompanyId_ShouldReturnUpdatedCompany()
+        public async Task UpdateCompanyAsync_NotExistingCompanyId_ShouldReturnNull()
         {
             // Arrange
             var companyApi = this.fixture.GetService<ICompanyApi>();

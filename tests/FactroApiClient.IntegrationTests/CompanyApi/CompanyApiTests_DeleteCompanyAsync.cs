@@ -4,7 +4,6 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
     using System.Threading.Tasks;
 
     using FactroApiClient.Company;
-    using FactroApiClient.Company.Contracts;
     using FactroApiClient.Company.Contracts.Basic;
 
     using FluentAssertions;
@@ -22,34 +21,35 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
             var name = $"{BaseTestFixture.TestPrefix}{Guid.NewGuid().ToString()}";
 
             var createCompanyRequest = new CreateCompanyRequest(name);
+
             var existingCompany = await companyApi.CreateCompanyAsync(createCompanyRequest);
 
-            var deletedCompany = new DeleteCompanyResponse();
+            var deleteCompanyResponse = new DeleteCompanyResponse();
 
             // Act
-            Func<Task> act = async () => deletedCompany = await companyApi.DeleteCompanyAsync(existingCompany.Id);
+            Func<Task> act = async () => deleteCompanyResponse = await companyApi.DeleteCompanyAsync(existingCompany.Id);
 
             // Assert
             await act.Should().NotThrowAsync();
 
-            deletedCompany.Should().BeEquivalentTo(existingCompany);
+            deleteCompanyResponse.Should().BeEquivalentTo(existingCompany);
         }
 
         [Fact]
-        public async Task DeleteCompanyAsync_NotExistingCompany_ShouldDeleteCompany()
+        public async Task DeleteCompanyAsync_NotExistingCompany_ShouldReturnNull()
         {
             // Arrange
             var companyApi = this.fixture.GetService<ICompanyApi>();
 
-            var deletedCompany = new DeleteCompanyResponse();
+            var deleteCompanyResponse = new DeleteCompanyResponse();
 
             // Act
-            Func<Task> act = async () => deletedCompany = await companyApi.DeleteCompanyAsync(Guid.NewGuid().ToString());
+            Func<Task> act = async () => deleteCompanyResponse = await companyApi.DeleteCompanyAsync(Guid.NewGuid().ToString());
 
             // Assert
             await act.Should().NotThrowAsync();
 
-            deletedCompany.Should().BeNull();
+            deleteCompanyResponse.Should().BeNull();
         }
     }
 }

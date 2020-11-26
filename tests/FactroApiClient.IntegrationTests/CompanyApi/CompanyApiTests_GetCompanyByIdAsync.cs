@@ -4,7 +4,6 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
     using System.Threading.Tasks;
 
     using FactroApiClient.Company;
-    using FactroApiClient.Company.Contracts;
     using FactroApiClient.Company.Contracts.Basic;
 
     using FluentAssertions;
@@ -14,7 +13,7 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
     public partial class CompanyApiTests
     {
         [Fact]
-        public async Task GetCompanyAsync_ExistingCompany_ShouldFetchCompany()
+        public async Task GetCompanyAsync_ExistingCompany_ShouldReturnExpectedCompany()
         {
             // Arrange
             var companyApi = this.fixture.GetService<ICompanyApi>();
@@ -22,34 +21,35 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
             var name = $"{BaseTestFixture.TestPrefix}{Guid.NewGuid().ToString()}";
 
             var createCompanyRequest = new CreateCompanyRequest(name);
+
             var existingCompany = await companyApi.CreateCompanyAsync(createCompanyRequest);
 
-            var fetchedCompany = new GetCompanyByIdResponse();
+            var getCompanyByIdResponse = new GetCompanyByIdResponse();
 
             // Act
-            Func<Task> act = async () => fetchedCompany = await companyApi.GetCompanyByIdAsync(existingCompany.Id);
+            Func<Task> act = async () => getCompanyByIdResponse = await companyApi.GetCompanyByIdAsync(existingCompany.Id);
 
             // Assert
             await act.Should().NotThrowAsync();
 
-            fetchedCompany.Should().BeEquivalentTo(existingCompany);
+            getCompanyByIdResponse.Should().BeEquivalentTo(existingCompany);
         }
 
         [Fact]
-        public async Task GetCompanyAsync_NotExistingCompany_ResultShouldBeNull()
+        public async Task GetCompanyAsync_NotExistingCompany_ShouldReturnNull()
         {
             // Arrange
             var companyApi = this.fixture.GetService<ICompanyApi>();
 
-            var fetchedCompany = new GetCompanyByIdResponse();
+            var getCompanyByIdResponse = new GetCompanyByIdResponse();
 
             // Act
-            Func<Task> act = async () => fetchedCompany = await companyApi.GetCompanyByIdAsync(Guid.NewGuid().ToString());
+            Func<Task> act = async () => getCompanyByIdResponse = await companyApi.GetCompanyByIdAsync(Guid.NewGuid().ToString());
 
             // Assert
             await act.Should().NotThrowAsync();
 
-            fetchedCompany.Should().BeNull();
+            getCompanyByIdResponse.Should().BeNull();
         }
     }
 }

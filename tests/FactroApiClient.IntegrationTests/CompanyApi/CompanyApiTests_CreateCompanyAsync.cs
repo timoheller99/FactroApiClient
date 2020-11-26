@@ -5,7 +5,6 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
     using System.Threading.Tasks;
 
     using FactroApiClient.Company;
-    using FactroApiClient.Company.Contracts;
     using FactroApiClient.Company.Contracts.Basic;
 
     using FluentAssertions;
@@ -43,7 +42,7 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
         }
 
         [Fact]
-        public async Task CreateCompanyAsync_TwoIdenticalCompanies_ShouldStoreBothCompanies()
+        public async Task CreateCompanyAsync_TwoCompaniesWithSameName_ShouldStoreBothCompanies()
         {
             // Arrange
             var companyApi = this.fixture.GetService<ICompanyApi>();
@@ -52,21 +51,25 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
 
             var createCompanyRequest = new CreateCompanyRequest(name);
 
-            await companyApi.CreateCompanyAsync(createCompanyRequest);
+            var firstCreatedCompany = await companyApi.CreateCompanyAsync(createCompanyRequest);
+
+            var secondCreatedCompany = default(CreateCompanyResponse);
 
             // Act
-            Func<Task> act = async () => await companyApi.CreateCompanyAsync(createCompanyRequest);
+            Func<Task> act = async () => secondCreatedCompany = await companyApi.CreateCompanyAsync(createCompanyRequest);
 
             // Assert
             await act.Should().NotThrowAsync();
 
             using (new AssertionScope())
             {
+                secondCreatedCompany.Should().NotBeNull();
+
                 var companies = (await companyApi.GetCompaniesAsync())
                     .Where(x => x.Name.StartsWith(BaseTestFixture.TestPrefix)).ToList();
 
-                var matchingCompanies = companies.Where(x => x.Name == name);
-                matchingCompanies.Should().HaveCount(2);
+                companies.Should().Contain(x => x.Id == firstCreatedCompany.Id)
+                    .And.Contain(x => x.Id == secondCreatedCompany.Id);
             }
         }
     }
