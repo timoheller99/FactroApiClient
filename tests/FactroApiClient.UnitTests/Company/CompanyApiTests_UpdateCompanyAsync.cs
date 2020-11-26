@@ -37,26 +37,28 @@ namespace FactroApiClient.UnitTests.Company
                 Name = updateCompanyRequest.Name,
             };
 
-            var expectedContent = new StringContent(JsonConvert.SerializeObject(expectedUpdatedCompany, this.fixture.JsonSerializerSettings));
-            var response = new HttpResponseMessage
-            {
-                Content = expectedContent,
-            };
-            var companyApi = this.fixture.GetCompanyApi(response);
+            var expectedResponseContent = new StringContent(JsonConvert.SerializeObject(expectedUpdatedCompany, this.fixture.JsonSerializerSettings));
 
-            var updatedCompany = new UpdateCompanyResponse();
+            var expectedResponse = new HttpResponseMessage
+            {
+                Content = expectedResponseContent,
+            };
+
+            var companyApi = this.fixture.GetCompanyApi(expectedResponse);
+
+            var updateCompanyResponse = new UpdateCompanyResponse();
 
             // Act
             Func<Task> act = async () =>
-                updatedCompany = await companyApi.UpdateCompanyAsync(existingCompany.Id, updateCompanyRequest);
+                updateCompanyResponse = await companyApi.UpdateCompanyAsync(existingCompany.Id, updateCompanyRequest);
 
             // Assert
             await act.Should().NotThrowAsync();
 
             using (new AssertionScope())
             {
-                updatedCompany.Id.Should().Be(existingCompany.Id);
-                updatedCompany.Name.Should().Be(expectedUpdatedCompany.Name);
+                updateCompanyResponse.Id.Should().Be(existingCompany.Id);
+                updateCompanyResponse.Name.Should().Be(expectedUpdatedCompany.Name);
             }
         }
 
@@ -77,31 +79,32 @@ namespace FactroApiClient.UnitTests.Company
         }
 
         [Fact]
-        public async Task UpdateCompanyAsync_UnsuccessfulRequest_ResultShouldBeNull()
+        public async Task UpdateCompanyAsync_UnsuccessfulRequest_ShouldReturnNull()
         {
             // Arrange
             var companyId = Guid.NewGuid().ToString();
             var updateCompanyRequest = new UpdateCompanyRequest();
 
-            var response = new HttpResponseMessage(HttpStatusCode.BadRequest)
+            var expectedResponse = new HttpResponseMessage
             {
+                StatusCode = HttpStatusCode.BadRequest,
                 RequestMessage = new HttpRequestMessage
                 {
                     RequestUri = new Uri("http://www.mock-web-address.com"),
                 },
             };
 
-            var companyApi = this.fixture.GetCompanyApi(response);
+            var companyApi = this.fixture.GetCompanyApi(expectedResponse);
 
-            var result = new UpdateCompanyResponse();
+            var updateCompanyResponse = new UpdateCompanyResponse();
 
             // Act
-            Func<Task> act = async () => result = await companyApi.UpdateCompanyAsync(companyId, updateCompanyRequest);
+            Func<Task> act = async () => updateCompanyResponse = await companyApi.UpdateCompanyAsync(companyId, updateCompanyRequest);
 
             // Assert
             await act.Should().NotThrowAsync();
 
-            result.Should().BeNull();
+            updateCompanyResponse.Should().BeNull();
         }
     }
 }

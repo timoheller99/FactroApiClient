@@ -16,35 +16,33 @@ namespace FactroApiClient.UnitTests.Company
     public partial class CompanyApiTests
     {
         [Fact]
-        public async Task GetCompanyAsync_ValidId_ShouldReturnDeletedCompany()
+        public async Task GetCompanyAsync_ValidId_ShouldReturnExpectedCompany()
         {
             // Arrange
-            var company = new GetCompanyPayload
+            var existingCompany = new GetCompanyPayload
             {
                 Id = Guid.NewGuid().ToString(),
             };
 
-            var expectedContent =
-                new StringContent(JsonConvert.SerializeObject(company, this.fixture.JsonSerializerSettings));
+            var expectedResponseContent =
+                new StringContent(JsonConvert.SerializeObject(existingCompany, this.fixture.JsonSerializerSettings));
 
-            var response = new HttpResponseMessage
+            var expectedResponse = new HttpResponseMessage
             {
-                Content = expectedContent,
+                Content = expectedResponseContent,
             };
 
-            var companyApi = this.fixture.GetCompanyApi(response);
+            var companyApi = this.fixture.GetCompanyApi(expectedResponse);
 
-            var companyId = company.Id;
-
-            var result = new GetCompanyByIdResponse();
+            var getCompanyByIdResponse = new GetCompanyByIdResponse();
 
             // Act
-            Func<Task> act = async () => result = await companyApi.GetCompanyByIdAsync(companyId);
+            Func<Task> act = async () => getCompanyByIdResponse = await companyApi.GetCompanyByIdAsync(existingCompany.Id);
 
             // Assert
             await act.Should().NotThrowAsync();
 
-            result.Id.Should().Be(company.Id);
+            getCompanyByIdResponse.Id.Should().Be(existingCompany.Id);
         }
 
         [Theory]
@@ -62,28 +60,29 @@ namespace FactroApiClient.UnitTests.Company
         }
 
         [Fact]
-        public async Task GetCompanyAsync_UnsuccessfulRequest_ResultShouldBeNull()
+        public async Task GetCompanyAsync_UnsuccessfulRequest_ShouldReturnNull()
         {
             // Arrange
-            var response = new HttpResponseMessage(HttpStatusCode.BadRequest)
+            var expectedResponse = new HttpResponseMessage
             {
+                StatusCode = HttpStatusCode.BadRequest,
                 RequestMessage = new HttpRequestMessage
                 {
                     RequestUri = new Uri("http://www.mock-web-address.com"),
                 },
             };
 
-            var companyApi = this.fixture.GetCompanyApi(response);
+            var companyApi = this.fixture.GetCompanyApi(expectedResponse);
 
-            var result = new GetCompanyByIdResponse();
+            var getCompanyByIdResponse = new GetCompanyByIdResponse();
 
             // Act
-            Func<Task> act = async () => result = await companyApi.GetCompanyByIdAsync(Guid.NewGuid().ToString());
+            Func<Task> act = async () => getCompanyByIdResponse = await companyApi.GetCompanyByIdAsync(Guid.NewGuid().ToString());
 
             // Assert
             await act.Should().NotThrowAsync();
 
-            result.Should().BeNull();
+            getCompanyByIdResponse.Should().BeNull();
         }
     }
 }

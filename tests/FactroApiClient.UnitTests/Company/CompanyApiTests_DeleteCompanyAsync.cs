@@ -19,32 +19,30 @@ namespace FactroApiClient.UnitTests.Company
         public async Task DeleteCompanyAsync_ValidId_ShouldReturnDeletedCompany()
         {
             // Arrange
-            var company = new GetCompanyPayload
+            var existingCompany = new GetCompanyPayload
             {
                 Id = Guid.NewGuid().ToString(),
             };
 
-            var expectedContent =
-                new StringContent(JsonConvert.SerializeObject(company, this.fixture.JsonSerializerSettings));
+            var expectedResponseContent =
+                new StringContent(JsonConvert.SerializeObject(existingCompany, this.fixture.JsonSerializerSettings));
 
-            var response = new HttpResponseMessage
+            var expectedResponse = new HttpResponseMessage
             {
-                Content = expectedContent,
+                Content = expectedResponseContent,
             };
 
-            var companyApi = this.fixture.GetCompanyApi(response);
+            var companyApi = this.fixture.GetCompanyApi(expectedResponse);
 
-            var companyId = company.Id;
-
-            var deletedCompany = new DeleteCompanyResponse();
+            var deleteCompanyResponse = new DeleteCompanyResponse();
 
             // Act
-            Func<Task> act = async () => deletedCompany = await companyApi.DeleteCompanyAsync(companyId);
+            Func<Task> act = async () => deleteCompanyResponse = await companyApi.DeleteCompanyAsync(existingCompany.Id);
 
             // Assert
             await act.Should().NotThrowAsync();
 
-            deletedCompany.Id.Should().Be(company.Id);
+            deleteCompanyResponse.Id.Should().Be(existingCompany.Id);
         }
 
         [Theory]
@@ -62,11 +60,12 @@ namespace FactroApiClient.UnitTests.Company
         }
 
         [Fact]
-        public async Task DeleteCompanyAsync_UnsuccessfulRequest_ResultShouldBeNull()
+        public async Task DeleteCompanyAsync_UnsuccessfulRequest_ShouldReturnNull()
         {
             // Arrange
-            var response = new HttpResponseMessage(HttpStatusCode.BadRequest)
+            var response = new HttpResponseMessage
             {
+                StatusCode = HttpStatusCode.BadRequest,
                 RequestMessage = new HttpRequestMessage
                 {
                     RequestUri = new Uri("http://www.mock-web-address.com"),
@@ -75,15 +74,15 @@ namespace FactroApiClient.UnitTests.Company
 
             var companyApi = this.fixture.GetCompanyApi(response);
 
-            var result = new DeleteCompanyResponse();
+            var deleteCompanyResponse = new DeleteCompanyResponse();
 
             // Act
-            Func<Task> act = async () => result = await companyApi.DeleteCompanyAsync(Guid.NewGuid().ToString());
+            Func<Task> act = async () => deleteCompanyResponse = await companyApi.DeleteCompanyAsync(Guid.NewGuid().ToString());
 
             // Assert
             await act.Should().NotThrowAsync();
 
-            result.Should().BeNull();
+            deleteCompanyResponse.Should().BeNull();
         }
     }
 }

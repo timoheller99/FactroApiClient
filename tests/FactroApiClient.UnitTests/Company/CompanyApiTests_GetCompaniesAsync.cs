@@ -18,10 +18,10 @@ namespace FactroApiClient.UnitTests.Company
     public partial class CompanyApiTests
     {
         [Fact]
-        public async Task GetCompaniesAsync_ValidRequest_ShouldReturnCompanyList()
+        public async Task GetCompaniesAsync_ValidRequest_ShouldReturnCompanies()
         {
             // Arrange
-            var companyList = new List<GetCompanyPayload>
+            var existingCompaniesList = new List<GetCompanyPayload>
             {
                 new GetCompanyPayload
                 {
@@ -33,32 +33,33 @@ namespace FactroApiClient.UnitTests.Company
                 },
             };
 
-            var expectedContent = new StringContent(JsonConvert.SerializeObject(companyList, this.fixture.JsonSerializerSettings));
+            var expectedResponseContent = new StringContent(JsonConvert.SerializeObject(existingCompaniesList, this.fixture.JsonSerializerSettings));
 
-            var response = new HttpResponseMessage
+            var expectedResponse = new HttpResponseMessage
             {
-                Content = expectedContent,
+                Content = expectedResponseContent,
             };
 
-            var companyApi = this.fixture.GetCompanyApi(response);
+            var companyApi = this.fixture.GetCompanyApi(expectedResponse);
 
-            var result = new List<GetCompanyPayload>();
+            var getCompaniesResponse = new List<GetCompanyPayload>();
 
             // Act
-            Func<Task> act = async () => result = (await companyApi.GetCompaniesAsync()).ToList();
+            Func<Task> act = async () => getCompaniesResponse = (await companyApi.GetCompaniesAsync()).ToList();
 
             // Assert
             await act.Should().NotThrowAsync();
 
-            result.Should().HaveCount(companyList.Count);
+            getCompaniesResponse.Should().BeEquivalentTo(existingCompaniesList);
         }
 
         [Fact]
-        public async Task GetCompaniesAsync_UnsuccessfulRequest_ResultShouldBeNull()
+        public async Task GetCompaniesAsync_UnsuccessfulRequest_ShouldReturnNull()
         {
             // Arrange
-            var response = new HttpResponseMessage(HttpStatusCode.BadRequest)
+            var response = new HttpResponseMessage
             {
+                StatusCode = HttpStatusCode.BadRequest,
                 RequestMessage = new HttpRequestMessage
                 {
                     RequestUri = new Uri("http://www.mock-web-address.com"),
@@ -67,15 +68,15 @@ namespace FactroApiClient.UnitTests.Company
 
             var companyApi = this.fixture.GetCompanyApi(response);
 
-            var result = new List<GetCompanyPayload>();
+            var getCompaniesResponse = new List<GetCompanyPayload>();
 
             // Act
-            Func<Task> act = async () => result = (await companyApi.GetCompaniesAsync())?.ToList();
+            Func<Task> act = async () => getCompaniesResponse = (await companyApi.GetCompaniesAsync())?.ToList();
 
             // Assert
             await act.Should().NotThrowAsync();
 
-            result.Should().BeNull();
+            getCompaniesResponse.Should().BeNull();
         }
     }
 }
