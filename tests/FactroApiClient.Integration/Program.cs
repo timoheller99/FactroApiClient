@@ -2,6 +2,8 @@
 {
     using System;
 
+    using FactroApiClient.Appointment;
+
     using Microsoft.Extensions.DependencyInjection;
 
     using Serilog;
@@ -16,7 +18,7 @@
 
                 var serviceProvider = Startup.ConfigureServices(serviceCollection).BuildServiceProvider();
 
-                // var testService = serviceProvider.GetRequiredService<TestService>();
+                var appointmentApi = serviceProvider.GetRequiredService<IAppointmentApi>();
             }
             catch (Exception ex)
             {
