@@ -7,19 +7,9 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
     using FactroApiClient.Appointment;
     using FactroApiClient.Appointment.Contracts;
 
-    public sealed class AppointmentApiTestFixture : BaseTestFixture, IDisposable
+    public sealed class AppointmentApiTestFixture : BaseTestFixture
     {
         public AppointmentApiTestFixture()
-        {
-            this.ClearFactroInstanceAsync().GetAwaiter().GetResult();
-        }
-
-        public override async Task ClearFactroInstanceAsync()
-        {
-            await this.ClearAppointmentsAsync();
-        }
-
-        public void Dispose()
         {
             this.ClearFactroInstanceAsync().GetAwaiter().GetResult();
         }
@@ -38,6 +28,11 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
             return createAppointmentResponse;
         }
 
+        protected override async Task ClearFactroInstanceAsync()
+        {
+            await this.ClearAppointmentsAsync();
+        }
+
         private async Task ClearAppointmentsAsync()
         {
             var service = this.GetService<IAppointmentApi>();
@@ -46,10 +41,9 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
 
             var appointmentsToRemove = appointments.Where(x => x.Subject.StartsWith(TestPrefix));
 
-            foreach (var appointmentPayload in appointmentsToRemove)
-            {
-                await service.DeleteAppointmentAsync(appointmentPayload.Id);
-            }
+            var tasks = appointmentsToRemove.Select(x => service.DeleteAppointmentAsync(x.Id));
+
+            await Task.WhenAll(tasks);
         }
     }
 }

@@ -7,7 +7,7 @@ namespace FactroApiClient.IntegrationTests
 
     using Microsoft.Extensions.DependencyInjection;
 
-    public class BaseTestFixture
+    public class BaseTestFixture : IDisposable
     {
         public const string ValidEmployeeId = "5d82d596-308e-4df1-b199-9b62ae7458f2";
 
@@ -25,7 +25,12 @@ namespace FactroApiClient.IntegrationTests
             return this.serviceProvider.GetRequiredService<T>();
         }
 
-        public virtual async Task ClearFactroInstanceAsync()
+        public void Dispose()
+        {
+            this.ClearFactroInstanceAsync().GetAwaiter().GetResult();
+        }
+
+        protected virtual async Task ClearFactroInstanceAsync()
         {
             await Task.CompletedTask;
         }
