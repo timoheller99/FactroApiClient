@@ -27,6 +27,22 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
             return createCompanyResponse;
         }
 
+        public async Task<CreateCompanyTagResponse> CreateTestCompanyTagAsync(ICompanyApi companyApi)
+        {
+            var name = $"{TestPrefix}{Guid.NewGuid().ToString()}";
+
+            var createCompanyTagRequest = new CreateCompanyTagRequest(name);
+
+            var createCompanyTagResponse = await companyApi.CreateCompanyTagAsync(createCompanyTagRequest);
+
+            return createCompanyTagResponse;
+        }
+
+        public async Task<IEnumerable<GetCompanyTagPayload>> GetCompanyTagsAsync(ICompanyApi companyApi)
+        {
+            return (await companyApi.GetCompanyTagsAsync()).Where(x => x.Name.StartsWith(TestPrefix));
+        }
+
         protected override async Task ClearFactroInstanceAsync()
         {
             var tasks = new[]
