@@ -41,10 +41,9 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
 
             var appointmentsToRemove = appointments.Where(x => x.Subject.StartsWith(TestPrefix));
 
-            foreach (var appointmentPayload in appointmentsToRemove)
-            {
-                await service.DeleteAppointmentAsync(appointmentPayload.Id);
-            }
+            var tasks = appointmentsToRemove.Select(x => service.DeleteAppointmentAsync(x.Id));
+
+            await Task.WhenAll(tasks);
         }
     }
 }

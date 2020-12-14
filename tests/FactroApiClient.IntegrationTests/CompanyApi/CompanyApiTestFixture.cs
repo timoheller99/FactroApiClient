@@ -1,11 +1,13 @@
 namespace FactroApiClient.IntegrationTests.CompanyApi
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
     using FactroApiClient.Company;
     using FactroApiClient.Company.Contracts.Basic;
+    using FactroApiClient.Company.Contracts.CompanyTag;
 
     public sealed class CompanyApiTestFixture : BaseTestFixture
     {
@@ -44,10 +46,22 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
 
             var companiesToRemove = companies.Where(x => x.Name.StartsWith(TestPrefix));
 
-            foreach (var companyPayload in companiesToRemove)
-            {
-                await service.DeleteCompanyAsync(companyPayload.Id);
-            }
+            var tasks = companiesToRemove.Select(companyPayload => service.DeleteCompanyAsync(companyPayload.Id));
+
+            await Task.WhenAll(tasks);
+        }
+
+        private async Task ClearCompanyTagsAsync()
+        {
+            var service = this.GetService<ICompanyApi>();
+
+            var companyTags = await service.GetCompanyTagsAsync();
+
+            var companyTagsToRemove = companyTags.Where(x => x.Name.StartsWith(TestPrefix));
+
+            var tasks = companyTagsToRemove.Select(companyTagPayload => service.DeleteCompanyTagAsync(companyTagPayload.Id));
+
+            await Task.WhenAll(tasks);
         }
     }
 }
