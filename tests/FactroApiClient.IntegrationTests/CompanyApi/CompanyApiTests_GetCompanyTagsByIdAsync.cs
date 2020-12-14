@@ -66,7 +66,7 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
         }
 
         [Fact]
-        public async Task GetCompanyByIdAsync_NotExistingCompany_ShouldReturnEmptyList()
+        public async Task GetCompanyTagsByIdAsync_NotExistingCompany_ShouldReturnEmptyList()
         {
             // Arrange
             var companyApi = this.fixture.GetService<ICompanyApi>();
