@@ -22,6 +22,13 @@ namespace FactroApiClient.UnitTests.CompanyApi
             new object[] { " " },
         };
 
+        public static readonly IEnumerable<object[]> InvalidCompanyTagIds = new List<object[]>
+        {
+            new object[] { null },
+            new object[] { string.Empty },
+            new object[] { " " },
+        };
+
         public CompanyApi GetCompanyApi(HttpResponseMessage response = null)
         {
             var loggerMock = this.GetLoggerMock();
