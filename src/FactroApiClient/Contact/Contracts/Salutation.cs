@@ -4,6 +4,6 @@ namespace FactroApiClient.Contact.Contracts
     {
         None,
         Male,
-        Female
+        Female,
     }
 }
