@@ -216,36 +216,217 @@ namespace FactroApiClient.Company
 
         public async Task<CreateCompanyTagResponse> CreateCompanyTagAsync(CreateCompanyTagRequest createCompanyTagRequest)
         {
-            // TODO: Will be implemented in a future pull request
-            return new CreateCompanyTagResponse();
+            if (createCompanyTagRequest == null)
+            {
+                throw new ArgumentNullException(nameof(createCompanyTagRequest), $"{nameof(createCompanyTagRequest)} can not be null.");
+            }
+
+            if (createCompanyTagRequest.Name == null)
+            {
+                throw new ArgumentNullException(nameof(createCompanyTagRequest), $"{nameof(createCompanyTagRequest.Name)} can not be null.");
+            }
+
+            using (var client = this.httpClientFactory.CreateClient(BaseClientName))
+            {
+                var requestRoute = ApiEndpoints.CompanyTag.Create();
+
+                var requestString = JsonConvert.SerializeObject(createCompanyTagRequest, this.jsonSerializerSettings);
+                var requestContent = ApiHelpers.GetStringContent(requestString);
+
+                var response = await client.PostAsync(requestRoute, requestContent);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    this.logger.LogWarning(
+                        "Could not create company tag: '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
+                        response.RequestMessage.RequestUri,
+                        (int)response.StatusCode,
+                        response.ReasonPhrase);
+
+                    return null;
+                }
+
+                var responseContentString = await response.Content.ReadAsStringAsync();
+
+                var result =
+                    JsonConvert.DeserializeObject<CreateCompanyTagResponse>(
+                        responseContentString,
+                        this.jsonSerializerSettings);
+
+                return result;
+            }
         }
 
         public async Task<IEnumerable<GetCompanyTagPayload>> GetCompanyTagsAsync()
         {
-            // TODO: Will be implemented in a future pull request
-            return new List<GetCompanyTagPayload>();
+            using (var client = this.httpClientFactory.CreateClient(BaseClientName))
+            {
+                var requestRute = ApiEndpoints.CompanyTag.GetAll();
+
+                var response = await client.GetAsync(requestRute);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    this.logger.LogWarning(
+                        "Could not fetch company tags: '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
+                        response.RequestMessage.RequestUri,
+                        (int)response.StatusCode,
+                        response.ReasonPhrase);
+
+                    return null;
+                }
+
+                var responseContentString = await response.Content.ReadAsStringAsync();
+
+                var result =
+                    JsonConvert.DeserializeObject<List<GetCompanyTagPayload>>(
+                        responseContentString,
+                        this.jsonSerializerSettings);
+
+                return result;
+            }
         }
 
-        public async Task<IEnumerable<GetCompanyTagPayload>> GetCompanyTagsAsync(string companyId)
+        public async Task<IEnumerable<GetCompanyTagAssociationPayload>> GetCompanyTagsByIdAsync(string companyId)
         {
-            // TODO: Will be implemented in a future pull request
-            return new List<GetCompanyTagPayload>();
+            if (string.IsNullOrWhiteSpace(companyId))
+            {
+                throw new ArgumentNullException(nameof(companyId), $"{nameof(companyId)} can not be null, empty or whitespace.");
+            }
+
+            using (var client = this.httpClientFactory.CreateClient(BaseClientName))
+            {
+                var requestRute = ApiEndpoints.CompanyTag.GetById(companyId);
+
+                var response = await client.GetAsync(requestRute);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    this.logger.LogWarning(
+                        "Could not fetch company tags for company with ID '{CompanyId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
+                        companyId,
+                        response.RequestMessage.RequestUri,
+                        (int)response.StatusCode,
+                        response.ReasonPhrase);
+
+                    return null;
+                }
+
+                var responseContentString = await response.Content.ReadAsStringAsync();
+
+                var result =
+                    JsonConvert.DeserializeObject<List<GetCompanyTagAssociationPayload>>(
+                        responseContentString,
+                        this.jsonSerializerSettings);
+
+                return result;
+            }
         }
 
         public async Task<DeleteCompanyTagResponse> DeleteCompanyTagAsync(string companyTagId)
         {
-            // TODO: Will be implemented in a future pull request
-            return new DeleteCompanyTagResponse();
+            if (string.IsNullOrWhiteSpace(companyTagId))
+            {
+                throw new ArgumentNullException(nameof(companyTagId), $"{nameof(companyTagId)} can not be null, empty or whitespace.");
+            }
+
+            using (var client = this.httpClientFactory.CreateClient(BaseClientName))
+            {
+                var requestRoute = ApiEndpoints.CompanyTag.Delete(companyTagId);
+
+                var response = await client.DeleteAsync(requestRoute);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    this.logger.LogWarning(
+                        "Could not delete company tag with id '{CompanyTagId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
+                        companyTagId,
+                        response.RequestMessage.RequestUri,
+                        (int)response.StatusCode,
+                        response.ReasonPhrase);
+
+                    return null;
+                }
+
+                var responseContentString = await response.Content.ReadAsStringAsync();
+
+                var result =
+                    JsonConvert.DeserializeObject<DeleteCompanyTagResponse>(
+                        responseContentString,
+                        this.jsonSerializerSettings);
+
+                return result;
+            }
         }
 
         public async Task AddCompanyTagAsync(string companyId, AddCompanyTagAssociationRequest addCompanyTagAssociationRequest)
         {
-            // TODO: Will be implemented in a future pull request
+            if (string.IsNullOrWhiteSpace(companyId))
+            {
+                throw new ArgumentNullException(nameof(companyId), $"{nameof(companyId)} can not be null, empty or whitespace.");
+            }
+
+            if (addCompanyTagAssociationRequest == null)
+            {
+                throw new ArgumentNullException(nameof(addCompanyTagAssociationRequest), $"{nameof(addCompanyTagAssociationRequest)} can not be null.");
+            }
+
+            if (addCompanyTagAssociationRequest.TagId == null)
+            {
+                throw new ArgumentNullException(nameof(addCompanyTagAssociationRequest), $"{nameof(addCompanyTagAssociationRequest.TagId)} can not be null.");
+            }
+
+            using (var client = this.httpClientFactory.CreateClient(BaseClientName))
+            {
+                var requestRoute = ApiEndpoints.CompanyTag.Add(companyId);
+
+                var requestString = JsonConvert.SerializeObject(addCompanyTagAssociationRequest, this.jsonSerializerSettings);
+                var requestContent = ApiHelpers.GetStringContent(requestString);
+
+                var response = await client.PutAsync(requestRoute, requestContent);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    this.logger.LogWarning(
+                        "Could not add company tag '{CompanyTagId}' to company '{CompanyId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
+                        addCompanyTagAssociationRequest.TagId,
+                        companyId,
+                        response.RequestMessage.RequestUri,
+                        (int)response.StatusCode,
+                        response.ReasonPhrase);
+                }
+            }
         }
 
         public async Task RemoveCompanyTagAsync(string companyId, string companyTagId)
         {
-            // TODO: Will be implemented in a future pull request
+            if (string.IsNullOrWhiteSpace(companyId))
+            {
+                throw new ArgumentNullException(nameof(companyId), $"{nameof(companyId)} can not be null, empty or whitespace.");
+            }
+
+            if (string.IsNullOrWhiteSpace(companyTagId))
+            {
+                throw new ArgumentNullException(nameof(companyTagId), $"{nameof(companyTagId)} can not be null, empty or whitespace.");
+            }
+
+            using (var client = this.httpClientFactory.CreateClient(BaseClientName))
+            {
+                var requestRoute = ApiEndpoints.CompanyTag.Remove(companyId, companyTagId);
+
+                var response = await client.DeleteAsync(requestRoute);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    this.logger.LogWarning(
+                        "Could not remove company tag '{CompanyTagId}' to company '{CompanyId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
+                        companyTagId,
+                        companyId,
+                        response.RequestMessage.RequestUri,
+                        (int)response.StatusCode,
+                        response.ReasonPhrase);
+                }
+            }
         }
     }
 }
