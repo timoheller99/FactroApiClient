@@ -7,19 +7,9 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
     using FactroApiClient.Company;
     using FactroApiClient.Company.Contracts.Basic;
 
-    public sealed class CompanyApiTestFixture : BaseTestFixture, IDisposable
+    public sealed class CompanyApiTestFixture : BaseTestFixture
     {
         public CompanyApiTestFixture()
-        {
-            this.ClearFactroInstanceAsync().GetAwaiter().GetResult();
-        }
-
-        public override async Task ClearFactroInstanceAsync()
-        {
-            await this.ClearCompaniesAsync();
-        }
-
-        public void Dispose()
         {
             this.ClearFactroInstanceAsync().GetAwaiter().GetResult();
         }
@@ -33,6 +23,17 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
             var createCompanyResponse = await companyApi.CreateCompanyAsync(createCompanyRequest);
 
             return createCompanyResponse;
+        }
+
+        protected override async Task ClearFactroInstanceAsync()
+        {
+            var tasks = new[]
+            {
+                this.ClearCompaniesAsync(),
+                this.ClearCompanyTagsAsync(),
+            };
+
+            await Task.WhenAll(tasks);
         }
 
         private async Task ClearCompaniesAsync()
