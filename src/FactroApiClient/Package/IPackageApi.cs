@@ -14,7 +14,7 @@ namespace FactroApiClient.Package
         // Base
         public Task<CreatePackageResponse> CreatePackageAsync(string projectId, CreatePackageRequest createPackageRequest);
 
-        public Task<IEnumerable<GetPackagePayload>> GetPackagesAsync();
+        public Task<IEnumerable<GetPackagePayload>> GetPackagesAsync(string projectId);
 
         public Task<IEnumerable<GetPackagePayload>> GetPackagesOfProjectAsync(string projectId);
 
