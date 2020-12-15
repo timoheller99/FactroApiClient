@@ -35,6 +35,11 @@ namespace FactroApiClient.Package
 
         public async Task<CreatePackageResponse> CreatePackageAsync(string projectId, CreatePackageRequest createPackageRequest)
         {
+            if (string.IsNullOrWhiteSpace(projectId))
+            {
+                throw new ArgumentNullException(nameof(projectId), $"{nameof(projectId)} can not be null, empty or whitespace.");
+            }
+
             if (createPackageRequest == null)
             {
                 throw new ArgumentNullException(nameof(createPackageRequest), $"{nameof(createPackageRequest)} can not be null.");
@@ -235,6 +240,11 @@ namespace FactroApiClient.Package
             if (string.IsNullOrWhiteSpace(packageId))
             {
                 throw new ArgumentNullException(nameof(packageId), $"{nameof(packageId)} can not be null, empty or whitespace.");
+            }
+
+            if (updatePackageRequest == null)
+            {
+                throw new ArgumentNullException(nameof(updatePackageRequest), $"{nameof(updatePackageRequest)} can not be null.");
             }
 
             using (var client = this.httpClientFactory.CreateClient(BaseClientName))
