@@ -941,7 +941,42 @@ namespace FactroApiClient.Package
             string packageId,
             ShiftPackageWithSuccessorsRequest shiftPackageWithSuccessorsRequest)
         {
-            throw new System.NotImplementedException();
+            if (string.IsNullOrWhiteSpace(projectId))
+            {
+                throw new ArgumentNullException(nameof(projectId), $"{nameof(projectId)} can not be null, empty or whitespace.");
+            }
+
+            if (string.IsNullOrWhiteSpace(packageId))
+            {
+                throw new ArgumentNullException(nameof(packageId), $"{nameof(packageId)} can not be null, empty or whitespace.");
+            }
+
+            if (shiftPackageWithSuccessorsRequest == null)
+            {
+                throw new ArgumentNullException(nameof(shiftPackageWithSuccessorsRequest), $"{nameof(shiftPackageWithSuccessorsRequest)} can not be null.");
+            }
+
+            using (var client = this.httpClientFactory.CreateClient(BaseClientName))
+            {
+                var requestRoute = ApiEndpoints.Package.Create(projectId);
+
+                var requestString = JsonConvert.SerializeObject(shiftPackageWithSuccessorsRequest, this.jsonSerializerSettings);
+                var requestContent = ApiHelpers.GetStringContent(requestString);
+
+                var response = await client.PostAsync(requestRoute, requestContent);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    this.logger.LogWarning(
+                        "Could not shift package with id '{PackageId}' in project with id '{ProjectId}' by '{DaysDelta}' days: '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
+                        packageId,
+                        projectId,
+                        shiftPackageWithSuccessorsRequest.DaysDelta,
+                        response.RequestMessage.RequestUri,
+                        (int)response.StatusCode,
+                        response.ReasonPhrase);
+                }
+            }
         }
     }
 }
