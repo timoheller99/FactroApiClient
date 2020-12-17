@@ -9,7 +9,17 @@ namespace FactroApiClient.Endpoints
                 return $"projects/{projectId}/packages/{packageId}/company";
             }
 
+            public static string RemoveCompany(string projectId, string packageId)
+            {
+                return $"projects/{projectId}/packages/{packageId}/company";
+            }
+
             public static string SetContact(string projectId, string packageId)
+            {
+                return $"projects/{projectId}/packages/{packageId}/contact";
+            }
+
+            public static string RemoveContact(string projectId, string packageId)
             {
                 return $"projects/{projectId}/packages/{packageId}/contact";
             }

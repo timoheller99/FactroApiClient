@@ -36,7 +36,11 @@ namespace FactroApiClient.Package
         // Association
         public Task SetCompanyAsync(string projectId, string packageId, SetCompanyAssociationRequest setCompanyAssociationRequest);
 
+        public Task RemoveCompanyAsync(string projectId, string packageId);
+
         public Task SetContactAsync(string projectId, string packageId, SetContactAssociationRequest setContactAssociationRequest);
+
+        public Task RemoveContactAsync(string projectId, string packageId);
 
         public Task MoveToPackageAsync(string projectId, string packageId, SetPackageAssociationRequest setPackageAssociationRequest);
 
