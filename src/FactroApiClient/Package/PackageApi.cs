@@ -958,7 +958,7 @@ namespace FactroApiClient.Package
 
             using (var client = this.httpClientFactory.CreateClient(BaseClientName))
             {
-                var requestRoute = ApiEndpoints.Package.Create(projectId);
+                var requestRoute = ApiEndpoints.PackageShiftTasks.ShiftTasksWithSuccessors(projectId, packageId);
 
                 var requestString = JsonConvert.SerializeObject(shiftPackageWithSuccessorsRequest, this.jsonSerializerSettings);
                 var requestContent = ApiHelpers.GetStringContent(requestString);
