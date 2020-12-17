@@ -493,7 +493,10 @@ namespace FactroApiClient.Package
             {
                 var requestRoute = ApiEndpoints.PackageAssociation.SetCompany(projectId, packageId);
 
-                var response = await client.DeleteAsync(requestRoute);
+                var requestString = JsonConvert.SerializeObject(setCompanyAssociationRequest, this.jsonSerializerSettings);
+                var requestContent = ApiHelpers.GetStringContent(requestString);
+
+                var response = await client.PutAsync(requestRoute, requestContent);
 
                 if (!response.IsSuccessStatusCode)
                 {
@@ -534,7 +537,10 @@ namespace FactroApiClient.Package
             {
                 var requestRoute = ApiEndpoints.PackageAssociation.SetCompany(projectId, packageId);
 
-                var response = await client.DeleteAsync(requestRoute);
+                var requestString = JsonConvert.SerializeObject(setContactAssociationRequest, this.jsonSerializerSettings);
+                var requestContent = ApiHelpers.GetStringContent(requestString);
+
+                var response = await client.PutAsync(requestRoute, requestContent);
 
                 if (!response.IsSuccessStatusCode)
                 {
