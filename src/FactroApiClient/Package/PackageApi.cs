@@ -686,7 +686,7 @@ namespace FactroApiClient.Package
         public async Task<AddPackageWriteRightsForUserResponse> GrantWriteRightsToUserAsync(
             string projectId,
             string packageId,
-            AddPackageWriteRightsForUserRequest addPackageReadRightsForUserRequest)
+            AddPackageWriteRightsForUserRequest addPackageWriteRightsForUserRequest)
         {
             throw new System.NotImplementedException();
         }
