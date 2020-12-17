@@ -2,6 +2,8 @@ namespace FactroApiClient.Package.Contracts.Document
 {
     using System;
 
+    using FactroApiClient.SharedContracts;
+
     public class DeletePackageDocumentResponse : IGetPackageDocumentPayload
     {
         public DateTime ChangeDate { get; set; }

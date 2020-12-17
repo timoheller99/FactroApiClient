@@ -1,4 +1,4 @@
-namespace FactroApiClient.Package.Contracts.Document
+namespace FactroApiClient.SharedContracts
 {
     public enum DocumentReferenceType
     {
