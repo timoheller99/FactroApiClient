@@ -566,7 +566,7 @@ namespace FactroApiClient.Package
 
             using (var client = this.httpClientFactory.CreateClient(BaseClientName))
             {
-                var requestRoute = ApiEndpoints.PackageAssociation.SetCompany(projectId, packageId);
+                var requestRoute = ApiEndpoints.PackageAssociation.SetContact(projectId, packageId);
 
                 var requestString = JsonConvert.SerializeObject(setContactAssociationRequest, this.jsonSerializerSettings);
                 var requestContent = ApiHelpers.GetStringContent(requestString);
