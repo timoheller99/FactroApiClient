@@ -1,10 +1,8 @@
-namespace FactroApiClient.Project.Contracts.Document
+namespace FactroApiClient.SharedContracts
 {
     using System;
 
-    using FactroApiClient.SharedContracts;
-
-    public interface IGetProjectDocumentPayload
+    public interface IDocumentPayload
     {
         public DateTime ChangeDate { get; set; }
 

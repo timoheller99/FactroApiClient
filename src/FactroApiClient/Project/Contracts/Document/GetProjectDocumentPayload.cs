@@ -4,7 +4,7 @@ namespace FactroApiClient.Project.Contracts.Document
 
     using FactroApiClient.SharedContracts;
 
-    public class GetProjectDocumentPayload : IGetProjectDocumentPayload
+    public class GetProjectDocumentPayload : IDocumentPayload
     {
         public DateTime ChangeDate { get; set; }
 
