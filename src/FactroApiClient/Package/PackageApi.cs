@@ -469,12 +469,90 @@ namespace FactroApiClient.Package
 
         public async Task SetCompanyAsync(string projectId, string packageId, SetCompanyAssociationRequest setCompanyAssociationRequest)
         {
-            throw new System.NotImplementedException();
+            if (string.IsNullOrWhiteSpace(projectId))
+            {
+                throw new ArgumentNullException(nameof(projectId), $"{nameof(projectId)} can not be null, empty or whitespace.");
+            }
+
+            if (string.IsNullOrWhiteSpace(packageId))
+            {
+                throw new ArgumentNullException(nameof(packageId), $"{nameof(packageId)} can not be null, empty or whitespace.");
+            }
+
+            if (setCompanyAssociationRequest == null)
+            {
+                throw new ArgumentNullException(nameof(setCompanyAssociationRequest), $"{nameof(setCompanyAssociationRequest)} can not be null.");
+            }
+
+            if (string.IsNullOrWhiteSpace(setCompanyAssociationRequest.CompanyId))
+            {
+                throw new ArgumentNullException(nameof(setCompanyAssociationRequest), $"{nameof(setCompanyAssociationRequest.CompanyId)} can not be null, empty or whitespace.");
+            }
+
+            using (var client = this.httpClientFactory.CreateClient(BaseClientName))
+            {
+                var requestRoute = ApiEndpoints.PackageAssociation.SetCompany(projectId, packageId);
+
+                var requestString = JsonConvert.SerializeObject(setCompanyAssociationRequest, this.jsonSerializerSettings);
+                var requestContent = ApiHelpers.GetStringContent(requestString);
+
+                var response = await client.PutAsync(requestRoute, requestContent);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    this.logger.LogWarning(
+                        "Could not set company of package with id '{PackageId}' in project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
+                        packageId,
+                        projectId,
+                        response.RequestMessage.RequestUri,
+                        (int)response.StatusCode,
+                        response.ReasonPhrase);
+                }
+            }
         }
 
         public async Task SetContactAsync(string projectId, string packageId, SetContactAssociationRequest setContactAssociationRequest)
         {
-            throw new System.NotImplementedException();
+            if (string.IsNullOrWhiteSpace(projectId))
+            {
+                throw new ArgumentNullException(nameof(projectId), $"{nameof(projectId)} can not be null, empty or whitespace.");
+            }
+
+            if (string.IsNullOrWhiteSpace(packageId))
+            {
+                throw new ArgumentNullException(nameof(packageId), $"{nameof(packageId)} can not be null, empty or whitespace.");
+            }
+
+            if (setContactAssociationRequest == null)
+            {
+                throw new ArgumentNullException(nameof(setContactAssociationRequest), $"{nameof(setContactAssociationRequest)} can not be null.");
+            }
+
+            if (string.IsNullOrWhiteSpace(setContactAssociationRequest.ContactId))
+            {
+                throw new ArgumentNullException(nameof(setContactAssociationRequest), $"{nameof(setContactAssociationRequest.ContactId)} can not be null, empty or whitespace.");
+            }
+
+            using (var client = this.httpClientFactory.CreateClient(BaseClientName))
+            {
+                var requestRoute = ApiEndpoints.PackageAssociation.SetCompany(projectId, packageId);
+
+                var requestString = JsonConvert.SerializeObject(setContactAssociationRequest, this.jsonSerializerSettings);
+                var requestContent = ApiHelpers.GetStringContent(requestString);
+
+                var response = await client.PutAsync(requestRoute, requestContent);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    this.logger.LogWarning(
+                        "Could not set contact of package with id '{PackageId}' in project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
+                        packageId,
+                        projectId,
+                        response.RequestMessage.RequestUri,
+                        (int)response.StatusCode,
+                        response.ReasonPhrase);
+                }
+            }
         }
 
         public async Task MoveToPackageAsync(string projectId, string packageId, SetPackageAssociationRequest setPackageAssociationRequest)
@@ -507,7 +585,9 @@ namespace FactroApiClient.Package
             throw new System.NotImplementedException();
         }
 
-        public async Task<AddPackageReadRightsForUserResponse> GrantReadRightsToUserAsync(string projectId, string packageId,
+        public async Task<AddPackageReadRightsForUserResponse> GrantReadRightsToUserAsync(
+            string projectId,
+            string packageId,
             AddPackageReadRightsForUserRequest addPackageReadRightsForUserRequest)
         {
             throw new System.NotImplementedException();
@@ -523,7 +603,9 @@ namespace FactroApiClient.Package
             throw new System.NotImplementedException();
         }
 
-        public async Task<AddPackageWriteRightsForUserResponse> GrantWriteRightsToUserAsync(string projectId, string packageId,
+        public async Task<AddPackageWriteRightsForUserResponse> GrantWriteRightsToUserAsync(
+            string projectId,
+            string packageId,
             AddPackageWriteRightsForUserRequest addPackageReadRightsForUserRequest)
         {
             throw new System.NotImplementedException();
@@ -534,7 +616,9 @@ namespace FactroApiClient.Package
             throw new System.NotImplementedException();
         }
 
-        public async Task ShiftTasksAsync(string projectId, string packageId,
+        public async Task ShiftTasksAsync(
+            string projectId,
+            string packageId,
             ShiftPackageWithSuccessorsRequest shiftPackageWithSuccessorsRequest)
         {
             throw new System.NotImplementedException();
