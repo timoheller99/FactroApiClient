@@ -551,12 +551,92 @@ namespace FactroApiClient.Package
 
         public async Task MoveToPackageAsync(string projectId, string packageId, SetPackageAssociationRequest setPackageAssociationRequest)
         {
-            throw new System.NotImplementedException();
+            if (string.IsNullOrWhiteSpace(projectId))
+            {
+                throw new ArgumentNullException(nameof(projectId), $"{nameof(projectId)} can not be null, empty or whitespace.");
+            }
+
+            if (string.IsNullOrWhiteSpace(packageId))
+            {
+                throw new ArgumentNullException(nameof(packageId), $"{nameof(packageId)} can not be null, empty or whitespace.");
+            }
+
+            if (setPackageAssociationRequest == null)
+            {
+                throw new ArgumentNullException(nameof(setPackageAssociationRequest), $"{nameof(setPackageAssociationRequest)} can not be null.");
+            }
+
+            if (string.IsNullOrWhiteSpace(setPackageAssociationRequest.ParentPackageId))
+            {
+                throw new ArgumentNullException(nameof(setPackageAssociationRequest), $"{nameof(setPackageAssociationRequest.ParentPackageId)} can not be null, empty or whitespace.");
+            }
+
+            using (var client = this.httpClientFactory.CreateClient(BaseClientName))
+            {
+                var requestRoute = ApiEndpoints.PackageAssociation.MoveIntoPackage(projectId, packageId);
+
+                var requestString = JsonConvert.SerializeObject(setPackageAssociationRequest, this.jsonSerializerSettings);
+                var requestContent = ApiHelpers.GetStringContent(requestString);
+
+                var response = await client.PutAsync(requestRoute, requestContent);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    this.logger.LogWarning(
+                        "Could not move package with id '{PackageId}' in project with id '{ProjectId}' into package with id '{ParentPackageId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
+                        packageId,
+                        projectId,
+                        setPackageAssociationRequest.ParentPackageId,
+                        response.RequestMessage.RequestUri,
+                        (int)response.StatusCode,
+                        response.ReasonPhrase);
+                }
+            }
         }
 
         public async Task MoveToProjectAsync(string projectId, string packageId, SetProjectAssociationRequest setProjectAssociationRequest)
         {
-            throw new System.NotImplementedException();
+            if (string.IsNullOrWhiteSpace(projectId))
+            {
+                throw new ArgumentNullException(nameof(projectId), $"{nameof(projectId)} can not be null, empty or whitespace.");
+            }
+
+            if (string.IsNullOrWhiteSpace(packageId))
+            {
+                throw new ArgumentNullException(nameof(packageId), $"{nameof(packageId)} can not be null, empty or whitespace.");
+            }
+
+            if (setProjectAssociationRequest == null)
+            {
+                throw new ArgumentNullException(nameof(setProjectAssociationRequest), $"{nameof(setProjectAssociationRequest)} can not be null.");
+            }
+
+            if (string.IsNullOrWhiteSpace(setProjectAssociationRequest.ProjectId))
+            {
+                throw new ArgumentNullException(nameof(setProjectAssociationRequest), $"{nameof(setProjectAssociationRequest.ProjectId)} can not be null, empty or whitespace.");
+            }
+
+            using (var client = this.httpClientFactory.CreateClient(BaseClientName))
+            {
+                var requestRoute = ApiEndpoints.PackageAssociation.MoveIntoPackage(projectId, packageId);
+
+                var requestString = JsonConvert.SerializeObject(setProjectAssociationRequest, this.jsonSerializerSettings);
+                var requestContent = ApiHelpers.GetStringContent(requestString);
+
+                var response = await client.PutAsync(requestRoute, requestContent);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    this.logger.LogWarning(
+                        "Could not move package with id '{PackageId}' in project with id '{ProjectId}' into project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
+                        packageId,
+                        projectId,
+                        setProjectAssociationRequest.ProjectId,
+                        response.RequestMessage.RequestUri,
+                        (int)response.StatusCode,
+                        response.ReasonPhrase);
+                }
+            }
         }
 
         public async Task<IEnumerable<GetPackageDocumentPayload>> GetDocumentsAsync(string projectId, string packageId)
