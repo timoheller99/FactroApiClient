@@ -579,7 +579,9 @@ namespace FactroApiClient.Package
             throw new System.NotImplementedException();
         }
 
-        public async Task<AddPackageReadRightsForUserResponse> GrantReadRightsToUserAsync(string projectId, string packageId,
+        public async Task<AddPackageReadRightsForUserResponse> GrantReadRightsToUserAsync(
+            string projectId,
+            string packageId,
             AddPackageReadRightsForUserRequest addPackageReadRightsForUserRequest)
         {
             throw new System.NotImplementedException();
@@ -595,7 +597,9 @@ namespace FactroApiClient.Package
             throw new System.NotImplementedException();
         }
 
-        public async Task<AddPackageWriteRightsForUserResponse> GrantWriteRightsToUserAsync(string projectId, string packageId,
+        public async Task<AddPackageWriteRightsForUserResponse> GrantWriteRightsToUserAsync(
+            string projectId,
+            string packageId,
             AddPackageWriteRightsForUserRequest addPackageReadRightsForUserRequest)
         {
             throw new System.NotImplementedException();
@@ -606,7 +610,9 @@ namespace FactroApiClient.Package
             throw new System.NotImplementedException();
         }
 
-        public async Task ShiftTasksAsync(string projectId, string packageId,
+        public async Task ShiftTasksAsync(
+            string projectId,
+            string packageId,
             ShiftPackageWithSuccessorsRequest shiftPackageWithSuccessorsRequest)
         {
             throw new System.NotImplementedException();
