@@ -554,7 +554,7 @@ namespace FactroApiClient.Package
             throw new System.NotImplementedException();
         }
 
-        public async Task MoveToProjectAsync(string projectId, string packageId, SetProjectAssociationRequest setPackageAssociationRequest)
+        public async Task MoveToProjectAsync(string projectId, string packageId, SetProjectAssociationRequest setProjectAssociationRequest)
         {
             throw new System.NotImplementedException();
         }
