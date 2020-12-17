@@ -2,7 +2,9 @@ namespace FactroApiClient.Package.Contracts.Document
 {
     using System;
 
-    public class GetPackageDocumentPayload : IGetPackageDocumentPayload
+    using FactroApiClient.SharedContracts;
+
+    public class GetPackageDocumentPayload : IDocumentPayload
     {
         public DateTime ChangeDate
          { get; set; }
@@ -19,7 +21,7 @@ namespace FactroApiClient.Package.Contracts.Document
 
         public string ReferenceId { get; set; }
 
-        public DocumentReferenceType DocumentReferenceType { get; set; }
+        public DocumentReferenceType ReferenceType { get; set; }
 
         public double Size { get; set; }
 

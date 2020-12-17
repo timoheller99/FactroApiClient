@@ -1,4 +1,4 @@
-namespace FactroApiClient.Package.Contracts.AccessRights
+namespace FactroApiClient.SharedContracts
 {
     public enum AccessReason
     {

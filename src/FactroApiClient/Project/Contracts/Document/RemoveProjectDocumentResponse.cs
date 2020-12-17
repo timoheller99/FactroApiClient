@@ -1,10 +1,10 @@
-namespace FactroApiClient.Package.Contracts.Document
+namespace FactroApiClient.Project.Contracts.Document
 {
     using System;
 
     using FactroApiClient.SharedContracts;
 
-    public class DeletePackageDocumentResponse : IDocumentPayload
+    public class RemoveProjectDocumentResponse : IDocumentPayload
     {
         public DateTime ChangeDate { get; set; }
 
@@ -13,8 +13,6 @@ namespace FactroApiClient.Package.Contracts.Document
         public string CreatorId { get; set; }
 
         public string Id { get; set; }
-
-        public string MandantId { get; set; }
 
         public string ContentType { get; set; }
 
