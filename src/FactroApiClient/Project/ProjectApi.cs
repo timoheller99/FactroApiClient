@@ -662,32 +662,217 @@ namespace FactroApiClient.Project
 
         public async Task<CreateProjectTagResponse> CreateProjectTagAsync(CreateProjectTagRequest createProjectTagRequest)
         {
-            throw new System.NotImplementedException();
+            if (createProjectTagRequest == null)
+            {
+                throw new ArgumentNullException(nameof(createProjectTagRequest), $"{nameof(createProjectTagRequest)} can not be null.");
+            }
+
+            if (createProjectTagRequest.Name == null)
+            {
+                throw new ArgumentNullException(nameof(createProjectTagRequest), $"{nameof(createProjectTagRequest.Name)} can not be null.");
+            }
+
+            using (var client = this.httpClientFactory.CreateClient(BaseClientName))
+            {
+                var requestRoute = ApiEndpoints.ProjectTag.Create();
+
+                var requestString = JsonConvert.SerializeObject(createProjectTagRequest, this.jsonSerializerSettings);
+                var requestContent = ApiHelpers.GetStringContent(requestString);
+
+                var response = await client.PostAsync(requestRoute, requestContent);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    this.logger.LogWarning(
+                        "Could not create project tag: '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
+                        response.RequestMessage.RequestUri,
+                        (int)response.StatusCode,
+                        response.ReasonPhrase);
+
+                    return null;
+                }
+
+                var responseContentString = await response.Content.ReadAsStringAsync();
+
+                var result =
+                    JsonConvert.DeserializeObject<CreateProjectTagResponse>(
+                        responseContentString,
+                        this.jsonSerializerSettings);
+
+                return result;
+            }
         }
 
         public async Task<IEnumerable<GetProjectTagPayload>> GetProjectTagsAsync()
         {
-            throw new System.NotImplementedException();
+            using (var client = this.httpClientFactory.CreateClient(BaseClientName))
+            {
+                var requestRoute = ApiEndpoints.ProjectTag.GetAll();
+
+                var response = await client.GetAsync(requestRoute);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    this.logger.LogWarning(
+                        "Could not fetch project tags: '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
+                        response.RequestMessage.RequestUri,
+                        (int)response.StatusCode,
+                        response.ReasonPhrase);
+
+                    return null;
+                }
+
+                var responseContentString = await response.Content.ReadAsStringAsync();
+
+                var result =
+                    JsonConvert.DeserializeObject<IEnumerable<GetProjectTagPayload>>(
+                        responseContentString,
+                        this.jsonSerializerSettings);
+
+                return result;
+            }
         }
 
         public async Task<IEnumerable<GetAssignedProjectTagPayload>> GetTagsOfProjectAsync(string projectId)
         {
-            throw new System.NotImplementedException();
+            if (string.IsNullOrWhiteSpace(projectId))
+            {
+                throw new ArgumentNullException(nameof(projectId), $"{nameof(projectId)} can not be null, empty or whitespace.");
+            }
+
+            using (var client = this.httpClientFactory.CreateClient(BaseClientName))
+            {
+                var requestRoute = ApiEndpoints.ProjectTag.GetById(projectId);
+
+                var response = await client.GetAsync(requestRoute);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    this.logger.LogWarning(
+                        "Could not fetch tags of project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
+                        projectId,
+                        response.RequestMessage.RequestUri,
+                        (int)response.StatusCode,
+                        response.ReasonPhrase);
+
+                    return null;
+                }
+
+                var responseContentString = await response.Content.ReadAsStringAsync();
+
+                var result =
+                    JsonConvert.DeserializeObject<IEnumerable<GetAssignedProjectTagPayload>>(
+                        responseContentString,
+                        this.jsonSerializerSettings);
+
+                return result;
+            }
         }
 
         public async Task<DeleteProjectTagResponse> DeleteProjectTagAsync(string projectTagId)
         {
-            throw new System.NotImplementedException();
+            if (string.IsNullOrWhiteSpace(projectTagId))
+            {
+                throw new ArgumentNullException(nameof(projectTagId), $"{nameof(projectTagId)} can not be null, empty or whitespace.");
+            }
+
+            using (var client = this.httpClientFactory.CreateClient(BaseClientName))
+            {
+                var requestRoute = ApiEndpoints.ProjectTag.Delete(projectTagId);
+
+                var response = await client.DeleteAsync(requestRoute);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    this.logger.LogWarning(
+                        "Could not delete project tag with id '{ProjectTagId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
+                        projectTagId,
+                        response.RequestMessage.RequestUri,
+                        (int)response.StatusCode,
+                        response.ReasonPhrase);
+
+                    return null;
+                }
+
+                var responseContentString = await response.Content.ReadAsStringAsync();
+
+                var result =
+                    JsonConvert.DeserializeObject<DeleteProjectTagResponse>(
+                        responseContentString,
+                        this.jsonSerializerSettings);
+
+                return result;
+            }
         }
 
         public async Task AddTagToProjectAsync(string projectId, AddProjectTagAssociationRequest addProjectTagAssociationRequest)
         {
-            throw new System.NotImplementedException();
+            if (string.IsNullOrWhiteSpace(projectId))
+            {
+                throw new ArgumentNullException(nameof(projectId), $"{nameof(projectId)} can not be null, empty or whitespace.");
+            }
+
+            if (addProjectTagAssociationRequest == null)
+            {
+                throw new ArgumentNullException(nameof(addProjectTagAssociationRequest), $"{nameof(addProjectTagAssociationRequest)} can not be null.");
+            }
+
+            if (string.IsNullOrWhiteSpace(addProjectTagAssociationRequest.TagId))
+            {
+                throw new ArgumentNullException(nameof(addProjectTagAssociationRequest), $"{nameof(addProjectTagAssociationRequest.TagId)} can not be null, empty or whitespace.");
+            }
+
+            using (var client = this.httpClientFactory.CreateClient(BaseClientName))
+            {
+                var requestRoute = ApiEndpoints.ProjectTag.AddToProject(projectId);
+
+                var requestString = JsonConvert.SerializeObject(addProjectTagAssociationRequest, this.jsonSerializerSettings);
+                var requestContent = ApiHelpers.GetStringContent(requestString);
+
+                var response = await client.PutAsync(requestRoute, requestContent);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    this.logger.LogWarning(
+                        "Could not add project tag with id '{ProjectTagId}' to project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
+                        addProjectTagAssociationRequest.TagId,
+                        projectId,
+                        response.RequestMessage.RequestUri,
+                        (int)response.StatusCode,
+                        response.ReasonPhrase);
+                }
+            }
         }
 
         public async Task RemoveTagFromProjectAsync(string projectId, string tagId)
         {
-            throw new System.NotImplementedException();
+            if (string.IsNullOrWhiteSpace(projectId))
+            {
+                throw new ArgumentNullException(nameof(projectId), $"{nameof(projectId)} can not be null, empty or whitespace.");
+            }
+
+            if (string.IsNullOrWhiteSpace(tagId))
+            {
+                throw new ArgumentNullException(nameof(tagId), $"{nameof(tagId)} can not be null, empty or whitespace.");
+            }
+
+            using (var client = this.httpClientFactory.CreateClient(BaseClientName))
+            {
+                var requestRoute = ApiEndpoints.ProjectTag.RemoveFromProject(projectId, tagId);
+
+                var response = await client.DeleteAsync(requestRoute);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    this.logger.LogWarning(
+                        "Could not remove project tag with id '{ProjectTagId}' from project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
+                        tagId,
+                        projectId,
+                        response.RequestMessage.RequestUri,
+                        (int)response.StatusCode,
+                        response.ReasonPhrase);
+                }
+            }
         }
     }
 }
