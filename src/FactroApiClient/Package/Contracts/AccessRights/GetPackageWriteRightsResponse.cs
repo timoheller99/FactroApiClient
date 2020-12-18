@@ -6,7 +6,8 @@ namespace FactroApiClient.Package.Contracts.AccessRights
 
     public class GetPackageWriteRightsResponse
     {
-        // TODO: The structure of this model is not clearly descripted in the documentation and has to be tested.
-        public IEnumerable<AccessRightReason> AccessRightReasons { get; set; }
+        public string EmployeeId { get; set; }
+
+        public IEnumerable<AccessRightReason> AccessRights { get; set; }
     }
 }

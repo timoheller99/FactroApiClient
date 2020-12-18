@@ -48,13 +48,13 @@ namespace FactroApiClient.Project
         public Task<RemoveProjectDocumentResponse> DeleteProjectDocumentAsync(string projectId, string documentId);
 
         // Access Rights
-        public Task<GetProjectReadRightsResponse> GetReadRightsAsync(string projectId);
+        public Task<IEnumerable<GetProjectReadRightsResponse>> GetReadRightsAsync(string projectId);
 
         public Task<AddProjectReadRightsForUserResponse> GrantReadRightsToUserAsync(string projectId, AddProjectReadRightsForUserRequest addProjectReadRightsForUserRequest);
 
         public Task RevokeReadRightsFromUserAsync(string projectId, string employeeId);
 
-        public Task<GetProjectWriteRightsResponse> GetWriteRightsAsync(string projectId);
+        public Task<IEnumerable<GetProjectWriteRightsResponse>> GetWriteRightsAsync(string projectId);
 
         public Task<AddProjectWriteRightsForUserResponse> GrantWriteRightsToUserAsync(string projectId, AddProjectWriteRightsForUserRequest addProjectWriteRightsForUserRequest);
 
