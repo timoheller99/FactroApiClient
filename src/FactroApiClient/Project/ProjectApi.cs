@@ -388,34 +388,240 @@ namespace FactroApiClient.Project
 
         public async Task<GetProjectReadRightsResponse> GetReadRightsAsync(string projectId)
         {
-            throw new System.NotImplementedException();
+            if (string.IsNullOrWhiteSpace(projectId))
+            {
+                throw new ArgumentNullException(nameof(projectId), $"{nameof(projectId)} can not be null, empty or whitespace.");
+            }
+
+            using (var client = this.httpClientFactory.CreateClient(BaseClientName))
+            {
+                var requestRoute = ApiEndpoints.ProjectsAccessRights.GetReadRights(projectId);
+
+                var response = await client.GetAsync(requestRoute);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    this.logger.LogWarning(
+                        "Could not fetch read rights for project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
+                        projectId,
+                        response.RequestMessage.RequestUri,
+                        (int)response.StatusCode,
+                        response.ReasonPhrase);
+
+                    return null;
+                }
+
+                var responseContentString = await response.Content.ReadAsStringAsync();
+
+                var result =
+                    JsonConvert.DeserializeObject<GetProjectReadRightsResponse>(
+                        responseContentString,
+                        this.jsonSerializerSettings);
+
+                return result;
+            }
         }
 
-        public async Task<AddProjectReadRightsForUserResponse> GrantReadRightsToUserAsync(string projectId,
+        public async Task<AddProjectReadRightsForUserResponse> GrantReadRightsToUserAsync(
+            string projectId,
             AddProjectReadRightsForUserRequest addProjectReadRightsForUserRequest)
         {
-            throw new System.NotImplementedException();
+            if (string.IsNullOrWhiteSpace(projectId))
+            {
+                throw new ArgumentNullException(nameof(projectId), $"{nameof(projectId)} can not be null, empty or whitespace.");
+            }
+
+            if (addProjectReadRightsForUserRequest == null)
+            {
+                throw new ArgumentNullException(nameof(addProjectReadRightsForUserRequest), $"{nameof(addProjectReadRightsForUserRequest)} can not be null.");
+            }
+
+            if (string.IsNullOrWhiteSpace(addProjectReadRightsForUserRequest.EmployeeId))
+            {
+                throw new ArgumentNullException(nameof(addProjectReadRightsForUserRequest), $"{nameof(addProjectReadRightsForUserRequest.EmployeeId)} can not be null, empty or whitespace.");
+            }
+
+            using (var client = this.httpClientFactory.CreateClient(BaseClientName))
+            {
+                var requestRoute = ApiEndpoints.ProjectsAccessRights.GrantReadRights(projectId);
+
+                var requestString = JsonConvert.SerializeObject(addProjectReadRightsForUserRequest, this.jsonSerializerSettings);
+                var requestContent = ApiHelpers.GetStringContent(requestString);
+
+                var response = await client.PutAsync(requestRoute, requestContent);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    this.logger.LogWarning(
+                        "Could not grant read rights to employee with id '{EmployeeId}' for project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
+                        addProjectReadRightsForUserRequest.EmployeeId,
+                        projectId,
+                        response.RequestMessage.RequestUri,
+                        (int)response.StatusCode,
+                        response.ReasonPhrase);
+
+                    return null;
+                }
+
+                var responseContentString = await response.Content.ReadAsStringAsync();
+
+                var result =
+                    JsonConvert.DeserializeObject<AddProjectReadRightsForUserResponse>(
+                        responseContentString,
+                        this.jsonSerializerSettings);
+
+                return result;
+            }
         }
 
         public async Task RevokeReadRightsFromUserAsync(string projectId, string employeeId)
         {
-            throw new System.NotImplementedException();
+            if (string.IsNullOrWhiteSpace(projectId))
+            {
+                throw new ArgumentNullException(nameof(projectId), $"{nameof(projectId)} can not be null, empty or whitespace.");
+            }
+
+            if (string.IsNullOrWhiteSpace(employeeId))
+            {
+                throw new ArgumentNullException(nameof(employeeId), $"{nameof(employeeId)} can not be null, empty or whitespace.");
+            }
+
+            using (var client = this.httpClientFactory.CreateClient(BaseClientName))
+            {
+                var requestRoute = ApiEndpoints.ProjectsAccessRights.RevokeReadRights(projectId, employeeId);
+
+                var response = await client.DeleteAsync(requestRoute);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    this.logger.LogWarning(
+                        "Could not revoke read rights from employee with id '{EmployeeId}' for project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
+                        employeeId,
+                        projectId,
+                        response.RequestMessage.RequestUri,
+                        (int)response.StatusCode,
+                        response.ReasonPhrase);
+                }
+            }
         }
 
         public async Task<GetProjectWriteRightsResponse> GetWriteRightsAsync(string projectId)
         {
-            throw new System.NotImplementedException();
+            if (string.IsNullOrWhiteSpace(projectId))
+            {
+                throw new ArgumentNullException(nameof(projectId), $"{nameof(projectId)} can not be null, empty or whitespace.");
+            }
+
+            using (var client = this.httpClientFactory.CreateClient(BaseClientName))
+            {
+                var requestRoute = ApiEndpoints.ProjectsAccessRights.GetWriteRights(projectId);
+
+                var response = await client.GetAsync(requestRoute);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    this.logger.LogWarning(
+                        "Could not fetch write rights for project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
+                        projectId,
+                        response.RequestMessage.RequestUri,
+                        (int)response.StatusCode,
+                        response.ReasonPhrase);
+
+                    return null;
+                }
+
+                var responseContentString = await response.Content.ReadAsStringAsync();
+
+                var result =
+                    JsonConvert.DeserializeObject<GetProjectWriteRightsResponse>(
+                        responseContentString,
+                        this.jsonSerializerSettings);
+
+                return result;
+            }
         }
 
-        public async Task<AddProjectWriteRightsForUserResponse> GrantWriteRightsToUserAsync(string projectId,
+        public async Task<AddProjectWriteRightsForUserResponse> GrantWriteRightsToUserAsync(
+            string projectId,
             AddProjectWriteRightsForUserRequest addProjectWriteRightsForUserRequest)
         {
-            throw new System.NotImplementedException();
+            if (string.IsNullOrWhiteSpace(projectId))
+            {
+                throw new ArgumentNullException(nameof(projectId), $"{nameof(projectId)} can not be null, empty or whitespace.");
+            }
+
+            if (addProjectWriteRightsForUserRequest == null)
+            {
+                throw new ArgumentNullException(nameof(addProjectWriteRightsForUserRequest), $"{nameof(addProjectWriteRightsForUserRequest)} can not be null.");
+            }
+
+            if (string.IsNullOrWhiteSpace(addProjectWriteRightsForUserRequest.EmployeeId))
+            {
+                throw new ArgumentNullException(nameof(addProjectWriteRightsForUserRequest), $"{nameof(addProjectWriteRightsForUserRequest.EmployeeId)} can not be null, empty or whitespace.");
+            }
+
+            using (var client = this.httpClientFactory.CreateClient(BaseClientName))
+            {
+                var requestRoute = ApiEndpoints.ProjectsAccessRights.GrantWriteRights(projectId);
+
+                var requestString = JsonConvert.SerializeObject(addProjectWriteRightsForUserRequest, this.jsonSerializerSettings);
+                var requestContent = ApiHelpers.GetStringContent(requestString);
+
+                var response = await client.PutAsync(requestRoute, requestContent);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    this.logger.LogWarning(
+                        "Could not grant write rights to employee with id '{EmployeeId}' for project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
+                        addProjectWriteRightsForUserRequest.EmployeeId,
+                        projectId,
+                        response.RequestMessage.RequestUri,
+                        (int)response.StatusCode,
+                        response.ReasonPhrase);
+
+                    return null;
+                }
+
+                var responseContentString = await response.Content.ReadAsStringAsync();
+
+                var result =
+                    JsonConvert.DeserializeObject<AddProjectWriteRightsForUserResponse>(
+                        responseContentString,
+                        this.jsonSerializerSettings);
+
+                return result;
+            }
         }
 
         public async Task RevokeWriteRightsFromUserAsync(string projectId, string employeeId)
         {
-            throw new System.NotImplementedException();
+            if (string.IsNullOrWhiteSpace(projectId))
+            {
+                throw new ArgumentNullException(nameof(projectId), $"{nameof(projectId)} can not be null, empty or whitespace.");
+            }
+
+            if (string.IsNullOrWhiteSpace(employeeId))
+            {
+                throw new ArgumentNullException(nameof(employeeId), $"{nameof(employeeId)} can not be null, empty or whitespace.");
+            }
+
+            using (var client = this.httpClientFactory.CreateClient(BaseClientName))
+            {
+                var requestRoute = ApiEndpoints.ProjectsAccessRights.RevokeWriteRights(projectId, employeeId);
+
+                var response = await client.DeleteAsync(requestRoute);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    this.logger.LogWarning(
+                        "Could not revoke write rights from employee with id '{EmployeeId}' for project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
+                        employeeId,
+                        projectId,
+                        response.RequestMessage.RequestUri,
+                        (int)response.StatusCode,
+                        response.ReasonPhrase);
+                }
+            }
         }
 
         public async Task<GetProjectStructureResponse> GetProjectStructureAsync(string projectId)
