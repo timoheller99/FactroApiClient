@@ -226,17 +226,129 @@ namespace FactroApiClient.Project
 
         public async Task<CreateProjectCommentResponse> CreateProjectCommentAsync(string projectId, CreateProjectCommentRequest createProjectCommentRequest)
         {
-            throw new System.NotImplementedException();
+            if (string.IsNullOrWhiteSpace(projectId))
+            {
+                throw new ArgumentNullException(nameof(projectId), $"{nameof(projectId)} can not be null, empty or whitespace.");
+            }
+
+            if (createProjectCommentRequest == null)
+            {
+                throw new ArgumentNullException(nameof(createProjectCommentRequest), $"{nameof(createProjectCommentRequest)} can not be null.");
+            }
+
+            if (createProjectCommentRequest.Text == null)
+            {
+                throw new ArgumentNullException(nameof(createProjectCommentRequest), $"{nameof(createProjectCommentRequest.Text)} can not be null.");
+            }
+
+            using (var client = this.httpClientFactory.CreateClient(BaseClientName))
+            {
+                var requestRoute = ApiEndpoints.ProjectComment.Create(projectId);
+
+                var requestString = JsonConvert.SerializeObject(createProjectCommentRequest, this.jsonSerializerSettings);
+                var requestContent = ApiHelpers.GetStringContent(requestString);
+
+                var response = await client.PostAsync(requestRoute, requestContent);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    this.logger.LogWarning(
+                        "Could not create comment in project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
+                        projectId,
+                        response.RequestMessage.RequestUri,
+                        (int)response.StatusCode,
+                        response.ReasonPhrase);
+
+                    return null;
+                }
+
+                var responseContentString = await response.Content.ReadAsStringAsync();
+
+                var result =
+                    JsonConvert.DeserializeObject<CreateProjectCommentResponse>(
+                        responseContentString,
+                        this.jsonSerializerSettings);
+
+                return result;
+            }
         }
 
         public async Task<IEnumerable<GetProjectCommentPayload>> GetProjectCommentsAsync(string projectId)
         {
-            throw new System.NotImplementedException();
+            if (string.IsNullOrWhiteSpace(projectId))
+            {
+                throw new ArgumentNullException(nameof(projectId), $"{nameof(projectId)} can not be null, empty or whitespace.");
+            }
+
+            using (var client = this.httpClientFactory.CreateClient(BaseClientName))
+            {
+                var requestRoute = ApiEndpoints.ProjectComment.GetAll(projectId);
+
+                var response = await client.GetAsync(requestRoute);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    this.logger.LogWarning(
+                        "Could not fetch comments of project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
+                        projectId,
+                        response.RequestMessage.RequestUri,
+                        (int)response.StatusCode,
+                        response.ReasonPhrase);
+
+                    return null;
+                }
+
+                var responseContentString = await response.Content.ReadAsStringAsync();
+
+                var result =
+                    JsonConvert.DeserializeObject<IEnumerable<GetProjectCommentPayload>>(
+                        responseContentString,
+                        this.jsonSerializerSettings);
+
+                return result;
+            }
         }
 
         public async Task<DeleteProjectCommentResponse> DeleteProjectCommentAsync(string projectId, string commentId)
         {
-            throw new System.NotImplementedException();
+            if (string.IsNullOrWhiteSpace(projectId))
+            {
+                throw new ArgumentNullException(nameof(projectId), $"{nameof(projectId)} can not be null, empty or whitespace.");
+            }
+
+            if (string.IsNullOrWhiteSpace(commentId))
+            {
+                throw new ArgumentNullException(nameof(projectId), $"{nameof(projectId)} can not be null, empty or whitespace.");
+            }
+
+            using (var client = this.httpClientFactory.CreateClient(BaseClientName))
+            {
+                var requestRoute = ApiEndpoints.ProjectComment.Delete(projectId, commentId);
+
+                var response = await client.DeleteAsync(requestRoute);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    this.logger.LogWarning(
+                        "Could not delete comment with id '{CommentId}' of project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
+                        commentId,
+                        projectId,
+                        response.RequestMessage.RequestUri,
+                        (int)response.StatusCode,
+                        response.ReasonPhrase);
+
+                    return null;
+                }
+
+                var responseContentString = await response.Content.ReadAsStringAsync();
+
+                var result =
+                    JsonConvert.DeserializeObject<DeleteProjectCommentResponse>(
+                        responseContentString,
+                        this.jsonSerializerSettings);
+
+                return result;
+            }
         }
 
         public async Task SetProjectCompanyAsync(string projectId, SetProjectCompanyAssociationRequest setProjectCompanyAssociationRequest)
