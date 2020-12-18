@@ -22,6 +22,13 @@ namespace FactroApiClient.UnitTests.ProjectApi
             new object[] { " " },
         };
 
+        public static readonly IEnumerable<object[]> InvalidProjectCommentIds = new List<object[]>
+        {
+            new object[] { null },
+            new object[] { string.Empty },
+            new object[] { " " },
+        };
+
         public ProjectApi GetProjectApi(HttpResponseMessage response = null)
         {
             var loggerMock = this.GetLoggerMock();
