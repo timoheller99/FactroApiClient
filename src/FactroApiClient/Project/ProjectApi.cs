@@ -416,12 +416,65 @@ namespace FactroApiClient.Project
 
         public async Task SetProjectContactAsync(string projectId, SetProjectContactAssociationRequest setProjectContactAssociationRequest)
         {
-            throw new System.NotImplementedException();
+            if (string.IsNullOrWhiteSpace(projectId))
+            {
+                throw new ArgumentNullException(nameof(projectId), $"{nameof(projectId)} can not be null, empty or whitespace.");
+            }
+
+            if (setProjectContactAssociationRequest == null)
+            {
+                throw new ArgumentNullException(nameof(setProjectContactAssociationRequest), $"{nameof(setProjectContactAssociationRequest)} can not be null.");
+            }
+
+            if (string.IsNullOrWhiteSpace(setProjectContactAssociationRequest.ContactId))
+            {
+                throw new ArgumentNullException(nameof(setProjectContactAssociationRequest), $"{nameof(setProjectContactAssociationRequest.ContactId)} can not be null, empty or whitespace.");
+            }
+
+            using (var client = this.httpClientFactory.CreateClient(BaseClientName))
+            {
+                var requestRoute = ApiEndpoints.ProjectAssociation.SetContact(projectId);
+
+                var requestString = JsonConvert.SerializeObject(setProjectContactAssociationRequest, this.jsonSerializerSettings);
+                var requestContent = ApiHelpers.GetStringContent(requestString);
+
+                var response = await client.PutAsync(requestRoute, requestContent);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    this.logger.LogWarning(
+                        "Could not set contact of project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
+                        projectId,
+                        response.RequestMessage.RequestUri,
+                        (int)response.StatusCode,
+                        response.ReasonPhrase);
+                }
+            }
         }
 
         public async Task RemoveProjectContactAsync(string projectId)
         {
-            throw new System.NotImplementedException();
+            if (string.IsNullOrWhiteSpace(projectId))
+            {
+                throw new ArgumentNullException(nameof(projectId), $"{nameof(projectId)} can not be null, empty or whitespace.");
+            }
+
+            using (var client = this.httpClientFactory.CreateClient(BaseClientName))
+            {
+                var requestRoute = ApiEndpoints.ProjectAssociation.RemoveContact(projectId);
+
+                var response = await client.DeleteAsync(requestRoute);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    this.logger.LogWarning(
+                        "Could not remove contact from project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
+                        projectId,
+                        response.RequestMessage.RequestUri,
+                        (int)response.StatusCode,
+                        response.ReasonPhrase);
+                }
+            }
         }
 
         public async Task<CreateProjectDocumentResponse> CreateProjectDocumentAsync(string projectId, byte[] data)
