@@ -2,6 +2,11 @@ namespace FactroApiClient.Project.Contracts.Base
 {
     public class CreateProjectRequest
     {
+        public CreateProjectRequest(string title)
+        {
+            this.Title = title;
+        }
+
         public string Description { get; set; }
 
         public string Title { get; set; }
