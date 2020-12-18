@@ -722,7 +722,7 @@ namespace FactroApiClient.Package
             throw new System.NotImplementedException();
         }
 
-        public async Task<GetPackageReadRightsResponse> GetReadRightsAsync(string projectId, string packageId)
+        public async Task<IEnumerable<GetPackageReadRightsResponse>> GetReadRightsAsync(string projectId, string packageId)
         {
             if (string.IsNullOrWhiteSpace(projectId))
             {
@@ -756,7 +756,7 @@ namespace FactroApiClient.Package
                 var responseContentString = await response.Content.ReadAsStringAsync();
 
                 var result =
-                    JsonConvert.DeserializeObject<GetPackageReadRightsResponse>(
+                    JsonConvert.DeserializeObject<IEnumerable<GetPackageReadRightsResponse>>(
                         responseContentString,
                         this.jsonSerializerSettings);
 
@@ -860,7 +860,7 @@ namespace FactroApiClient.Package
             }
         }
 
-        public async Task<GetPackageWriteRightsResponse> GetWriteRightsAsync(string projectId, string packageId)
+        public async Task<IEnumerable<GetPackageWriteRightsResponse>> GetWriteRightsAsync(string projectId, string packageId)
         {
             if (string.IsNullOrWhiteSpace(projectId))
             {
@@ -894,7 +894,7 @@ namespace FactroApiClient.Package
                 var responseContentString = await response.Content.ReadAsStringAsync();
 
                 var result =
-                    JsonConvert.DeserializeObject<GetPackageWriteRightsResponse>(
+                    JsonConvert.DeserializeObject<IEnumerable<GetPackageWriteRightsResponse>>(
                         responseContentString,
                         this.jsonSerializerSettings);
 
