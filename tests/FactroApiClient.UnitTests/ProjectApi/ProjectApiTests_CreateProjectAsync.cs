@@ -16,7 +16,7 @@ namespace FactroApiClient.UnitTests.ProjectApi
     public partial class ProjectApiTests
     {
         [Fact]
-        public async Task CreateProject_ValidModel_ShouldReturnCreatedProject()
+        public async Task CreateProject_ValidRequest_ShouldReturnCreatedProject()
         {
             // Arrange
             var title = Guid.NewGuid().ToString();
@@ -50,7 +50,7 @@ namespace FactroApiClient.UnitTests.ProjectApi
         }
 
         [Fact]
-        public async Task CreateProject_NullModel_ShouldThrowArgumentNullException()
+        public async Task CreateProject_NullRequestModel_ShouldThrowArgumentNullException()
         {
             // Arrange
             var projectApi = this.fixture.GetProjectApi();
@@ -63,7 +63,7 @@ namespace FactroApiClient.UnitTests.ProjectApi
         }
 
         [Fact]
-        public async Task CreateProjectAsync_NullTitle_ShouldThrowArgumentNullException()
+        public async Task CreateProjectAsync_NullRequestModelTitle_ShouldThrowArgumentNullException()
         {
             // Arrange
             var createProjectRequest = new CreateProjectRequest(title: null);
@@ -77,8 +77,8 @@ namespace FactroApiClient.UnitTests.ProjectApi
             await act.Should().ThrowAsync<ArgumentNullException>();
         }
 
-        [Fact]
-        public async Task CreateProject_UnsuccessfulRequest_ShouldReturnNull()
+        [Fact(Skip = "Throw of exception is not implemented yet.")]
+        public async Task CreateProject_BadRequest_ShouldReturnProjectApiException()
         {
             // Arrange
             var title = Guid.NewGuid().ToString();

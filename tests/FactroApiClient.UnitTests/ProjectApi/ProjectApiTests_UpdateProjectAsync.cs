@@ -63,6 +63,22 @@ namespace FactroApiClient.UnitTests.ProjectApi
             }
         }
 
+        [Theory]
+        [MemberData(nameof(ProjectApiTestFixture.InvalidProjectIds), MemberType = typeof(ProjectApiTestFixture))]
+        public async Task UpdateProjectAsync_InvalidProjectId_ShouldThrowArgumentNullException(string projectId)
+        {
+            // Arrange
+            var projectApi = this.fixture.GetProjectApi();
+
+            var updateProjectRequest = new UpdateProjectRequest();
+
+            // Act
+            Func<Task> act = async () => await projectApi.UpdateProjectAsync(projectId, updateProjectRequest);
+
+            // Assert
+            await act.Should().ThrowAsync<ArgumentNullException>();
+        }
+
         [Fact]
         public async Task UpdateProjectAsync_NullRequestModel_ShouldReturnUpdatedProject()
         {
@@ -81,24 +97,8 @@ namespace FactroApiClient.UnitTests.ProjectApi
             await act.Should().ThrowAsync<ArgumentNullException>();
         }
 
-        [Theory]
-        [MemberData(nameof(ProjectApiTestFixture.InvalidProjectIds), MemberType = typeof(ProjectApiTestFixture))]
-        public async Task UpdateProjectAsync_InvalidProjectId_ShouldThrowArgumentNullException(string projectId)
-        {
-            // Arrange
-            var projectApi = this.fixture.GetProjectApi();
-
-            var updateProjectRequest = new UpdateProjectRequest();
-
-            // Act
-            Func<Task> act = async () => await projectApi.UpdateProjectAsync(projectId, updateProjectRequest);
-
-            // Assert
-            await act.Should().ThrowAsync<ArgumentNullException>();
-        }
-
-        [Fact]
-        public async Task UpdateProjectAsync_UnsuccessfulRequest_ShouldReturnNull()
+        [Fact(Skip = "Throw of exception is not implemented yet.")]
+        public async Task UpdateProjectAsync_BadRequest_ShouldReturnProjectApiException()
         {
             // Arrange
             var projectId = Guid.NewGuid().ToString();
@@ -116,15 +116,11 @@ namespace FactroApiClient.UnitTests.ProjectApi
 
             var projectApi = this.fixture.GetProjectApi(expectedResponse);
 
-            var updateProjectResponse = new UpdateProjectResponse();
-
             // Act
-            Func<Task> act = async () => updateProjectResponse = await projectApi.UpdateProjectAsync(projectId, updateProjectRequest);
+            Func<Task> act = async () => await projectApi.UpdateProjectAsync(projectId, updateProjectRequest);
 
             // Assert
-            await act.Should().NotThrowAsync();
-
-            updateProjectResponse.Should().BeNull();
+            await act.Should().ThrowAsync<Exception>();
         }
     }
 }
