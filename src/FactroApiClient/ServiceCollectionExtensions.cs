@@ -8,6 +8,7 @@ namespace FactroApiClient
     using FactroApiClient.Company;
     using FactroApiClient.Contact;
     using FactroApiClient.Package;
+    using FactroApiClient.Project;
 
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -24,6 +25,7 @@ namespace FactroApiClient
             serviceCollection.AddTransient<ICompanyApi, CompanyApi>();
             serviceCollection.AddTransient<IContactApi, ContactApi>();
             serviceCollection.AddTransient<IPackageApi, PackageApi>();
+            serviceCollection.AddTransient<IProjectApi, ProjectApi>();
         }
 
         private static void RegisterHttpClient(this IServiceCollection serviceCollection, IConfigurationRoot configurationRoot)
