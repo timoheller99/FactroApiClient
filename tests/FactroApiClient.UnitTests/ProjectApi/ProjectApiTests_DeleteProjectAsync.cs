@@ -16,7 +16,7 @@ namespace FactroApiClient.UnitTests.ProjectApi
     public partial class ProjectApiTests
     {
         [Fact]
-        public async Task DeleteProjectAsync_ValidId_ShouldReturnDeletedProject()
+        public async Task DeleteProjectAsync_ValidRequest_ShouldReturnDeletedProject()
         {
             // Arrange
             var existingProject = new GetProjectPayload
@@ -59,8 +59,8 @@ namespace FactroApiClient.UnitTests.ProjectApi
             await act.Should().ThrowAsync<ArgumentNullException>();
         }
 
-        [Fact]
-        public async Task DeleteProjectAsync_UnsuccessfulRequest_ShouldReturnNull()
+        [Fact(Skip = "Throw of exception is not implemented yet.")]
+        public async Task DeleteProjectAsync_BadRequest_ShouldReturnProjectApiException()
         {
             // Arrange
             var expectedResponse = new HttpResponseMessage
@@ -74,15 +74,11 @@ namespace FactroApiClient.UnitTests.ProjectApi
 
             var projectApi = this.fixture.GetProjectApi(expectedResponse);
 
-            var deleteProjectResponse = new DeleteProjectResponse();
-
             // Act
-            Func<Task> act = async () => deleteProjectResponse = await projectApi.DeleteProjectAsync(Guid.NewGuid().ToString());
+            Func<Task> act = async () => await projectApi.DeleteProjectAsync(Guid.NewGuid().ToString());
 
             // Assert
-            await act.Should().NotThrowAsync();
-
-            deleteProjectResponse.Should().BeNull();
+            await act.Should().ThrowAsync<Exception>();
         }
     }
 }

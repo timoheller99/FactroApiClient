@@ -16,7 +16,7 @@ namespace FactroApiClient.UnitTests.ProjectApi
     public partial class ProjectApiTests
     {
         [Fact]
-        public async Task GetProjectAsync_ValidId_ShouldReturnExpectedProject()
+        public async Task GetProjectByIdAsync_ValidRequest_ShouldReturnExpectedProject()
         {
             // Arrange
             var existingProject = new GetProjectPayload
@@ -47,7 +47,7 @@ namespace FactroApiClient.UnitTests.ProjectApi
 
         [Theory]
         [MemberData(nameof(ProjectApiTestFixture.InvalidProjectIds), MemberType = typeof(ProjectApiTestFixture))]
-        public async Task GetProjectAsync_InvalidProjectId_ShouldThrowArgumentNullException(string projectId)
+        public async Task GetProjectByIdAsync_InvalidProjectId_ShouldThrowArgumentNullException(string projectId)
         {
             // Arrange
             var projectApi = this.fixture.GetProjectApi();
@@ -59,8 +59,8 @@ namespace FactroApiClient.UnitTests.ProjectApi
             await act.Should().ThrowAsync<ArgumentNullException>();
         }
 
-        [Fact]
-        public async Task GetProjectAsync_UnsuccessfulRequest_ShouldReturnNull()
+        [Fact(Skip = "Throw of exception is not implemented yet.")]
+        public async Task GetProjectByIdAsync_BadRequest_ShouldReturnProjectApiException()
         {
             // Arrange
             var projectId = Guid.NewGuid().ToString();
@@ -76,15 +76,11 @@ namespace FactroApiClient.UnitTests.ProjectApi
 
             var projectApi = this.fixture.GetProjectApi(expectedResponse);
 
-            var getProjectByIdResponse = new GetProjectByIdResponse();
-
             // Act
-            Func<Task> act = async () => getProjectByIdResponse = await projectApi.GetProjectByIdAsync(projectId);
+            Func<Task> act = async () => await projectApi.GetProjectByIdAsync(projectId);
 
             // Assert
-            await act.Should().NotThrowAsync();
-
-            getProjectByIdResponse.Should().BeNull();
+            await act.Should().ThrowAsync<Exception>();
         }
     }
 }

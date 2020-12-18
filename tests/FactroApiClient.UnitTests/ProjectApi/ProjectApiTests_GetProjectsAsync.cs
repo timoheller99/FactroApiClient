@@ -53,8 +53,8 @@ namespace FactroApiClient.UnitTests.ProjectApi
             getProjectsResponse.Should().HaveCount(existingProjectsList.Count);
         }
 
-        [Fact]
-        public async Task GetProjectsAsync_UnsuccessfulRequest_ShouldReturnNull()
+        [Fact(Skip = "Throw of exception is not implemented yet.")]
+        public async Task GetProjectsAsync_BadRequest_ShouldReturnProjectApiException()
         {
             // Arrange
             var expectedResponse = new HttpResponseMessage
@@ -68,15 +68,11 @@ namespace FactroApiClient.UnitTests.ProjectApi
 
             var projectApi = this.fixture.GetProjectApi(expectedResponse);
 
-            var getProjectsResponse = new List<GetProjectPayload>();
-
             // Act
-            Func<Task> act = async () => getProjectsResponse = (await projectApi.GetProjectsAsync())?.ToList();
+            Func<Task> act = async () => await projectApi.GetProjectsAsync();
 
             // Assert
-            await act.Should().NotThrowAsync();
-
-            getProjectsResponse.Should().BeNull();
+            await act.Should().ThrowAsync<Exception>();
         }
     }
 }
