@@ -1,8 +1,11 @@
 namespace FactroApiClient.Project
 {
+    using System;
     using System.Collections.Generic;
+    using System.Net.Http;
     using System.Threading.Tasks;
 
+    using FactroApiClient.Endpoints;
     using FactroApiClient.Project.Contracts.AccessRights;
     using FactroApiClient.Project.Contracts.Association;
     using FactroApiClient.Project.Contracts.Base;
@@ -11,31 +14,214 @@ namespace FactroApiClient.Project
     using FactroApiClient.Project.Contracts.Structure;
     using FactroApiClient.Project.Contracts.Tag;
 
+    using Microsoft.Extensions.Logging;
+
+    using Newtonsoft.Json;
+
     public class ProjectApi : IProjectApi
     {
+        private const string BaseClientName = "BaseClient";
+
+        private readonly ILogger<ProjectApi> logger;
+
+        private readonly IHttpClientFactory httpClientFactory;
+
+        private readonly JsonSerializerSettings jsonSerializerSettings;
+
+        public ProjectApi(ILogger<ProjectApi> logger, IHttpClientFactory httpClientFactory)
+        {
+            this.logger = logger;
+            this.httpClientFactory = httpClientFactory;
+            this.jsonSerializerSettings = SerializerSettings.JsonSerializerSettings;
+        }
+
         public async Task<CreateProjectResponse> CreateProjectAsync(CreateProjectRequest createProjectRequest)
         {
-            throw new System.NotImplementedException();
+            if (createProjectRequest == null)
+            {
+                throw new ArgumentNullException(nameof(createProjectRequest), $"{nameof(createProjectRequest)} can not be null.");
+            }
+
+            if (createProjectRequest.Title == null)
+            {
+                throw new ArgumentNullException(nameof(createProjectRequest), $"{nameof(createProjectRequest.Title)} can not be null.");
+            }
+
+            using (var client = this.httpClientFactory.CreateClient(BaseClientName))
+            {
+                var requestRoute = ApiEndpoints.Project.Create();
+
+                var requestString = JsonConvert.SerializeObject(createProjectRequest, this.jsonSerializerSettings);
+                var requestContent = ApiHelpers.GetStringContent(requestString);
+
+                var response = await client.PostAsync(requestRoute, requestContent);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    this.logger.LogWarning(
+                        "Could not create project: '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
+                        response.RequestMessage.RequestUri,
+                        (int)response.StatusCode,
+                        response.ReasonPhrase);
+
+                    return null;
+                }
+
+                var responseContentString = await response.Content.ReadAsStringAsync();
+
+                var result =
+                    JsonConvert.DeserializeObject<CreateProjectResponse>(
+                        responseContentString,
+                        this.jsonSerializerSettings);
+
+                return result;
+            }
         }
 
         public async Task<IEnumerable<GetProjectPayload>> GetProjectsAsync()
         {
-            throw new System.NotImplementedException();
+            using (var client = this.httpClientFactory.CreateClient(BaseClientName))
+            {
+                var requestRoute = ApiEndpoints.Project.GetAll();
+
+                var response = await client.GetAsync(requestRoute);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    this.logger.LogWarning(
+                        "Could not fetch projects: '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
+                        response.RequestMessage.RequestUri,
+                        (int)response.StatusCode,
+                        response.ReasonPhrase);
+
+                    return null;
+                }
+
+                var responseContentString = await response.Content.ReadAsStringAsync();
+
+                var result =
+                    JsonConvert.DeserializeObject<IEnumerable<GetProjectPayload>>(
+                        responseContentString,
+                        this.jsonSerializerSettings);
+
+                return result;
+            }
         }
 
         public async Task<GetProjectByIdResponse> GetProjectByIdAsync(string projectId)
         {
-            throw new System.NotImplementedException();
+            if (string.IsNullOrWhiteSpace(projectId))
+            {
+                throw new ArgumentNullException(nameof(projectId), $"{nameof(projectId)} can not be null, empty or whitespace.");
+            }
+
+            using (var client = this.httpClientFactory.CreateClient(BaseClientName))
+            {
+                var requestRoute = ApiEndpoints.Project.GetById(projectId);
+
+                var response = await client.GetAsync(requestRoute);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    this.logger.LogWarning(
+                        "Could not fetch project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
+                        projectId,
+                        response.RequestMessage.RequestUri,
+                        (int)response.StatusCode,
+                        response.ReasonPhrase);
+
+                    return null;
+                }
+
+                var responseContentString = await response.Content.ReadAsStringAsync();
+
+                var result =
+                    JsonConvert.DeserializeObject<GetProjectByIdResponse>(
+                        responseContentString,
+                        this.jsonSerializerSettings);
+
+                return result;
+            }
         }
 
         public async Task<UpdateProjectResponse> UpdateProjectAsync(string projectId, UpdateProjectRequest updateProjectRequest)
         {
-            throw new System.NotImplementedException();
+            if (string.IsNullOrWhiteSpace(projectId))
+            {
+                throw new ArgumentNullException(nameof(projectId), $"{nameof(projectId)} can not be null, empty or whitespace.");
+            }
+
+            if (updateProjectRequest == null)
+            {
+                throw new ArgumentNullException(nameof(updateProjectRequest), $"{nameof(updateProjectRequest)} can not be null.");
+            }
+
+            using (var client = this.httpClientFactory.CreateClient(BaseClientName))
+            {
+                var requestRoute = ApiEndpoints.Project.Update(projectId);
+
+                var requestString = JsonConvert.SerializeObject(updateProjectRequest, this.jsonSerializerSettings);
+                var requestContent = ApiHelpers.GetStringContent(requestString);
+
+                var response = await client.PutAsync(requestRoute, requestContent);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    this.logger.LogWarning(
+                        "Could not update project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
+                        projectId,
+                        response.RequestMessage.RequestUri,
+                        (int)response.StatusCode,
+                        response.ReasonPhrase);
+
+                    return null;
+                }
+
+                var responseContentString = await response.Content.ReadAsStringAsync();
+
+                var result =
+                    JsonConvert.DeserializeObject<UpdateProjectResponse>(
+                        responseContentString,
+                        this.jsonSerializerSettings);
+
+                return result;
+            }
         }
 
         public async Task<DeleteProjectResponse> DeleteProjectAsync(string projectId)
         {
-            throw new System.NotImplementedException();
+            if (string.IsNullOrWhiteSpace(projectId))
+            {
+                throw new ArgumentNullException(nameof(projectId), $"{nameof(projectId)} can not be null, empty or whitespace.");
+            }
+
+            using (var client = this.httpClientFactory.CreateClient(BaseClientName))
+            {
+                var requestRoute = ApiEndpoints.Project.Delete(projectId);
+
+                var response = await client.DeleteAsync(requestRoute);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    this.logger.LogWarning(
+                        "Could not delete project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
+                        projectId,
+                        response.RequestMessage.RequestUri,
+                        (int)response.StatusCode,
+                        response.ReasonPhrase);
+
+                    return null;
+                }
+
+                var responseContentString = await response.Content.ReadAsStringAsync();
+
+                var result =
+                    JsonConvert.DeserializeObject<DeleteProjectResponse>(
+                        responseContentString,
+                        this.jsonSerializerSettings);
+
+                return result;
+            }
         }
 
         public async Task<CreateProjectCommentResponse> CreateProjectCommentAsync(string projectId, CreateProjectCommentRequest createProjectCommentRequest)
