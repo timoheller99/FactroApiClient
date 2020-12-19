@@ -902,7 +902,7 @@ namespace FactroApiClient.Package
             }
         }
 
-        public async Task<AddPackageWriteRightsForUserResponse> GrantWriteRightsToUserAsync(
+        public async Task<AddPackageWriteRightsForUserResponse> GrantPackageWriteRightsToUserAsync(
             string projectId,
             string packageId,
             AddPackageWriteRightsForUserRequest addPackageWriteRightsForUserRequest)
