@@ -860,7 +860,7 @@ namespace FactroApiClient.Package
             }
         }
 
-        public async Task<IEnumerable<GetPackageWriteRightsResponse>> GetWriteRightsAsync(string projectId, string packageId)
+        public async Task<IEnumerable<GetPackageWriteRightsResponse>> GetPackageWriteRightsAsync(string projectId, string packageId)
         {
             if (string.IsNullOrWhiteSpace(projectId))
             {

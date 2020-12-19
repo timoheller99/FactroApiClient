@@ -60,7 +60,7 @@ namespace FactroApiClient.Package
 
         public Task RevokePackageReadRightsFromUserAsync(string projectId, string packageId, string employeeId);
 
-        public Task<IEnumerable<GetPackageWriteRightsResponse>> GetWriteRightsAsync(string projectId, string packageId);
+        public Task<IEnumerable<GetPackageWriteRightsResponse>> GetPackageWriteRightsAsync(string projectId, string packageId);
 
         public Task<AddPackageWriteRightsForUserResponse> GrantWriteRightsToUserAsync(string projectId, string packageId, AddPackageWriteRightsForUserRequest addPackageWriteRightsForUserRequest);
 
