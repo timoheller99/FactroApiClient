@@ -44,7 +44,7 @@ namespace FactroApiClient.Package
 
         public Task MovePackageIntoPackageAsync(string projectId, string packageId, SetPackageAssociationRequest setPackageAssociationRequest);
 
-        public Task MoveToProjectAsync(string projectId, string packageId, SetProjectAssociationRequest setProjectAssociationRequest);
+        public Task MovePackageIntoProjectAsync(string projectId, string packageId, SetProjectAssociationRequest setProjectAssociationRequest);
 
         // Documents
         public Task<IEnumerable<GetPackageDocumentPayload>> GetDocumentsAsync(string projectId, string packageId);

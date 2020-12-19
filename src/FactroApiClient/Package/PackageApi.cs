@@ -662,7 +662,7 @@ namespace FactroApiClient.Package
             }
         }
 
-        public async Task MoveToProjectAsync(string projectId, string packageId, SetProjectAssociationRequest setProjectAssociationRequest)
+        public async Task MovePackageIntoProjectAsync(string projectId, string packageId, SetProjectAssociationRequest setProjectAssociationRequest)
         {
             if (string.IsNullOrWhiteSpace(projectId))
             {
