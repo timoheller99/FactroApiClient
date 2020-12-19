@@ -146,6 +146,11 @@ namespace FactroApiClient.Company
                 throw new ArgumentNullException(nameof(companyId), $"{nameof(companyId)} can not be null, empty or whitespace.");
             }
 
+            if (updateCompanyRequest == null)
+            {
+                throw new ArgumentNullException(nameof(updateCompanyRequest), $"{nameof(updateCompanyRequest)} can not be null.");
+            }
+
             using (var client = this.httpClientFactory.CreateClient(BaseClientName))
             {
                 var requestRoute = ApiEndpoints.Company.Update(companyId);
