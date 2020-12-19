@@ -717,7 +717,7 @@ namespace FactroApiClient.Package
             throw new System.NotImplementedException();
         }
 
-        public async Task<DeletePackageDocumentResponse> DeleteDocumentAsync(string projectId, string packageId, string documentId)
+        public async Task<DeletePackageDocumentResponse> DeletePackageDocumentAsync(string projectId, string packageId, string documentId)
         {
             throw new System.NotImplementedException();
         }

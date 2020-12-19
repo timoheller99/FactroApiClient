@@ -51,7 +51,7 @@ namespace FactroApiClient.Package
 
         public Task<GetPackageDocumentPayload> UploadPackageDocumentAsync(string projectId, string packageId, byte[] data);
 
-        public Task<DeletePackageDocumentResponse> DeleteDocumentAsync(string projectId, string packageId, string documentId);
+        public Task<DeletePackageDocumentResponse> DeletePackageDocumentAsync(string projectId, string packageId, string documentId);
 
         // Access Rights
         public Task<IEnumerable<GetPackageReadRightsResponse>> GetReadRightsAsync(string projectId, string packageId);
