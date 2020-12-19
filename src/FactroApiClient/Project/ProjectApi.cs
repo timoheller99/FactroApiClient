@@ -580,7 +580,7 @@ namespace FactroApiClient.Project
             }
         }
 
-        public async Task RevokeReadRightsFromUserAsync(string projectId, string employeeId)
+        public async Task RevokeProjectReadRightsFromUserAsync(string projectId, string employeeId)
         {
             if (string.IsNullOrWhiteSpace(projectId))
             {
