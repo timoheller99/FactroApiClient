@@ -8,6 +8,7 @@ namespace FactroApiClient.UnitTests.ContactApi
     using System.Threading.Tasks;
 
     using FactroApiClient.Contact.Contracts;
+    using FactroApiClient.SharedContracts;
 
     using FluentAssertions;
 
@@ -53,7 +54,7 @@ namespace FactroApiClient.UnitTests.ContactApi
             getContactsResponse.Should().HaveCount(existingContactsList.Count);
         }
 
-        [Fact(Skip = "Throw of exception is not implemented yet.")]
+        [Fact]
         public async Task GetContactsAsync_UnsuccessfulRequest_ShouldThrowContactApiException()
         {
             // Arrange
@@ -72,7 +73,7 @@ namespace FactroApiClient.UnitTests.ContactApi
             Func<Task> act = async () => await contactApi.GetContactsAsync();
 
             // Assert
-            await act.Should().ThrowAsync<Exception>();
+            await act.Should().ThrowAsync<FactroApiException>();
         }
     }
 }

@@ -8,6 +8,7 @@ namespace FactroApiClient.UnitTests.CompanyApi
     using System.Threading.Tasks;
 
     using FactroApiClient.Company.Contracts.CompanyTag;
+    using FactroApiClient.SharedContracts;
 
     using FluentAssertions;
 
@@ -53,7 +54,7 @@ namespace FactroApiClient.UnitTests.CompanyApi
             getCompanyTagsResponse.Should().BeEquivalentTo(existingCompaniesList);
         }
 
-        [Fact(Skip = "Throw of exception is not implemented yet.")]
+        [Fact]
         public async Task GetCompanyTagsAsync_UnsuccessfulRequest_ShouldThrowCompanyApiException()
         {
             // Arrange
@@ -72,7 +73,7 @@ namespace FactroApiClient.UnitTests.CompanyApi
             Func<Task> act = async () => await companyApi.GetCompanyTagsAsync();
 
             // Assert
-            await act.Should().ThrowAsync<Exception>();
+            await act.Should().ThrowAsync<FactroApiException>();
         }
     }
 }

@@ -7,6 +7,7 @@ namespace FactroApiClient.UnitTests.ProjectApi
 
     using FactroApiClient.Project.Contracts.Base;
     using FactroApiClient.Project.Contracts.Tag;
+    using FactroApiClient.SharedContracts;
 
     using FluentAssertions;
 
@@ -77,7 +78,7 @@ namespace FactroApiClient.UnitTests.ProjectApi
             await act.Should().ThrowAsync<ArgumentNullException>();
         }
 
-        [Fact(Skip = "Throw of exception is not implemented yet.")]
+        [Fact]
         public async Task RemoveTagFromProjectAsync_BadRequest_ShouldThrowProjectApiException()
         {
             // Arrange
@@ -99,7 +100,7 @@ namespace FactroApiClient.UnitTests.ProjectApi
             Func<Task> act = async () => await projectApi.RemoveTagFromProjectAsync(projectId, projectTagId);
 
             // Assert
-            await act.Should().ThrowAsync<Exception>();
+            await act.Should().ThrowAsync<FactroApiException>();
         }
     }
 }

@@ -8,6 +8,7 @@ namespace FactroApiClient.UnitTests.AppointmentApi
     using System.Threading.Tasks;
 
     using FactroApiClient.Appointment.Contracts;
+    using FactroApiClient.SharedContracts;
 
     using FluentAssertions;
 
@@ -53,7 +54,7 @@ namespace FactroApiClient.UnitTests.AppointmentApi
             getAppointmentsResponse.Should().HaveCount(existingAppointmentsList.Count);
         }
 
-        [Fact(Skip = "Throw of exception is not implemented yet.")]
+        [Fact]
         public async Task GetAppointmentsAsync_UnsuccessfulRequest_ShouldThrowAppointmentApiException()
         {
             // Arrange
@@ -72,7 +73,7 @@ namespace FactroApiClient.UnitTests.AppointmentApi
             Func<Task> act = async () => await appointmentApi.GetAppointmentsAsync();
 
             // Assert
-            await act.Should().ThrowAsync<Exception>();
+            await act.Should().ThrowAsync<FactroApiException>();
         }
     }
 }
