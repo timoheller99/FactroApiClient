@@ -528,7 +528,7 @@ namespace FactroApiClient.Project
             }
         }
 
-        public async Task<AddProjectReadRightsForUserResponse> GrantReadRightsToUserAsync(
+        public async Task<AddProjectReadRightsForUserResponse> GrantProjectReadRightsToUserAsync(
             string projectId,
             AddProjectReadRightsForUserRequest addProjectReadRightsForUserRequest)
         {

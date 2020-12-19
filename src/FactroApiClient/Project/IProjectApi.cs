@@ -50,7 +50,7 @@ namespace FactroApiClient.Project
         // Access Rights
         public Task<IEnumerable<GetProjectReadRightsResponse>> GetProjectReadRightsAsync(string projectId);
 
-        public Task<AddProjectReadRightsForUserResponse> GrantReadRightsToUserAsync(string projectId, AddProjectReadRightsForUserRequest addProjectReadRightsForUserRequest);
+        public Task<AddProjectReadRightsForUserResponse> GrantProjectReadRightsToUserAsync(string projectId, AddProjectReadRightsForUserRequest addProjectReadRightsForUserRequest);
 
         public Task RevokeReadRightsFromUserAsync(string projectId, string employeeId);
 
