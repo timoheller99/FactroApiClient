@@ -467,7 +467,7 @@ namespace FactroApiClient.Package
             }
         }
 
-        public async Task SetCompanyAsync(string projectId, string packageId, SetCompanyAssociationRequest setCompanyAssociationRequest)
+        public async Task SetPackageCompanyAsync(string projectId, string packageId, SetCompanyAssociationRequest setCompanyAssociationRequest)
         {
             if (string.IsNullOrWhiteSpace(projectId))
             {
