@@ -59,8 +59,8 @@ namespace FactroApiClient.UnitTests.ContactApi
             await act.Should().ThrowAsync<ArgumentNullException>();
         }
 
-        [Fact]
-        public async Task DeleteContactAsync_UnsuccessfulRequest_ShouldReturnNull()
+        [Fact(Skip = "Throw of exception is not implemented yet.")]
+        public async Task DeleteContactAsync_UnsuccessfulRequest_ShouldThrowContactApiException()
         {
             // Arrange
             var expectedResponse = new HttpResponseMessage
@@ -74,15 +74,11 @@ namespace FactroApiClient.UnitTests.ContactApi
 
             var contactApi = this.fixture.GetContactApi(expectedResponse);
 
-            var deleteContactResponse = new DeleteContactResponse();
-
             // Act
-            Func<Task> act = async () => deleteContactResponse = await contactApi.DeleteContactAsync(Guid.NewGuid().ToString());
+            Func<Task> act = async () => await contactApi.DeleteContactAsync(Guid.NewGuid().ToString());
 
             // Assert
-            await act.Should().NotThrowAsync();
-
-            deleteContactResponse.Should().BeNull();
+            await act.Should().ThrowAsync<Exception>();
         }
     }
 }

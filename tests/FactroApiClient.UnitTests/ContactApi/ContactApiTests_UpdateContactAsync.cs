@@ -79,8 +79,8 @@ namespace FactroApiClient.UnitTests.ContactApi
             await act.Should().ThrowAsync<ArgumentNullException>();
         }
 
-        [Fact]
-        public async Task UpdateContactAsync_UnsuccessfulRequest_ShouldReturnNull()
+        [Fact(Skip = "Throw of exception is not implemented yet.")]
+        public async Task UpdateContactAsync_UnsuccessfulRequest_ShouldThrowContactApiException()
         {
             // Arrange
             var contactId = Guid.NewGuid().ToString();
@@ -98,15 +98,11 @@ namespace FactroApiClient.UnitTests.ContactApi
 
             var contactApi = this.fixture.GetContactApi(expectedResponse);
 
-            var updateContactResponse = new UpdateContactResponse();
-
             // Act
-            Func<Task> act = async () => updateContactResponse = await contactApi.UpdateContactAsync(contactId, updateContactRequest);
+            Func<Task> act = async () => await contactApi.UpdateContactAsync(contactId, updateContactRequest);
 
             // Assert
-            await act.Should().NotThrowAsync();
-
-            updateContactResponse.Should().BeNull();
+            await act.Should().ThrowAsync<Exception>();
         }
     }
 }

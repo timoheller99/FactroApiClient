@@ -59,8 +59,8 @@ namespace FactroApiClient.UnitTests.CompanyApi
             await act.Should().ThrowAsync<ArgumentNullException>();
         }
 
-        [Fact]
-        public async Task GetCompanyAsync_UnsuccessfulRequest_ShouldReturnNull()
+        [Fact(Skip = "Throw of exception is not implemented yet.")]
+        public async Task GetCompanyAsync_UnsuccessfulRequest_ShouldThrowCompanyApiException()
         {
             // Arrange
             var expectedResponse = new HttpResponseMessage
@@ -74,15 +74,11 @@ namespace FactroApiClient.UnitTests.CompanyApi
 
             var companyApi = this.fixture.GetCompanyApi(expectedResponse);
 
-            var getCompanyByIdResponse = new GetCompanyByIdResponse();
-
             // Act
-            Func<Task> act = async () => getCompanyByIdResponse = await companyApi.GetCompanyByIdAsync(Guid.NewGuid().ToString());
+            Func<Task> act = async () => await companyApi.GetCompanyByIdAsync(Guid.NewGuid().ToString());
 
             // Assert
-            await act.Should().NotThrowAsync();
-
-            getCompanyByIdResponse.Should().BeNull();
+            await act.Should().ThrowAsync<Exception>();
         }
     }
 }

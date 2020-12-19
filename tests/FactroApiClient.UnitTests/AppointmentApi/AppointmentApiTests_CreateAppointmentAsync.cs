@@ -107,8 +107,8 @@ namespace FactroApiClient.UnitTests.AppointmentApi
             await act.Should().ThrowAsync<ArgumentNullException>();
         }
 
-        [Fact]
-        public async Task CreateAppointment_UnsuccessfulRequest_ShouldReturnNull()
+        [Fact(Skip = "Throw of exception is not implemented yet.")]
+        public async Task CreateAppointment_UnsuccessfulRequest_ShouldThrowAppointmentApiException()
         {
             // Arrange
             var employeeId = Guid.NewGuid().ToString();
@@ -129,15 +129,11 @@ namespace FactroApiClient.UnitTests.AppointmentApi
 
             var appointmentApi = this.fixture.GetAppointmentApi(expectedResponse);
 
-            var createAppointmentResponse = new CreateAppointmentResponse();
-
             // Act
-            Func<Task> act = async () => createAppointmentResponse = await appointmentApi.CreateAppointmentAsync(createAppointmentRequest);
+            Func<Task> act = async () => await appointmentApi.CreateAppointmentAsync(createAppointmentRequest);
 
             // Assert
-            await act.Should().NotThrowAsync();
-
-            createAppointmentResponse.Should().BeNull();
+            await act.Should().ThrowAsync<Exception>();
         }
     }
 }

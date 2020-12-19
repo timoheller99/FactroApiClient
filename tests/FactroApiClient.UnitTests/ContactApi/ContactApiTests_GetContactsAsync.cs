@@ -53,8 +53,8 @@ namespace FactroApiClient.UnitTests.ContactApi
             getContactsResponse.Should().HaveCount(existingContactsList.Count);
         }
 
-        [Fact]
-        public async Task GetContactsAsync_UnsuccessfulRequest_ShouldReturnNull()
+        [Fact(Skip = "Throw of exception is not implemented yet.")]
+        public async Task GetContactsAsync_UnsuccessfulRequest_ShouldThrowContactApiException()
         {
             // Arrange
             var expectedResponse = new HttpResponseMessage
@@ -68,15 +68,11 @@ namespace FactroApiClient.UnitTests.ContactApi
 
             var contactApi = this.fixture.GetContactApi(expectedResponse);
 
-            var getContactsResponse = new List<GetContactPayload>();
-
             // Act
-            Func<Task> act = async () => getContactsResponse = (await contactApi.GetContactsAsync())?.ToList();
+            Func<Task> act = async () => await contactApi.GetContactsAsync();
 
             // Assert
-            await act.Should().NotThrowAsync();
-
-            getContactsResponse.Should().BeNull();
+            await act.Should().ThrowAsync<Exception>();
         }
     }
 }
