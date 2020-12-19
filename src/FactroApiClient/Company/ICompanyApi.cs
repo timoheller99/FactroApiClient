@@ -87,6 +87,6 @@ namespace FactroApiClient.Company
         /// <param name="companyId">Id of the company.</param>
         /// <param name="companyTagId">Id of the company tag.</param>
         /// <returns>Returns void.</returns>
-        public Task RemoveCompanyTagAsync(string companyId, string companyTagId);
+        public Task RemoveTagFromCompanyAsync(string companyId, string companyTagId);
     }
 }

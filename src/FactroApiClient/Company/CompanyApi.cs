@@ -403,7 +403,7 @@ namespace FactroApiClient.Company
             }
         }
 
-        public async Task RemoveCompanyTagAsync(string companyId, string companyTagId)
+        public async Task RemoveTagFromCompanyAsync(string companyId, string companyTagId)
         {
             if (string.IsNullOrWhiteSpace(companyId))
             {
