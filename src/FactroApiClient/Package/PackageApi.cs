@@ -511,7 +511,7 @@ namespace FactroApiClient.Package
             }
         }
 
-        public async Task RemoveCompanyAsync(string projectId, string packageId)
+        public async Task RemovePackageCompanyAsync(string projectId, string packageId)
         {
             if (string.IsNullOrWhiteSpace(projectId))
             {
