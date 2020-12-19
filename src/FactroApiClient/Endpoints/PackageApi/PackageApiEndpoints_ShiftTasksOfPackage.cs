@@ -1,8 +1,8 @@
-namespace FactroApiClient.Endpoints
+namespace FactroApiClient.Endpoints.PackageApi
 {
-    internal static partial class ApiEndpoints
+    internal static partial class PackageApiEndpoints
     {
-        internal static class PackageShiftTasks
+        public static class ShiftTasksOfPackage
         {
             public static string ShiftTasksWithSuccessors(string projectId, string packageId)
             {

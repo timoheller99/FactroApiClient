@@ -1,8 +1,8 @@
-namespace FactroApiClient.Endpoints
+namespace FactroApiClient.Endpoints.PackageApi
 {
-    internal static partial class ApiEndpoints
+    internal static partial class PackageApiEndpoints
     {
-        internal static class PackageAssociation
+        public static class Association
         {
             public static string SetCompany(string projectId, string packageId)
             {
