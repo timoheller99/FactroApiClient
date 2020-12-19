@@ -492,7 +492,7 @@ namespace FactroApiClient.Project
             throw new System.NotImplementedException();
         }
 
-        public async Task<IEnumerable<GetProjectReadRightsResponse>> GetReadRightsAsync(string projectId)
+        public async Task<IEnumerable<GetProjectReadRightsResponse>> GetProjectReadRightsAsync(string projectId)
         {
             if (string.IsNullOrWhiteSpace(projectId))
             {
@@ -528,7 +528,7 @@ namespace FactroApiClient.Project
             }
         }
 
-        public async Task<AddProjectReadRightsForUserResponse> GrantReadRightsToUserAsync(
+        public async Task<AddProjectReadRightsForUserResponse> GrantProjectReadRightsToUserAsync(
             string projectId,
             AddProjectReadRightsForUserRequest addProjectReadRightsForUserRequest)
         {
@@ -580,7 +580,7 @@ namespace FactroApiClient.Project
             }
         }
 
-        public async Task RevokeReadRightsFromUserAsync(string projectId, string employeeId)
+        public async Task RevokeProjectReadRightsFromUserAsync(string projectId, string employeeId)
         {
             if (string.IsNullOrWhiteSpace(projectId))
             {
@@ -611,7 +611,7 @@ namespace FactroApiClient.Project
             }
         }
 
-        public async Task<IEnumerable<GetProjectWriteRightsResponse>> GetWriteRightsAsync(string projectId)
+        public async Task<IEnumerable<GetProjectWriteRightsResponse>> GetProjectWriteRightsAsync(string projectId)
         {
             if (string.IsNullOrWhiteSpace(projectId))
             {
@@ -647,7 +647,7 @@ namespace FactroApiClient.Project
             }
         }
 
-        public async Task<AddProjectWriteRightsForUserResponse> GrantWriteRightsToUserAsync(
+        public async Task<AddProjectWriteRightsForUserResponse> GrantProjectWriteRightsToUserAsync(
             string projectId,
             AddProjectWriteRightsForUserRequest addProjectWriteRightsForUserRequest)
         {
@@ -699,7 +699,7 @@ namespace FactroApiClient.Project
             }
         }
 
-        public async Task RevokeWriteRightsFromUserAsync(string projectId, string employeeId)
+        public async Task RevokeProjectWriteRightsFromUserAsync(string projectId, string employeeId)
         {
             if (string.IsNullOrWhiteSpace(projectId))
             {

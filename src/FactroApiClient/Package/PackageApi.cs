@@ -322,7 +322,7 @@ namespace FactroApiClient.Package
             }
         }
 
-        public async Task<CreatePackageCommentResponse> CreateCommentAsync(string projectId, string packageId, CreatePackageCommentRequest createPackageCommentRequest)
+        public async Task<CreatePackageCommentResponse> CreatePackageCommentAsync(string projectId, string packageId, CreatePackageCommentRequest createPackageCommentRequest)
         {
             if (string.IsNullOrWhiteSpace(projectId))
             {
@@ -377,7 +377,7 @@ namespace FactroApiClient.Package
             }
         }
 
-        public async Task<IEnumerable<GetPackageCommentPayload>> GetCommentsAsync(string projectId, string packageId)
+        public async Task<IEnumerable<GetPackageCommentPayload>> GetCommentsOfPackageAsync(string projectId, string packageId)
         {
             if (string.IsNullOrWhiteSpace(projectId))
             {
@@ -419,7 +419,7 @@ namespace FactroApiClient.Package
             }
         }
 
-        public async Task<DeletePackageCommentResponse> DeleteCommentAsync(string projectId, string packageId, string commentId)
+        public async Task<DeletePackageCommentResponse> DeletePackageCommentCommentAsync(string projectId, string packageId, string commentId)
         {
             if (string.IsNullOrWhiteSpace(projectId))
             {
@@ -467,7 +467,7 @@ namespace FactroApiClient.Package
             }
         }
 
-        public async Task SetCompanyAsync(string projectId, string packageId, SetCompanyAssociationRequest setCompanyAssociationRequest)
+        public async Task SetPackageCompanyAsync(string projectId, string packageId, SetCompanyAssociationRequest setCompanyAssociationRequest)
         {
             if (string.IsNullOrWhiteSpace(projectId))
             {
@@ -511,7 +511,7 @@ namespace FactroApiClient.Package
             }
         }
 
-        public async Task RemoveCompanyAsync(string projectId, string packageId)
+        public async Task RemovePackageCompanyAsync(string projectId, string packageId)
         {
             if (string.IsNullOrWhiteSpace(projectId))
             {
@@ -542,7 +542,7 @@ namespace FactroApiClient.Package
             }
         }
 
-        public async Task SetContactAsync(string projectId, string packageId, SetContactAssociationRequest setContactAssociationRequest)
+        public async Task SetPackageContactAsync(string projectId, string packageId, SetContactAssociationRequest setContactAssociationRequest)
         {
             if (string.IsNullOrWhiteSpace(projectId))
             {
@@ -586,7 +586,7 @@ namespace FactroApiClient.Package
             }
         }
 
-        public async Task RemoveContactAsync(string projectId, string packageId)
+        public async Task RemovePackageContactAsync(string projectId, string packageId)
         {
             if (string.IsNullOrWhiteSpace(projectId))
             {
@@ -617,7 +617,7 @@ namespace FactroApiClient.Package
             }
         }
 
-        public async Task MoveToPackageAsync(string projectId, string packageId, SetPackageAssociationRequest setPackageAssociationRequest)
+        public async Task MovePackageIntoPackageAsync(string projectId, string packageId, SetPackageAssociationRequest setPackageAssociationRequest)
         {
             if (string.IsNullOrWhiteSpace(projectId))
             {
@@ -662,7 +662,7 @@ namespace FactroApiClient.Package
             }
         }
 
-        public async Task MoveToProjectAsync(string projectId, string packageId, SetProjectAssociationRequest setProjectAssociationRequest)
+        public async Task MovePackageIntoProjectAsync(string projectId, string packageId, SetProjectAssociationRequest setProjectAssociationRequest)
         {
             if (string.IsNullOrWhiteSpace(projectId))
             {
@@ -707,22 +707,22 @@ namespace FactroApiClient.Package
             }
         }
 
-        public async Task<IEnumerable<GetPackageDocumentPayload>> GetDocumentsAsync(string projectId, string packageId)
+        public async Task<IEnumerable<GetPackageDocumentPayload>> GetPackageDocumentsAsync(string projectId, string packageId)
         {
             throw new System.NotImplementedException();
         }
 
-        public async Task<GetPackageDocumentPayload> UploadDocumentAsync(string projectId, string packageId, byte[] data)
+        public async Task<GetPackageDocumentPayload> UploadPackageDocumentAsync(string projectId, string packageId, byte[] data)
         {
             throw new System.NotImplementedException();
         }
 
-        public async Task<DeletePackageDocumentResponse> DeleteDocumentAsync(string projectId, string packageId, string documentId)
+        public async Task<DeletePackageDocumentResponse> DeletePackageDocumentAsync(string projectId, string packageId, string documentId)
         {
             throw new System.NotImplementedException();
         }
 
-        public async Task<IEnumerable<GetPackageReadRightsResponse>> GetReadRightsAsync(string projectId, string packageId)
+        public async Task<IEnumerable<GetPackageReadRightsResponse>> GetPackageReadRightsAsync(string projectId, string packageId)
         {
             if (string.IsNullOrWhiteSpace(projectId))
             {
@@ -764,7 +764,7 @@ namespace FactroApiClient.Package
             }
         }
 
-        public async Task<AddPackageReadRightsForUserResponse> GrantReadRightsToUserAsync(
+        public async Task<AddPackageReadRightsForUserResponse> GrantPackageReadRightsToUserAsync(
             string projectId,
             string packageId,
             AddPackageReadRightsForUserRequest addPackageReadRightsForUserRequest)
@@ -823,7 +823,7 @@ namespace FactroApiClient.Package
             }
         }
 
-        public async Task RevokeReadRightsFromUserAsync(string projectId, string packageId, string employeeId)
+        public async Task RevokePackageReadRightsFromUserAsync(string projectId, string packageId, string employeeId)
         {
             if (string.IsNullOrWhiteSpace(projectId))
             {
@@ -860,7 +860,7 @@ namespace FactroApiClient.Package
             }
         }
 
-        public async Task<IEnumerable<GetPackageWriteRightsResponse>> GetWriteRightsAsync(string projectId, string packageId)
+        public async Task<IEnumerable<GetPackageWriteRightsResponse>> GetPackageWriteRightsAsync(string projectId, string packageId)
         {
             if (string.IsNullOrWhiteSpace(projectId))
             {
@@ -902,7 +902,7 @@ namespace FactroApiClient.Package
             }
         }
 
-        public async Task<AddPackageWriteRightsForUserResponse> GrantWriteRightsToUserAsync(
+        public async Task<AddPackageWriteRightsForUserResponse> GrantPackageWriteRightsToUserAsync(
             string projectId,
             string packageId,
             AddPackageWriteRightsForUserRequest addPackageWriteRightsForUserRequest)
@@ -961,7 +961,7 @@ namespace FactroApiClient.Package
             }
         }
 
-        public async Task RevokeWriteRightsFromUserAsync(string projectId, string packageId, string employeeId)
+        public async Task RevokePackageWriteRightsFromUserAsync(string projectId, string packageId, string employeeId)
         {
             if (string.IsNullOrWhiteSpace(projectId))
             {
@@ -998,7 +998,7 @@ namespace FactroApiClient.Package
             }
         }
 
-        public async Task ShiftTasksAsync(
+        public async Task ShiftTasksOfPackageAsync(
             string projectId,
             string packageId,
             ShiftPackageWithSuccessorsRequest shiftPackageWithSuccessorsRequest)

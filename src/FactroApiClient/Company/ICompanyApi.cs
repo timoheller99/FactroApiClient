@@ -64,7 +64,7 @@ namespace FactroApiClient.Company
         /// </summary>
         /// <param name="companyId">Id of the company whose tags should be fetched.</param>
         /// <returns>Returns the list of tags associated with the given company id.</returns>
-        public Task<IEnumerable<GetCompanyTagAssociationPayload>> GetCompanyTagsByIdAsync(string companyId);
+        public Task<IEnumerable<GetCompanyTagAssociationPayload>> GetTagsOfCompanyAsync(string companyId);
 
         /// <summary>
         /// Deletes the company tag with the given company tag id.
@@ -79,7 +79,7 @@ namespace FactroApiClient.Company
         /// <param name="companyId">Id of the company to associate.</param>
         /// <param name="addCompanyTagAssociationRequest">Request model to create the association.</param>
         /// <returns>Returns void.</returns>
-        public Task AddCompanyTagAsync(string companyId, AddCompanyTagAssociationRequest addCompanyTagAssociationRequest);
+        public Task AddTagToCompanyAsync(string companyId, AddCompanyTagAssociationRequest addCompanyTagAssociationRequest);
 
         /// <summary>
         /// Removes the association between the given company id and the given company tag id.
@@ -87,6 +87,6 @@ namespace FactroApiClient.Company
         /// <param name="companyId">Id of the company.</param>
         /// <param name="companyTagId">Id of the company tag.</param>
         /// <returns>Returns void.</returns>
-        public Task RemoveCompanyTagAsync(string companyId, string companyTagId);
+        public Task RemoveTagFromCompanyAsync(string companyId, string companyTagId);
     }
 }

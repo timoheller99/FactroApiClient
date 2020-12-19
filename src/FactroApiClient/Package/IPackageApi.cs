@@ -27,46 +27,46 @@ namespace FactroApiClient.Package
         public Task<DeletePackageResponse> DeletePackageAsync(string projectId, string packageId);
 
         // Comments
-        public Task<CreatePackageCommentResponse> CreateCommentAsync(string projectId, string packageId, CreatePackageCommentRequest createPackageCommentRequest);
+        public Task<CreatePackageCommentResponse> CreatePackageCommentAsync(string projectId, string packageId, CreatePackageCommentRequest createPackageCommentRequest);
 
-        public Task<IEnumerable<GetPackageCommentPayload>> GetCommentsAsync(string projectId, string packageId);
+        public Task<IEnumerable<GetPackageCommentPayload>> GetCommentsOfPackageAsync(string projectId, string packageId);
 
-        public Task<DeletePackageCommentResponse> DeleteCommentAsync(string projectId, string packageId, string commentId);
+        public Task<DeletePackageCommentResponse> DeletePackageCommentCommentAsync(string projectId, string packageId, string commentId);
 
         // Association
-        public Task SetCompanyAsync(string projectId, string packageId, SetCompanyAssociationRequest setCompanyAssociationRequest);
+        public Task SetPackageCompanyAsync(string projectId, string packageId, SetCompanyAssociationRequest setCompanyAssociationRequest);
 
-        public Task RemoveCompanyAsync(string projectId, string packageId);
+        public Task RemovePackageCompanyAsync(string projectId, string packageId);
 
-        public Task SetContactAsync(string projectId, string packageId, SetContactAssociationRequest setContactAssociationRequest);
+        public Task SetPackageContactAsync(string projectId, string packageId, SetContactAssociationRequest setContactAssociationRequest);
 
-        public Task RemoveContactAsync(string projectId, string packageId);
+        public Task RemovePackageContactAsync(string projectId, string packageId);
 
-        public Task MoveToPackageAsync(string projectId, string packageId, SetPackageAssociationRequest setPackageAssociationRequest);
+        public Task MovePackageIntoPackageAsync(string projectId, string packageId, SetPackageAssociationRequest setPackageAssociationRequest);
 
-        public Task MoveToProjectAsync(string projectId, string packageId, SetProjectAssociationRequest setProjectAssociationRequest);
+        public Task MovePackageIntoProjectAsync(string projectId, string packageId, SetProjectAssociationRequest setProjectAssociationRequest);
 
         // Documents
-        public Task<IEnumerable<GetPackageDocumentPayload>> GetDocumentsAsync(string projectId, string packageId);
+        public Task<IEnumerable<GetPackageDocumentPayload>> GetPackageDocumentsAsync(string projectId, string packageId);
 
-        public Task<GetPackageDocumentPayload> UploadDocumentAsync(string projectId, string packageId, byte[] data);
+        public Task<GetPackageDocumentPayload> UploadPackageDocumentAsync(string projectId, string packageId, byte[] data);
 
-        public Task<DeletePackageDocumentResponse> DeleteDocumentAsync(string projectId, string packageId, string documentId);
+        public Task<DeletePackageDocumentResponse> DeletePackageDocumentAsync(string projectId, string packageId, string documentId);
 
         // Access Rights
-        public Task<IEnumerable<GetPackageReadRightsResponse>> GetReadRightsAsync(string projectId, string packageId);
+        public Task<IEnumerable<GetPackageReadRightsResponse>> GetPackageReadRightsAsync(string projectId, string packageId);
 
-        public Task<AddPackageReadRightsForUserResponse> GrantReadRightsToUserAsync(string projectId, string packageId, AddPackageReadRightsForUserRequest addPackageReadRightsForUserRequest);
+        public Task<AddPackageReadRightsForUserResponse> GrantPackageReadRightsToUserAsync(string projectId, string packageId, AddPackageReadRightsForUserRequest addPackageReadRightsForUserRequest);
 
-        public Task RevokeReadRightsFromUserAsync(string projectId, string packageId, string employeeId);
+        public Task RevokePackageReadRightsFromUserAsync(string projectId, string packageId, string employeeId);
 
-        public Task<IEnumerable<GetPackageWriteRightsResponse>> GetWriteRightsAsync(string projectId, string packageId);
+        public Task<IEnumerable<GetPackageWriteRightsResponse>> GetPackageWriteRightsAsync(string projectId, string packageId);
 
-        public Task<AddPackageWriteRightsForUserResponse> GrantWriteRightsToUserAsync(string projectId, string packageId, AddPackageWriteRightsForUserRequest addPackageWriteRightsForUserRequest);
+        public Task<AddPackageWriteRightsForUserResponse> GrantPackageWriteRightsToUserAsync(string projectId, string packageId, AddPackageWriteRightsForUserRequest addPackageWriteRightsForUserRequest);
 
-        public Task RevokeWriteRightsFromUserAsync(string projectId, string packageId, string employeeId);
+        public Task RevokePackageWriteRightsFromUserAsync(string projectId, string packageId, string employeeId);
 
         // Misc
-        public Task ShiftTasksAsync(string projectId, string packageId, ShiftPackageWithSuccessorsRequest shiftPackageWithSuccessorsRequest);
+        public Task ShiftTasksOfPackageAsync(string projectId, string packageId, ShiftPackageWithSuccessorsRequest shiftPackageWithSuccessorsRequest);
     }
 }

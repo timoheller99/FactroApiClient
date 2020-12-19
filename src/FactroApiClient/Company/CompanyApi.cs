@@ -292,7 +292,7 @@ namespace FactroApiClient.Company
             }
         }
 
-        public async Task<IEnumerable<GetCompanyTagAssociationPayload>> GetCompanyTagsByIdAsync(string companyId)
+        public async Task<IEnumerable<GetCompanyTagAssociationPayload>> GetTagsOfCompanyAsync(string companyId)
         {
             if (string.IsNullOrWhiteSpace(companyId))
             {
@@ -364,7 +364,7 @@ namespace FactroApiClient.Company
             }
         }
 
-        public async Task AddCompanyTagAsync(string companyId, AddCompanyTagAssociationRequest addCompanyTagAssociationRequest)
+        public async Task AddTagToCompanyAsync(string companyId, AddCompanyTagAssociationRequest addCompanyTagAssociationRequest)
         {
             if (string.IsNullOrWhiteSpace(companyId))
             {
@@ -403,7 +403,7 @@ namespace FactroApiClient.Company
             }
         }
 
-        public async Task RemoveCompanyTagAsync(string companyId, string companyTagId)
+        public async Task RemoveTagFromCompanyAsync(string companyId, string companyTagId)
         {
             if (string.IsNullOrWhiteSpace(companyId))
             {

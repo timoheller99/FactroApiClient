@@ -5,8 +5,6 @@ namespace FactroApiClient.UnitTests.CompanyApi
     using System.Net.Http;
     using System.Threading.Tasks;
 
-    using FactroApiClient.Company.Contracts.CompanyTag;
-
     using FluentAssertions;
 
     using Xunit;
@@ -14,18 +12,17 @@ namespace FactroApiClient.UnitTests.CompanyApi
     public partial class CompanyApiTests
     {
         [Fact]
-        public async Task AddCompanyTagAsync_ValidRequest_ShouldNotThrow()
+        public async Task RemoveTagFromCompanyAsync_ValidRequest_ShouldNotThrow()
         {
             // Arrange
             var tagId = Guid.NewGuid().ToString();
-            var addCompanyTagRequest = new AddCompanyTagAssociationRequest(tagId);
             var companyId = Guid.NewGuid().ToString();
 
             var expectedResponse = new HttpResponseMessage();
             var companyApi = this.fixture.GetCompanyApi(expectedResponse);
 
             // Act
-            Func<Task> act = async () => await companyApi.AddCompanyTagAsync(companyId, addCompanyTagRequest);
+            Func<Task> act = async () => await companyApi.RemoveTagFromCompanyAsync(companyId, tagId);
 
             // Assert
             await act.Should().NotThrowAsync();
@@ -33,23 +30,23 @@ namespace FactroApiClient.UnitTests.CompanyApi
 
         [Theory]
         [MemberData(nameof(CompanyApiTestFixture.InvalidCompanyIds), MemberType = typeof(CompanyApiTestFixture))]
-        public async Task AddCompanyTagAsync_InvalidCompanyId_ShouldThrowArgumentNullException(string companyId)
+        public async Task RemoveTagFromCompanyAsync_InvalidCompanyId_ShouldThrowArgumentNullException(string companyId)
         {
             // Arrange
             var tagId = Guid.NewGuid().ToString();
-            var addCompanyTagRequest = new AddCompanyTagAssociationRequest(tagId);
 
             var companyApi = this.fixture.GetCompanyApi();
 
             // Act
-            Func<Task> act = async () => await companyApi.AddCompanyTagAsync(companyId, addCompanyTagRequest);
+            Func<Task> act = async () => await companyApi.RemoveTagFromCompanyAsync(companyId, tagId);
 
             // Assert
             await act.Should().ThrowAsync<ArgumentNullException>();
         }
 
-        [Fact]
-        public async Task AddCompanyTagAsync_NullRequestModel_ShouldThrowArgumentNullException()
+        [Theory]
+        [MemberData(nameof(CompanyApiTestFixture.InvalidCompanyTagIds), MemberType = typeof(CompanyApiTestFixture))]
+        public async Task RemoveTagFromCompanyAsync_InvalidTagId_ShouldThrowArgumentNullException(string tagId)
         {
             // Arrange
             var companyId = Guid.NewGuid().ToString();
@@ -57,30 +54,14 @@ namespace FactroApiClient.UnitTests.CompanyApi
             var companyApi = this.fixture.GetCompanyApi();
 
             // Act
-            Func<Task> act = async () => await companyApi.AddCompanyTagAsync(companyId, addCompanyTagAssociationRequest: null);
-
-            // Assert
-            await act.Should().ThrowAsync<ArgumentNullException>();
-        }
-
-        [Fact]
-        public async Task AddCompanyTagAsync_NullRequestModelTagId_ShouldThrowArgumentNullException()
-        {
-            // Arrange
-            var companyId = Guid.NewGuid().ToString();
-            var addCompanyTagRequest = new AddCompanyTagAssociationRequest(tagId: null);
-
-            var companyApi = this.fixture.GetCompanyApi();
-
-            // Act
-            Func<Task> act = async () => await companyApi.AddCompanyTagAsync(companyId, addCompanyTagRequest);
+            Func<Task> act = async () => await companyApi.RemoveTagFromCompanyAsync(companyId, tagId);
 
             // Assert
             await act.Should().ThrowAsync<ArgumentNullException>();
         }
 
         [Fact(Skip = "Throw of exception is not implemented yet.")]
-        public async Task AddCompanyTagAsync_UnsuccessfulRequest_ShouldThrowCompanyApiException()
+        public async Task RemoveTagFromCompanyAsync_UnsuccessfulRequest_ShouldThrowCompanyApiException()
         {
             // Arrange
             var response = new HttpResponseMessage
@@ -95,9 +76,9 @@ namespace FactroApiClient.UnitTests.CompanyApi
             var companyApi = this.fixture.GetCompanyApi(response);
 
             // Act
-            Func<Task> act = async () => await companyApi.AddCompanyTagAsync(
+            Func<Task> act = async () => await companyApi.RemoveTagFromCompanyAsync(
                 Guid.NewGuid().ToString(),
-                new AddCompanyTagAssociationRequest(Guid.NewGuid().ToString()));
+                Guid.NewGuid().ToString());
 
             // Assert
             await act.Should().ThrowAsync<Exception>();

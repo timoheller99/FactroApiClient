@@ -48,17 +48,17 @@ namespace FactroApiClient.Project
         public Task<RemoveProjectDocumentResponse> DeleteProjectDocumentAsync(string projectId, string documentId);
 
         // Access Rights
-        public Task<IEnumerable<GetProjectReadRightsResponse>> GetReadRightsAsync(string projectId);
+        public Task<IEnumerable<GetProjectReadRightsResponse>> GetProjectReadRightsAsync(string projectId);
 
-        public Task<AddProjectReadRightsForUserResponse> GrantReadRightsToUserAsync(string projectId, AddProjectReadRightsForUserRequest addProjectReadRightsForUserRequest);
+        public Task<AddProjectReadRightsForUserResponse> GrantProjectReadRightsToUserAsync(string projectId, AddProjectReadRightsForUserRequest addProjectReadRightsForUserRequest);
 
-        public Task RevokeReadRightsFromUserAsync(string projectId, string employeeId);
+        public Task RevokeProjectReadRightsFromUserAsync(string projectId, string employeeId);
 
-        public Task<IEnumerable<GetProjectWriteRightsResponse>> GetWriteRightsAsync(string projectId);
+        public Task<IEnumerable<GetProjectWriteRightsResponse>> GetProjectWriteRightsAsync(string projectId);
 
-        public Task<AddProjectWriteRightsForUserResponse> GrantWriteRightsToUserAsync(string projectId, AddProjectWriteRightsForUserRequest addProjectWriteRightsForUserRequest);
+        public Task<AddProjectWriteRightsForUserResponse> GrantProjectWriteRightsToUserAsync(string projectId, AddProjectWriteRightsForUserRequest addProjectWriteRightsForUserRequest);
 
-        public Task RevokeWriteRightsFromUserAsync(string projectId, string employeeId);
+        public Task RevokeProjectWriteRightsFromUserAsync(string projectId, string employeeId);
 
         // Structure
         public Task<GetProjectStructureResponse> GetProjectStructureAsync(string projectId);
