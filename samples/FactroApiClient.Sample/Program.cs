@@ -1,8 +1,9 @@
-﻿namespace FactroApiClient.Integration
+﻿namespace FactroApiClient.Sample
 {
     using System;
 
-    using FactroApiClient.Appointment;
+    using FactroApiClient.Company;
+    using FactroApiClient.Company.Contracts.CompanyTag;
 
     using Microsoft.Extensions.DependencyInjection;
 
@@ -18,7 +19,10 @@
 
                 var serviceProvider = Startup.ConfigureServices(serviceCollection).BuildServiceProvider();
 
-                var appointmentApi = serviceProvider.GetRequiredService<IAppointmentApi>();
+                var companyApi = serviceProvider.GetRequiredService<ICompanyApi>();
+
+                var createdTag = companyApi.CreateCompanyTagAsync(new CreateCompanyTagRequest("AUTOTEST_Tag")).GetAwaiter().GetResult();
+                companyApi.DeleteCompanyTagAsync(createdTag.Id).GetAwaiter();
             }
             catch (Exception ex)
             {

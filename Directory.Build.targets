@@ -3,7 +3,7 @@
   <ItemGroup>
     <PackageReference Update="coverlet.collector" Version="1.2.0" />
 
-    <PackageReference Update="FactroApiClient" Version="1.0.0-alpha.15" />
+    <PackageReference Update="FactroApiClient" Version="1.0.0-alpha.55" />
 
     <PackageReference Update="FluentAssertions" Version="5.10.3" />
     <PackageReference Update="FluentAssertions.Analyzers" Version="0.11.4" />
@@ -28,6 +28,7 @@
 
     <PackageReference Update="Newtonsoft.Json" Version="12.0.3" />
 
+    <PackageReference Update="Serilog.Settings.Configuration" Version="3.1.0" />
     <PackageReference Update="Serilog.Extensions.Logging" Version="3.0.1" />
     <PackageReference Update="Serilog.Sinks.Console" Version="3.1.1" />
     <PackageReference Update="Serilog.Sinks.File" Version="4.1.0" />
