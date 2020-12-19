@@ -961,7 +961,7 @@ namespace FactroApiClient.Package
             }
         }
 
-        public async Task RevokeWriteRightsFromUserAsync(string projectId, string packageId, string employeeId)
+        public async Task RevokePackageWriteRightsFromUserAsync(string projectId, string packageId, string employeeId)
         {
             if (string.IsNullOrWhiteSpace(projectId))
             {
