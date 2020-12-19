@@ -764,7 +764,7 @@ namespace FactroApiClient.Package
             }
         }
 
-        public async Task<AddPackageReadRightsForUserResponse> GrantReadRightsToUserAsync(
+        public async Task<AddPackageReadRightsForUserResponse> GrantPackageReadRightsToUserAsync(
             string projectId,
             string packageId,
             AddPackageReadRightsForUserRequest addPackageReadRightsForUserRequest)
