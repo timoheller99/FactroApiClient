@@ -32,4 +32,8 @@
     <PackageReference Include="StyleCop.Analyzers" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Endpoints" />
+  </ItemGroup>
+
 </Project>

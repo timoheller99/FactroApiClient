@@ -5,7 +5,6 @@ namespace FactroApiClient.Project
     using System.Net.Http;
     using System.Threading.Tasks;
 
-    using FactroApiClient.Endpoints.ProjectApi;
     using FactroApiClient.Project.Contracts.AccessRights;
     using FactroApiClient.Project.Contracts.Association;
     using FactroApiClient.Project.Contracts.Base;
@@ -13,6 +12,7 @@ namespace FactroApiClient.Project
     using FactroApiClient.Project.Contracts.Document;
     using FactroApiClient.Project.Contracts.Structure;
     using FactroApiClient.Project.Contracts.Tag;
+    using FactroApiClient.Project.Endpoints;
 
     using Microsoft.Extensions.Logging;
 

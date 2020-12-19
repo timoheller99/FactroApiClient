@@ -6,7 +6,7 @@ namespace FactroApiClient.Appointment
     using System.Threading.Tasks;
 
     using FactroApiClient.Appointment.Contracts;
-    using FactroApiClient.Endpoints.AppointmentApi;
+    using FactroApiClient.Appointment.Endpoints;
 
     using Microsoft.Extensions.Logging;
 

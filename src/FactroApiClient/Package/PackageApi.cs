@@ -5,12 +5,12 @@ namespace FactroApiClient.Package
     using System.Net.Http;
     using System.Threading.Tasks;
 
-    using FactroApiClient.Endpoints.PackageApi;
     using FactroApiClient.Package.Contracts;
     using FactroApiClient.Package.Contracts.AccessRights;
     using FactroApiClient.Package.Contracts.Association;
     using FactroApiClient.Package.Contracts.Comment;
     using FactroApiClient.Package.Contracts.Document;
+    using FactroApiClient.Package.Entpoints;
 
     using Microsoft.Extensions.Logging;
 

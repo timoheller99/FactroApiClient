@@ -6,7 +6,7 @@ namespace FactroApiClient.Contact
     using System.Threading.Tasks;
 
     using FactroApiClient.Contact.Contracts;
-    using FactroApiClient.Endpoints.ContactApi;
+    using FactroApiClient.Contact.Endpoints;
 
     using Microsoft.Extensions.Logging;
 

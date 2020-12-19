@@ -1,4 +1,4 @@
-namespace FactroApiClient.Endpoints.PackageApi
+namespace FactroApiClient.Package.Entpoints
 {
     internal static partial class PackageApiEndpoints
     {

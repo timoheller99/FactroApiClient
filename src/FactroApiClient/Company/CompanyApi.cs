@@ -7,7 +7,7 @@ namespace FactroApiClient.Company
 
     using FactroApiClient.Company.Contracts.Basic;
     using FactroApiClient.Company.Contracts.CompanyTag;
-    using FactroApiClient.Endpoints.CompanyApi;
+    using FactroApiClient.Company.Endpoints;
 
     using Microsoft.Extensions.Logging;
 
