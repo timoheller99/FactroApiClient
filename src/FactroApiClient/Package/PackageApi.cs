@@ -617,7 +617,7 @@ namespace FactroApiClient.Package
             }
         }
 
-        public async Task MoveToPackageAsync(string projectId, string packageId, SetPackageAssociationRequest setPackageAssociationRequest)
+        public async Task MovePackageIntoPackageAsync(string projectId, string packageId, SetPackageAssociationRequest setPackageAssociationRequest)
         {
             if (string.IsNullOrWhiteSpace(projectId))
             {
