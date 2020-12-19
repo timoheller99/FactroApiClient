@@ -722,7 +722,7 @@ namespace FactroApiClient.Package
             throw new System.NotImplementedException();
         }
 
-        public async Task<IEnumerable<GetPackageReadRightsResponse>> GetReadRightsAsync(string projectId, string packageId)
+        public async Task<IEnumerable<GetPackageReadRightsResponse>> GetPackageReadRightsAsync(string projectId, string packageId)
         {
             if (string.IsNullOrWhiteSpace(projectId))
             {
