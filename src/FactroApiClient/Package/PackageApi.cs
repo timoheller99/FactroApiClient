@@ -712,7 +712,7 @@ namespace FactroApiClient.Package
             throw new System.NotImplementedException();
         }
 
-        public async Task<GetPackageDocumentPayload> UploadDocumentAsync(string projectId, string packageId, byte[] data)
+        public async Task<GetPackageDocumentPayload> UploadPackageDocumentAsync(string projectId, string packageId, byte[] data)
         {
             throw new System.NotImplementedException();
         }

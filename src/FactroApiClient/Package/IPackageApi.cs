@@ -49,7 +49,7 @@ namespace FactroApiClient.Package
         // Documents
         public Task<IEnumerable<GetPackageDocumentPayload>> GetPackageDocumentsAsync(string projectId, string packageId);
 
-        public Task<GetPackageDocumentPayload> UploadDocumentAsync(string projectId, string packageId, byte[] data);
+        public Task<GetPackageDocumentPayload> UploadPackageDocumentAsync(string projectId, string packageId, byte[] data);
 
         public Task<DeletePackageDocumentResponse> DeleteDocumentAsync(string projectId, string packageId, string documentId);
 
