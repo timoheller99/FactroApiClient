@@ -5,7 +5,7 @@ namespace FactroApiClient.Project
     using System.Net.Http;
     using System.Threading.Tasks;
 
-    using FactroApiClient.Endpoints;
+    using FactroApiClient.Endpoints.ProjectApi;
     using FactroApiClient.Project.Contracts.AccessRights;
     using FactroApiClient.Project.Contracts.Association;
     using FactroApiClient.Project.Contracts.Base;
@@ -49,7 +49,7 @@ namespace FactroApiClient.Project
 
             using (var client = this.httpClientFactory.CreateClient(BaseClientName))
             {
-                var requestRoute = ApiEndpoints.Project.Create();
+                var requestRoute = ProjectApiEndpoints.Base.Create();
 
                 var requestString = JsonConvert.SerializeObject(createProjectRequest, this.jsonSerializerSettings);
                 var requestContent = ApiHelpers.GetStringContent(requestString);
@@ -82,7 +82,7 @@ namespace FactroApiClient.Project
         {
             using (var client = this.httpClientFactory.CreateClient(BaseClientName))
             {
-                var requestRoute = ApiEndpoints.Project.GetAll();
+                var requestRoute = ProjectApiEndpoints.Base.GetAll();
 
                 var response = await client.GetAsync(requestRoute);
 
@@ -117,7 +117,7 @@ namespace FactroApiClient.Project
 
             using (var client = this.httpClientFactory.CreateClient(BaseClientName))
             {
-                var requestRoute = ApiEndpoints.Project.GetById(projectId);
+                var requestRoute = ProjectApiEndpoints.Base.GetById(projectId);
 
                 var response = await client.GetAsync(requestRoute);
 
@@ -158,7 +158,7 @@ namespace FactroApiClient.Project
 
             using (var client = this.httpClientFactory.CreateClient(BaseClientName))
             {
-                var requestRoute = ApiEndpoints.Project.Update(projectId);
+                var requestRoute = ProjectApiEndpoints.Base.Update(projectId);
 
                 var requestString = JsonConvert.SerializeObject(updateProjectRequest, this.jsonSerializerSettings);
                 var requestContent = ApiHelpers.GetStringContent(requestString);
@@ -197,7 +197,7 @@ namespace FactroApiClient.Project
 
             using (var client = this.httpClientFactory.CreateClient(BaseClientName))
             {
-                var requestRoute = ApiEndpoints.Project.Delete(projectId);
+                var requestRoute = ProjectApiEndpoints.Base.Delete(projectId);
 
                 var response = await client.DeleteAsync(requestRoute);
 
@@ -243,7 +243,7 @@ namespace FactroApiClient.Project
 
             using (var client = this.httpClientFactory.CreateClient(BaseClientName))
             {
-                var requestRoute = ApiEndpoints.ProjectComment.Create(projectId);
+                var requestRoute = ProjectApiEndpoints.Comment.Create(projectId);
 
                 var requestString = JsonConvert.SerializeObject(createProjectCommentRequest, this.jsonSerializerSettings);
                 var requestContent = ApiHelpers.GetStringContent(requestString);
@@ -282,7 +282,7 @@ namespace FactroApiClient.Project
 
             using (var client = this.httpClientFactory.CreateClient(BaseClientName))
             {
-                var requestRoute = ApiEndpoints.ProjectComment.GetAll(projectId);
+                var requestRoute = ProjectApiEndpoints.Comment.GetAll(projectId);
 
                 var response = await client.GetAsync(requestRoute);
 
@@ -323,7 +323,7 @@ namespace FactroApiClient.Project
 
             using (var client = this.httpClientFactory.CreateClient(BaseClientName))
             {
-                var requestRoute = ApiEndpoints.ProjectComment.Delete(projectId, commentId);
+                var requestRoute = ProjectApiEndpoints.Comment.Delete(projectId, commentId);
 
                 var response = await client.DeleteAsync(requestRoute);
 
@@ -370,7 +370,7 @@ namespace FactroApiClient.Project
 
             using (var client = this.httpClientFactory.CreateClient(BaseClientName))
             {
-                var requestRoute = ApiEndpoints.ProjectAssociation.SetCompany(projectId);
+                var requestRoute = ProjectApiEndpoints.Association.SetCompany(projectId);
 
                 var requestString = JsonConvert.SerializeObject(setProjectCompanyAssociationRequest, this.jsonSerializerSettings);
                 var requestContent = ApiHelpers.GetStringContent(requestString);
@@ -398,7 +398,7 @@ namespace FactroApiClient.Project
 
             using (var client = this.httpClientFactory.CreateClient(BaseClientName))
             {
-                var requestRoute = ApiEndpoints.ProjectAssociation.RemoveCompany(projectId);
+                var requestRoute = ProjectApiEndpoints.Association.RemoveCompany(projectId);
 
                 var response = await client.DeleteAsync(requestRoute);
 
@@ -433,7 +433,7 @@ namespace FactroApiClient.Project
 
             using (var client = this.httpClientFactory.CreateClient(BaseClientName))
             {
-                var requestRoute = ApiEndpoints.ProjectAssociation.SetContact(projectId);
+                var requestRoute = ProjectApiEndpoints.Association.SetContact(projectId);
 
                 var requestString = JsonConvert.SerializeObject(setProjectContactAssociationRequest, this.jsonSerializerSettings);
                 var requestContent = ApiHelpers.GetStringContent(requestString);
@@ -461,7 +461,7 @@ namespace FactroApiClient.Project
 
             using (var client = this.httpClientFactory.CreateClient(BaseClientName))
             {
-                var requestRoute = ApiEndpoints.ProjectAssociation.RemoveContact(projectId);
+                var requestRoute = ProjectApiEndpoints.Association.RemoveContact(projectId);
 
                 var response = await client.DeleteAsync(requestRoute);
 
@@ -501,7 +501,7 @@ namespace FactroApiClient.Project
 
             using (var client = this.httpClientFactory.CreateClient(BaseClientName))
             {
-                var requestRoute = ApiEndpoints.ProjectsAccessRights.GetReadRights(projectId);
+                var requestRoute = ProjectApiEndpoints.AccessRights.GetReadRights(projectId);
 
                 var response = await client.GetAsync(requestRoute);
 
@@ -549,7 +549,7 @@ namespace FactroApiClient.Project
 
             using (var client = this.httpClientFactory.CreateClient(BaseClientName))
             {
-                var requestRoute = ApiEndpoints.ProjectsAccessRights.GrantReadRights(projectId);
+                var requestRoute = ProjectApiEndpoints.AccessRights.GrantReadRights(projectId);
 
                 var requestString = JsonConvert.SerializeObject(addProjectReadRightsForUserRequest, this.jsonSerializerSettings);
                 var requestContent = ApiHelpers.GetStringContent(requestString);
@@ -594,7 +594,7 @@ namespace FactroApiClient.Project
 
             using (var client = this.httpClientFactory.CreateClient(BaseClientName))
             {
-                var requestRoute = ApiEndpoints.ProjectsAccessRights.RevokeReadRights(projectId, employeeId);
+                var requestRoute = ProjectApiEndpoints.AccessRights.RevokeReadRights(projectId, employeeId);
 
                 var response = await client.DeleteAsync(requestRoute);
 
@@ -620,7 +620,7 @@ namespace FactroApiClient.Project
 
             using (var client = this.httpClientFactory.CreateClient(BaseClientName))
             {
-                var requestRoute = ApiEndpoints.ProjectsAccessRights.GetWriteRights(projectId);
+                var requestRoute = ProjectApiEndpoints.AccessRights.GetWriteRights(projectId);
 
                 var response = await client.GetAsync(requestRoute);
 
@@ -668,7 +668,7 @@ namespace FactroApiClient.Project
 
             using (var client = this.httpClientFactory.CreateClient(BaseClientName))
             {
-                var requestRoute = ApiEndpoints.ProjectsAccessRights.GrantWriteRights(projectId);
+                var requestRoute = ProjectApiEndpoints.AccessRights.GrantWriteRights(projectId);
 
                 var requestString = JsonConvert.SerializeObject(addProjectWriteRightsForUserRequest, this.jsonSerializerSettings);
                 var requestContent = ApiHelpers.GetStringContent(requestString);
@@ -713,7 +713,7 @@ namespace FactroApiClient.Project
 
             using (var client = this.httpClientFactory.CreateClient(BaseClientName))
             {
-                var requestRoute = ApiEndpoints.ProjectsAccessRights.RevokeWriteRights(projectId, employeeId);
+                var requestRoute = ProjectApiEndpoints.AccessRights.RevokeWriteRights(projectId, employeeId);
 
                 var response = await client.DeleteAsync(requestRoute);
 
@@ -739,7 +739,7 @@ namespace FactroApiClient.Project
 
             using (var client = this.httpClientFactory.CreateClient(BaseClientName))
             {
-                var requestRoute = ApiEndpoints.ProjectStructure.GetStructure(projectId);
+                var requestRoute = ProjectApiEndpoints.Structure.GetStructure(projectId);
 
                 var response = await client.GetAsync(requestRoute);
 
@@ -780,7 +780,7 @@ namespace FactroApiClient.Project
 
             using (var client = this.httpClientFactory.CreateClient(BaseClientName))
             {
-                var requestRoute = ApiEndpoints.ProjectTag.Create();
+                var requestRoute = ProjectApiEndpoints.Tag.Create();
 
                 var requestString = JsonConvert.SerializeObject(createProjectTagRequest, this.jsonSerializerSettings);
                 var requestContent = ApiHelpers.GetStringContent(requestString);
@@ -813,7 +813,7 @@ namespace FactroApiClient.Project
         {
             using (var client = this.httpClientFactory.CreateClient(BaseClientName))
             {
-                var requestRoute = ApiEndpoints.ProjectTag.GetAll();
+                var requestRoute = ProjectApiEndpoints.Tag.GetAll();
 
                 var response = await client.GetAsync(requestRoute);
 
@@ -848,7 +848,7 @@ namespace FactroApiClient.Project
 
             using (var client = this.httpClientFactory.CreateClient(BaseClientName))
             {
-                var requestRoute = ApiEndpoints.ProjectTag.GetById(projectId);
+                var requestRoute = ProjectApiEndpoints.Tag.GetById(projectId);
 
                 var response = await client.GetAsync(requestRoute);
 
@@ -884,7 +884,7 @@ namespace FactroApiClient.Project
 
             using (var client = this.httpClientFactory.CreateClient(BaseClientName))
             {
-                var requestRoute = ApiEndpoints.ProjectTag.Delete(projectTagId);
+                var requestRoute = ProjectApiEndpoints.Tag.Delete(projectTagId);
 
                 var response = await client.DeleteAsync(requestRoute);
 
@@ -930,7 +930,7 @@ namespace FactroApiClient.Project
 
             using (var client = this.httpClientFactory.CreateClient(BaseClientName))
             {
-                var requestRoute = ApiEndpoints.ProjectTag.AddToProject(projectId);
+                var requestRoute = ProjectApiEndpoints.Tag.AddToProject(projectId);
 
                 var requestString = JsonConvert.SerializeObject(addProjectTagAssociationRequest, this.jsonSerializerSettings);
                 var requestContent = ApiHelpers.GetStringContent(requestString);
@@ -964,7 +964,7 @@ namespace FactroApiClient.Project
 
             using (var client = this.httpClientFactory.CreateClient(BaseClientName))
             {
-                var requestRoute = ApiEndpoints.ProjectTag.RemoveFromProject(projectId, tagId);
+                var requestRoute = ProjectApiEndpoints.Tag.RemoveFromProject(projectId, tagId);
 
                 var response = await client.DeleteAsync(requestRoute);
 
