@@ -16,7 +16,7 @@ namespace FactroApiClient.UnitTests.ContactApi
     public partial class ContactApiTests
     {
         [Fact]
-        public async Task CreateContact_ValidModel_ShouldReturnCreatedContact()
+        public async Task CreateContact_ValidRequest_ShouldReturnCreatedContact()
         {
             // Arrange
             var firstName = Guid.NewGuid().ToString();
@@ -52,7 +52,7 @@ namespace FactroApiClient.UnitTests.ContactApi
         }
 
         [Fact]
-        public async Task CreateContact_NullModel_ShouldThrowArgumentNullException()
+        public async Task CreateContact_NullRequestModel_ShouldThrowArgumentNullException()
         {
             // Arrange
             var contactApi = this.fixture.GetContactApi();
@@ -82,7 +82,7 @@ namespace FactroApiClient.UnitTests.ContactApi
         }
 
         [Fact]
-        public async Task CreateContactAsync_InvalidLastName_ShouldThrowArgumentNullException()
+        public async Task CreateContactAsync_NullLastName_ShouldThrowArgumentNullException()
         {
             // Arrange
             var firstName = Guid.NewGuid().ToString();

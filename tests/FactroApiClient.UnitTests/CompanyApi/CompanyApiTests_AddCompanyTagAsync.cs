@@ -49,7 +49,7 @@ namespace FactroApiClient.UnitTests.CompanyApi
         }
 
         [Fact]
-        public async Task AddCompanyTagAsync_NullModel_ShouldThrowArgumentNullException()
+        public async Task AddCompanyTagAsync_NullRequestModel_ShouldThrowArgumentNullException()
         {
             // Arrange
             var companyId = Guid.NewGuid().ToString();
@@ -64,7 +64,7 @@ namespace FactroApiClient.UnitTests.CompanyApi
         }
 
         [Fact]
-        public async Task AddCompanyTagAsync_InvalidModel_ShouldThrowArgumentNullException()
+        public async Task AddCompanyTagAsync_NullRequestModelTagId_ShouldThrowArgumentNullException()
         {
             // Arrange
             var companyId = Guid.NewGuid().ToString();

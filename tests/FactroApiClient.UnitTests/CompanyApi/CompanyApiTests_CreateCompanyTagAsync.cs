@@ -16,7 +16,7 @@ namespace FactroApiClient.UnitTests.CompanyApi
     public partial class CompanyApiTests
     {
         [Fact]
-        public async Task CreateCompanyTagAsync_ValidModel_ShouldReturnExpectedCompany()
+        public async Task CreateCompanyTagAsync_ValidRequest_ShouldReturnExpectedCompany()
         {
             // Arrange
             var createCompanyTagRequest = new CreateCompanyTagRequest(Guid.NewGuid().ToString());
@@ -47,7 +47,7 @@ namespace FactroApiClient.UnitTests.CompanyApi
         }
 
         [Fact]
-        public async Task CreateCompanyTagAsync_NullModel_ShouldThrowArgumentNullException()
+        public async Task CreateCompanyTagAsync_NullRequestModel_ShouldThrowArgumentNullException()
         {
             // Arrange
             var companyApi = this.fixture.GetCompanyApi();
@@ -60,10 +60,10 @@ namespace FactroApiClient.UnitTests.CompanyApi
         }
 
         [Fact]
-        public async Task CreateCompanyTagAsync_NullName_ShouldThrowArgumentNullException()
+        public async Task CreateCompanyTagAsync_NullRequestModelName_ShouldThrowArgumentNullException()
         {
             // Arrange
-            var createCompanyTagRequest = new CreateCompanyTagRequest(null);
+            var createCompanyTagRequest = new CreateCompanyTagRequest(name: null);
 
             var companyApi = this.fixture.GetCompanyApi();
 

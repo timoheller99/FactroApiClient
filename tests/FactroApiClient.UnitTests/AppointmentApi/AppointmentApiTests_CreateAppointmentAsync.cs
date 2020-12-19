@@ -16,7 +16,7 @@ namespace FactroApiClient.UnitTests.AppointmentApi
     public partial class AppointmentApiTests
     {
         [Fact]
-        public async Task CreateAppointment_ValidModel_ShouldReturnCreatedAppointment()
+        public async Task CreateAppointment_ValidRequest_ShouldReturnCreatedAppointment()
         {
             // Arrange
             var employeeId = Guid.NewGuid().ToString();
@@ -56,7 +56,7 @@ namespace FactroApiClient.UnitTests.AppointmentApi
         }
 
         [Fact]
-        public async Task CreateAppointment_NullModel_ShouldThrowArgumentNullException()
+        public async Task CreateAppointment_NullRequestModel_ShouldThrowArgumentNullException()
         {
             // Arrange
             var appointmentApi = this.fixture.GetAppointmentApi();
@@ -70,7 +70,7 @@ namespace FactroApiClient.UnitTests.AppointmentApi
 
         [Theory]
         [MemberData(nameof(AppointmentApiTestFixture.InvalidEmployeeIds), MemberType = typeof(AppointmentApiTestFixture))]
-        public async Task CreateAppointmentAsync_InvalidEmployeeId_ShouldThrowArgumentNullException(string employeeId)
+        public async Task CreateAppointmentAsync_InvalidRequestModelEmployeeId_ShouldThrowArgumentNullException(string employeeId)
         {
             // Arrange
             var startDate = DateTime.UtcNow;
@@ -89,7 +89,7 @@ namespace FactroApiClient.UnitTests.AppointmentApi
         }
 
         [Fact]
-        public async Task CreateAppointmentAsync_NullSubject_ShouldThrowArgumentNullException()
+        public async Task CreateAppointmentAsync_NullRequestModelSubject_ShouldThrowArgumentNullException()
         {
             // Arrange
             var employeeId = Guid.NewGuid().ToString();
