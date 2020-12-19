@@ -53,8 +53,8 @@ namespace FactroApiClient.UnitTests.CompanyApi
             getCompaniesResponse.Should().BeEquivalentTo(existingCompaniesList);
         }
 
-        [Fact]
-        public async Task GetCompaniesAsync_UnsuccessfulRequest_ShouldReturnNull()
+        [Fact(Skip = "Throw of exception is not implemented yet.")]
+        public async Task GetCompaniesAsync_UnsuccessfulRequest_ShouldThrowCompanyApiException()
         {
             // Arrange
             var response = new HttpResponseMessage
@@ -68,15 +68,11 @@ namespace FactroApiClient.UnitTests.CompanyApi
 
             var companyApi = this.fixture.GetCompanyApi(response);
 
-            var getCompaniesResponse = new List<GetCompanyPayload>();
-
             // Act
-            Func<Task> act = async () => getCompaniesResponse = (await companyApi.GetCompaniesAsync())?.ToList();
+            Func<Task> act = async () => await companyApi.GetCompaniesAsync();
 
             // Assert
-            await act.Should().NotThrowAsync();
-
-            getCompaniesResponse.Should().BeNull();
+            await act.Should().ThrowAsync<Exception>();
         }
     }
 }

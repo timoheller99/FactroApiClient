@@ -157,6 +157,11 @@ namespace FactroApiClient.Appointment
                 throw new ArgumentNullException(nameof(appointmentId), $"{nameof(appointmentId)} can not be null, empty or whitespace.");
             }
 
+            if (updateAppointmentRequest == null)
+            {
+                throw new ArgumentNullException(nameof(updateAppointmentRequest), $"{nameof(updateAppointmentRequest)} can not be null.");
+            }
+
             using (var client = this.httpClientFactory.CreateClient(BaseClientName))
             {
                 var requestRoute = ApiEndpoints.Appointment.Update(appointmentId);

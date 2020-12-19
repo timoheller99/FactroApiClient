@@ -53,8 +53,8 @@ namespace FactroApiClient.UnitTests.AppointmentApi
             getAppointmentsResponse.Should().HaveCount(existingAppointmentsList.Count);
         }
 
-        [Fact]
-        public async Task GetAppointmentsAsync_UnsuccessfulRequest_ShouldReturnNull()
+        [Fact(Skip = "Throw of exception is not implemented yet.")]
+        public async Task GetAppointmentsAsync_UnsuccessfulRequest_ShouldThrowAppointmentApiException()
         {
             // Arrange
             var expectedResponse = new HttpResponseMessage
@@ -68,15 +68,11 @@ namespace FactroApiClient.UnitTests.AppointmentApi
 
             var appointmentApi = this.fixture.GetAppointmentApi(expectedResponse);
 
-            var getAppointmentsResponse = new List<GetAppointmentPayload>();
-
             // Act
-            Func<Task> act = async () => getAppointmentsResponse = (await appointmentApi.GetAppointmentsAsync())?.ToList();
+            Func<Task> act = async () => await appointmentApi.GetAppointmentsAsync();
 
             // Assert
-            await act.Should().NotThrowAsync();
-
-            getAppointmentsResponse.Should().BeNull();
+            await act.Should().ThrowAsync<Exception>();
         }
     }
 }

@@ -60,8 +60,8 @@ namespace FactroApiClient.UnitTests.CompanyApi
             await act.Should().ThrowAsync<ArgumentNullException>();
         }
 
-        [Fact]
-        public async Task DeleteCompanyTagAsync_UnsuccessfulRequest_ShouldReturnNull()
+        [Fact(Skip = "Throw of exception is not implemented yet.")]
+        public async Task DeleteCompanyTagAsync_UnsuccessfulRequest_ShouldThrowCompanyApiException()
         {
             // Arrange
             var response = new HttpResponseMessage
@@ -75,15 +75,11 @@ namespace FactroApiClient.UnitTests.CompanyApi
 
             var companyApi = this.fixture.GetCompanyApi(response);
 
-            var deleteCompanyTagResponse = new DeleteCompanyTagResponse();
-
             // Act
-            Func<Task> act = async () => deleteCompanyTagResponse = await companyApi.DeleteCompanyTagAsync(Guid.NewGuid().ToString());
+            Func<Task> act = async () => await companyApi.DeleteCompanyTagAsync(Guid.NewGuid().ToString());
 
             // Assert
-            await act.Should().NotThrowAsync();
-
-            deleteCompanyTagResponse.Should().BeNull();
+            await act.Should().ThrowAsync<Exception>();
         }
     }
 }
