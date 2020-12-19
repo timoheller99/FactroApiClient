@@ -707,7 +707,7 @@ namespace FactroApiClient.Package
             }
         }
 
-        public async Task<IEnumerable<GetPackageDocumentPayload>> GetDocumentsAsync(string projectId, string packageId)
+        public async Task<IEnumerable<GetPackageDocumentPayload>> GetPackageDocumentsAsync(string projectId, string packageId)
         {
             throw new System.NotImplementedException();
         }
