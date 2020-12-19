@@ -54,7 +54,7 @@ namespace FactroApiClient.Project
 
         public Task RevokeProjectReadRightsFromUserAsync(string projectId, string employeeId);
 
-        public Task<IEnumerable<GetProjectWriteRightsResponse>> GetWriteRightsAsync(string projectId);
+        public Task<IEnumerable<GetProjectWriteRightsResponse>> GetProjectWriteRightsAsync(string projectId);
 
         public Task<AddProjectWriteRightsForUserResponse> GrantWriteRightsToUserAsync(string projectId, AddProjectWriteRightsForUserRequest addProjectWriteRightsForUserRequest);
 

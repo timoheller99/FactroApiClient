@@ -19,7 +19,7 @@ namespace FactroApiClient.UnitTests.ProjectApi
     public partial class ProjectApiTests
     {
         [Fact]
-        public async Task GetWriteRightsAsync_ValidRequest_ShouldReturnWriteRights()
+        public async Task GetProjectWriteRightsAsync_ValidRequest_ShouldReturnWriteRights()
         {
             // Arrange
             var existingProject = new GetProjectPayload
@@ -47,7 +47,7 @@ namespace FactroApiClient.UnitTests.ProjectApi
             var getWriteRightsResponse = new List<GetProjectWriteRightsResponse>();
 
             // Act
-            Func<Task> act = async () => getWriteRightsResponse = (await projectApi.GetWriteRightsAsync(existingProject.Id)).ToList();
+            Func<Task> act = async () => getWriteRightsResponse = (await projectApi.GetProjectWriteRightsAsync(existingProject.Id)).ToList();
 
             // Assert
             await act.Should().NotThrowAsync();
@@ -57,20 +57,20 @@ namespace FactroApiClient.UnitTests.ProjectApi
 
         [Theory]
         [MemberData(nameof(ProjectApiTestFixture.InvalidProjectIds), MemberType = typeof(ProjectApiTestFixture))]
-        public async Task GetWriteRightsAsync_InvalidProjectId_ShouldThrowArgumentNullException(string projectId)
+        public async Task GetProjectWriteRightsAsync_InvalidProjectId_ShouldThrowArgumentNullException(string projectId)
         {
             // Arrange
             var projectApi = this.fixture.GetProjectApi();
 
             // Act
-            Func<Task> act = async () => await projectApi.GetWriteRightsAsync(projectId);
+            Func<Task> act = async () => await projectApi.GetProjectWriteRightsAsync(projectId);
 
             // Assert
             await act.Should().ThrowAsync<ArgumentNullException>();
         }
 
         [Fact(Skip = "Throw of exception is not implemented yet.")]
-        public async Task GetWriteRightsAsync_BadRequest_ShouldReturnProjectApiException()
+        public async Task GetProjectWriteRightsAsync_BadRequest_ShouldReturnProjectApiException()
         {
             // Arrange
             var expectedResponse = new HttpResponseMessage
@@ -85,7 +85,7 @@ namespace FactroApiClient.UnitTests.ProjectApi
             var projectApi = this.fixture.GetProjectApi(expectedResponse);
 
             // Act
-            Func<Task> act = async () => await projectApi.GetWriteRightsAsync(Guid.NewGuid().ToString());
+            Func<Task> act = async () => await projectApi.GetProjectWriteRightsAsync(Guid.NewGuid().ToString());
 
             // Assert
             await act.Should().ThrowAsync<Exception>();

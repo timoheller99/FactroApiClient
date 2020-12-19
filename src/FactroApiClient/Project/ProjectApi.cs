@@ -611,7 +611,7 @@ namespace FactroApiClient.Project
             }
         }
 
-        public async Task<IEnumerable<GetProjectWriteRightsResponse>> GetWriteRightsAsync(string projectId)
+        public async Task<IEnumerable<GetProjectWriteRightsResponse>> GetProjectWriteRightsAsync(string projectId)
         {
             if (string.IsNullOrWhiteSpace(projectId))
             {
