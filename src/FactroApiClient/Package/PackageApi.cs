@@ -998,7 +998,7 @@ namespace FactroApiClient.Package
             }
         }
 
-        public async Task ShiftTasksAsync(
+        public async Task ShiftTasksOfPackageAsync(
             string projectId,
             string packageId,
             ShiftPackageWithSuccessorsRequest shiftPackageWithSuccessorsRequest)
