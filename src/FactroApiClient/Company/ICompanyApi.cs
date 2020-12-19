@@ -79,7 +79,7 @@ namespace FactroApiClient.Company
         /// <param name="companyId">Id of the company to associate.</param>
         /// <param name="addCompanyTagAssociationRequest">Request model to create the association.</param>
         /// <returns>Returns void.</returns>
-        public Task AddCompanyTagAsync(string companyId, AddCompanyTagAssociationRequest addCompanyTagAssociationRequest);
+        public Task AddTagToCompanyAsync(string companyId, AddCompanyTagAssociationRequest addCompanyTagAssociationRequest);
 
         /// <summary>
         /// Removes the association between the given company id and the given company tag id.

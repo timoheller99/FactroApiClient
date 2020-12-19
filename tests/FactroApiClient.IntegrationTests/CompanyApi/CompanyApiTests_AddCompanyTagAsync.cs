@@ -13,7 +13,7 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
     public partial class CompanyApiTests
     {
         [Fact]
-        public async Task AddCompanyTagAsync_ExistingCompany_ShouldAddCompanyTag()
+        public async Task AddTagToCompanyAsync_ExistingCompany_ShouldAddCompanyTag()
         {
             // Arrange
             var companyApi = this.fixture.GetService<ICompanyApi>();
@@ -25,7 +25,7 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
             var addCompanyTagRequest = new AddCompanyTagAssociationRequest(createdCompanyTag.Id);
 
             // Act
-            Func<Task> act = async () => await companyApi.AddCompanyTagAsync(existingCompany.Id, addCompanyTagRequest);
+            Func<Task> act = async () => await companyApi.AddTagToCompanyAsync(existingCompany.Id, addCompanyTagRequest);
 
             // Assert
             await act.Should().NotThrowAsync();
@@ -34,7 +34,7 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
         }
 
         [Fact]
-        public async Task AddCompanyTagAsync_NotExistingCompany_ShouldNotAddCompanyTag()
+        public async Task AddTagToCompanyAsync_NotExistingCompany_ShouldNotAddCompanyTag()
         {
             // Arrange
             var companyApi = this.fixture.GetService<ICompanyApi>();
@@ -46,7 +46,7 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
             var companyId = Guid.NewGuid().ToString();
 
             // Act
-            Func<Task> act = async () => await companyApi.AddCompanyTagAsync(companyId, addCompanyTagRequest);
+            Func<Task> act = async () => await companyApi.AddTagToCompanyAsync(companyId, addCompanyTagRequest);
 
             // Assert
             await act.Should().NotThrowAsync();

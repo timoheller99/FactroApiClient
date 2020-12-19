@@ -32,7 +32,7 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
                 existingCompanyTags.Add(createdCompanyTag);
 
                 var addCompanyTagRequest = new AddCompanyTagAssociationRequest(createdCompanyTag.Id);
-                await companyApi.AddCompanyTagAsync(existingCompany.Id, addCompanyTagRequest);
+                await companyApi.AddTagToCompanyAsync(existingCompany.Id, addCompanyTagRequest);
             }
 
             var getCompanyTagsByIdResponse = new List<GetCompanyTagAssociationPayload>();

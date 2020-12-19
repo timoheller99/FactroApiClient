@@ -364,7 +364,7 @@ namespace FactroApiClient.Company
             }
         }
 
-        public async Task AddCompanyTagAsync(string companyId, AddCompanyTagAssociationRequest addCompanyTagAssociationRequest)
+        public async Task AddTagToCompanyAsync(string companyId, AddCompanyTagAssociationRequest addCompanyTagAssociationRequest)
         {
             if (string.IsNullOrWhiteSpace(companyId))
             {

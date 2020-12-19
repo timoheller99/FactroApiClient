@@ -65,7 +65,7 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
             var existingCompanyTag = await this.fixture.CreateTestCompanyTagAsync(companyApi);
 
             var addCompanyTagRequest = new AddCompanyTagAssociationRequest(existingCompanyTag.Id);
-            await companyApi.AddCompanyTagAsync(existingCompany.Id, addCompanyTagRequest);
+            await companyApi.AddTagToCompanyAsync(existingCompany.Id, addCompanyTagRequest);
 
             var deleteCompanyTagResponse = new DeleteCompanyTagResponse();
 
