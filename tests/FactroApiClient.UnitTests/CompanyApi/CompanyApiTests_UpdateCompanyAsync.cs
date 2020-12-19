@@ -78,6 +78,21 @@ namespace FactroApiClient.UnitTests.CompanyApi
             await act.Should().ThrowAsync<ArgumentNullException>();
         }
 
+        [Fact]
+        public async Task UpdateCompanyAsync_NullRequestModel_ShouldThrowArgumentNullException()
+        {
+            // Arrange
+            var companyId = Guid.NewGuid().ToString();
+
+            var companyApi = this.fixture.GetCompanyApi();
+
+            // Act
+            Func<Task> act = async () => await companyApi.UpdateCompanyAsync(companyId, updateCompanyRequest: null);
+
+            // Assert
+            await act.Should().ThrowAsync<ArgumentNullException>();
+        }
+
         [Fact(Skip = "Throw of exception is not implemented yet.")]
         public async Task UpdateCompanyAsync_UnsuccessfulRequest_ShouldThrowCompanyApiException()
         {
