@@ -29,7 +29,7 @@ namespace FactroApiClient.Package
         // Comments
         public Task<CreatePackageCommentResponse> CreatePackageCommentAsync(string projectId, string packageId, CreatePackageCommentRequest createPackageCommentRequest);
 
-        public Task<IEnumerable<GetPackageCommentPayload>> GetCommentsAsync(string projectId, string packageId);
+        public Task<IEnumerable<GetPackageCommentPayload>> GetCommentsOfPackageAsync(string projectId, string packageId);
 
         public Task<DeletePackageCommentResponse> DeleteCommentAsync(string projectId, string packageId, string commentId);
 

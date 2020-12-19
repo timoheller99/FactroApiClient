@@ -377,7 +377,7 @@ namespace FactroApiClient.Package
             }
         }
 
-        public async Task<IEnumerable<GetPackageCommentPayload>> GetCommentsAsync(string projectId, string packageId)
+        public async Task<IEnumerable<GetPackageCommentPayload>> GetCommentsOfPackageAsync(string projectId, string packageId)
         {
             if (string.IsNullOrWhiteSpace(projectId))
             {
