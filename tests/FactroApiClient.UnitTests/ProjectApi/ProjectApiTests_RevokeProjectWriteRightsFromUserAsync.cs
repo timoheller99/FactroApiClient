@@ -14,7 +14,7 @@ namespace FactroApiClient.UnitTests.ProjectApi
     public partial class ProjectApiTests
     {
         [Fact]
-        public async Task RevokeWriteRightsFromUserAsync_ValidRequest_ShouldReturnVoid()
+        public async Task RevokeProjectWriteRightsFromUserAsync_ValidRequest_ShouldReturnVoid()
         {
             // Arrange
             var existingProject = new GetProjectPayload
@@ -29,7 +29,7 @@ namespace FactroApiClient.UnitTests.ProjectApi
             var projectApi = this.fixture.GetProjectApi(expectedResponse);
 
             // Act
-            Func<Task> act = async () => await projectApi.RevokeWriteRightsFromUserAsync(existingProject.Id, employeeId);
+            Func<Task> act = async () => await projectApi.RevokeProjectWriteRightsFromUserAsync(existingProject.Id, employeeId);
 
             // Assert
             await act.Should().NotThrowAsync();
@@ -37,7 +37,7 @@ namespace FactroApiClient.UnitTests.ProjectApi
 
         [Theory]
         [MemberData(nameof(ProjectApiTestFixture.InvalidProjectIds), MemberType = typeof(ProjectApiTestFixture))]
-        public async Task RevokeWriteRightsFromUserAsync_InvalidProjectId_ShouldThrowArgumentNullException(string projectId)
+        public async Task RevokeProjectWriteRightsFromUserAsync_InvalidProjectId_ShouldThrowArgumentNullException(string projectId)
         {
             // Arrange
             var employeeId = Guid.NewGuid().ToString();
@@ -47,7 +47,7 @@ namespace FactroApiClient.UnitTests.ProjectApi
             var projectApi = this.fixture.GetProjectApi(expectedResponse);
 
             // Act
-            Func<Task> act = async () => await projectApi.RevokeWriteRightsFromUserAsync(projectId, employeeId);
+            Func<Task> act = async () => await projectApi.RevokeProjectWriteRightsFromUserAsync(projectId, employeeId);
 
             // Assert
             await act.Should().ThrowAsync<ArgumentNullException>();
@@ -55,7 +55,7 @@ namespace FactroApiClient.UnitTests.ProjectApi
 
         [Theory]
         [MemberData(nameof(ProjectApiTestFixture.InvalidEmployeeIds), MemberType = typeof(ProjectApiTestFixture))]
-        public async Task RevokeWriteRightsFromUserAsync_InvalidEmployeeId_ShouldThrowArgumentNullException(string employeeId)
+        public async Task RevokeProjectWriteRightsFromUserAsync_InvalidEmployeeId_ShouldThrowArgumentNullException(string employeeId)
         {
             // Arrange
             var existingProject = new GetProjectPayload
@@ -68,14 +68,14 @@ namespace FactroApiClient.UnitTests.ProjectApi
             var projectApi = this.fixture.GetProjectApi(expectedResponse);
 
             // Act
-            Func<Task> act = async () => await projectApi.RevokeWriteRightsFromUserAsync(existingProject.Id, employeeId);
+            Func<Task> act = async () => await projectApi.RevokeProjectWriteRightsFromUserAsync(existingProject.Id, employeeId);
 
             // Assert
             await act.Should().ThrowAsync<ArgumentNullException>();
         }
 
         [Fact(Skip = "Throw of exception is not implemented yet.")]
-        public async Task RevokeWriteRightsFromUserAsync_BadRequest_ShouldThrowProjectApiException()
+        public async Task RevokeProjectWriteRightsFromUserAsync_BadRequest_ShouldThrowProjectApiException()
         {
             // Arrange
             var projectId = Guid.NewGuid().ToString();
@@ -93,7 +93,7 @@ namespace FactroApiClient.UnitTests.ProjectApi
             var projectApi = this.fixture.GetProjectApi(expectedResponse);
 
             // Act
-            Func<Task> act = async () => await projectApi.RevokeWriteRightsFromUserAsync(projectId, employeeId);
+            Func<Task> act = async () => await projectApi.RevokeProjectWriteRightsFromUserAsync(projectId, employeeId);
 
             // Assert
             await act.Should().ThrowAsync<Exception>();
