@@ -492,7 +492,7 @@ namespace FactroApiClient.Project
             throw new System.NotImplementedException();
         }
 
-        public async Task<IEnumerable<GetProjectReadRightsResponse>> GetReadRightsAsync(string projectId)
+        public async Task<IEnumerable<GetProjectReadRightsResponse>> GetProjectReadRightsAsync(string projectId)
         {
             if (string.IsNullOrWhiteSpace(projectId))
             {

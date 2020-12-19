@@ -48,7 +48,7 @@ namespace FactroApiClient.Project
         public Task<RemoveProjectDocumentResponse> DeleteProjectDocumentAsync(string projectId, string documentId);
 
         // Access Rights
-        public Task<IEnumerable<GetProjectReadRightsResponse>> GetReadRightsAsync(string projectId);
+        public Task<IEnumerable<GetProjectReadRightsResponse>> GetProjectReadRightsAsync(string projectId);
 
         public Task<AddProjectReadRightsForUserResponse> GrantReadRightsToUserAsync(string projectId, AddProjectReadRightsForUserRequest addProjectReadRightsForUserRequest);
 

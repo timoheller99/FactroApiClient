@@ -19,7 +19,7 @@ namespace FactroApiClient.UnitTests.ProjectApi
     public partial class ProjectApiTests
     {
         [Fact]
-        public async Task GetReadRightsAsync_ValidRequest_ShouldReturnReadRights()
+        public async Task GetProjectReadRightsAsync_ValidRequest_ShouldReturnReadRights()
         {
             // Arrange
             var existingProject = new GetProjectPayload
@@ -47,7 +47,7 @@ namespace FactroApiClient.UnitTests.ProjectApi
             var getReadRightsResponse = new List<GetProjectReadRightsResponse>();
 
             // Act
-            Func<Task> act = async () => getReadRightsResponse = (await projectApi.GetReadRightsAsync(existingProject.Id)).ToList();
+            Func<Task> act = async () => getReadRightsResponse = (await projectApi.GetProjectReadRightsAsync(existingProject.Id)).ToList();
 
             // Assert
             await act.Should().NotThrowAsync();
@@ -57,20 +57,20 @@ namespace FactroApiClient.UnitTests.ProjectApi
 
         [Theory]
         [MemberData(nameof(ProjectApiTestFixture.InvalidProjectIds), MemberType = typeof(ProjectApiTestFixture))]
-        public async Task GetReadRightsAsync_InvalidProjectId_ShouldThrowArgumentNullException(string projectId)
+        public async Task GetProjectReadRightsAsync_InvalidProjectId_ShouldThrowArgumentNullException(string projectId)
         {
             // Arrange
             var projectApi = this.fixture.GetProjectApi();
 
             // Act
-            Func<Task> act = async () => await projectApi.GetReadRightsAsync(projectId);
+            Func<Task> act = async () => await projectApi.GetProjectReadRightsAsync(projectId);
 
             // Assert
             await act.Should().ThrowAsync<ArgumentNullException>();
         }
 
         [Fact(Skip = "Throw of exception is not implemented yet.")]
-        public async Task GetReadRightsAsync_BadRequest_ShouldReturnProjectApiException()
+        public async Task GetProjectReadRightsAsync_BadRequest_ShouldReturnProjectApiException()
         {
             // Arrange
             var expectedResponse = new HttpResponseMessage
@@ -85,7 +85,7 @@ namespace FactroApiClient.UnitTests.ProjectApi
             var projectApi = this.fixture.GetProjectApi(expectedResponse);
 
             // Act
-            Func<Task> act = async () => await projectApi.GetReadRightsAsync(Guid.NewGuid().ToString());
+            Func<Task> act = async () => await projectApi.GetProjectReadRightsAsync(Guid.NewGuid().ToString());
 
             // Assert
             await act.Should().ThrowAsync<Exception>();
