@@ -322,7 +322,7 @@ namespace FactroApiClient.Package
             }
         }
 
-        public async Task<CreatePackageCommentResponse> CreateCommentAsync(string projectId, string packageId, CreatePackageCommentRequest createPackageCommentRequest)
+        public async Task<CreatePackageCommentResponse> CreatePackageCommentAsync(string projectId, string packageId, CreatePackageCommentRequest createPackageCommentRequest)
         {
             if (string.IsNullOrWhiteSpace(projectId))
             {
