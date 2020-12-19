@@ -7,6 +7,7 @@ namespace FactroApiClient
     using FactroApiClient.Appointment;
     using FactroApiClient.Company;
     using FactroApiClient.Contact;
+    using FactroApiClient.Endpoints;
     using FactroApiClient.Package;
     using FactroApiClient.Project;
 
@@ -44,7 +45,7 @@ namespace FactroApiClient
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(apiToken);
-                client.BaseAddress = new Uri("https://cloud.factro.com/api/core/");
+                client.BaseAddress = new Uri(ApiEndpoints.BaseAddress);
             });
             serviceCollection.RemoveAll<IHttpMessageHandlerBuilderFilter>();
         }
