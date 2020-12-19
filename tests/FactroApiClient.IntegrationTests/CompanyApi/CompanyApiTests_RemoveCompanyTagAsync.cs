@@ -35,7 +35,7 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
 
             using (new AssertionScope())
             {
-                (await companyApi.GetCompanyTagsByIdAsync(existingCompany.Id)).Should().NotContain(x => x.Id == createdCompanyTag.Id);
+                (await companyApi.GetTagsOfCompanyAsync(existingCompany.Id)).Should().NotContain(x => x.Id == createdCompanyTag.Id);
 
                 (await this.fixture.GetCompanyTagsAsync(companyApi)).Should().ContainEquivalentOf(createdCompanyTag);
             }
@@ -57,7 +57,7 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
             // Assert
             await act.Should().NotThrowAsync();
 
-            (await companyApi.GetCompanyTagsByIdAsync(existingCompany.Id)).Should().NotContain(x => x.Id == createdCompanyTag.Id);
+            (await companyApi.GetTagsOfCompanyAsync(existingCompany.Id)).Should().NotContain(x => x.Id == createdCompanyTag.Id);
         }
 
         [Fact]

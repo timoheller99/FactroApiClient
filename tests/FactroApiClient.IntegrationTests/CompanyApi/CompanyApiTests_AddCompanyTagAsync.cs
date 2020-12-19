@@ -30,7 +30,7 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
             // Assert
             await act.Should().NotThrowAsync();
 
-            (await companyApi.GetCompanyTagsByIdAsync(existingCompany.Id)).Should().ContainEquivalentOf(createdCompanyTag);
+            (await companyApi.GetTagsOfCompanyAsync(existingCompany.Id)).Should().ContainEquivalentOf(createdCompanyTag);
         }
 
         [Fact]
@@ -51,7 +51,7 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
             // Assert
             await act.Should().NotThrowAsync();
 
-            (await companyApi.GetCompanyTagsByIdAsync(companyId)).Should().BeEmpty();
+            (await companyApi.GetTagsOfCompanyAsync(companyId)).Should().BeEmpty();
         }
     }
 }

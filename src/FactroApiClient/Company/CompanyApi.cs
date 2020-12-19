@@ -292,7 +292,7 @@ namespace FactroApiClient.Company
             }
         }
 
-        public async Task<IEnumerable<GetCompanyTagAssociationPayload>> GetCompanyTagsByIdAsync(string companyId)
+        public async Task<IEnumerable<GetCompanyTagAssociationPayload>> GetTagsOfCompanyAsync(string companyId)
         {
             if (string.IsNullOrWhiteSpace(companyId))
             {

@@ -15,7 +15,7 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
     public partial class CompanyApiTests
     {
         [Fact]
-        public async Task GetCompanyTagsByIdAsync_ExistingCompanyWithTags_ShouldReturnExpectedCompany()
+        public async Task GetTagsOfCompanyAsync_ExistingCompanyWithTags_ShouldReturnExpectedCompany()
         {
             // Arrange
             var companyApi = this.fixture.GetService<ICompanyApi>();
@@ -38,7 +38,7 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
             var getCompanyTagsByIdResponse = new List<GetCompanyTagAssociationPayload>();
 
             // Act
-            Func<Task> act = async () => getCompanyTagsByIdResponse = (await companyApi.GetCompanyTagsByIdAsync(existingCompany.Id)).ToList();
+            Func<Task> act = async () => getCompanyTagsByIdResponse = (await companyApi.GetTagsOfCompanyAsync(existingCompany.Id)).ToList();
 
             // Assert
             await act.Should().NotThrowAsync();
@@ -47,7 +47,7 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
         }
 
         [Fact]
-        public async Task GetCompanyTagsByIdAsync_ExistingCompanyWithoutTags_ShouldReturnExpectedCompany()
+        public async Task GetTagsOfCompanyAsync_ExistingCompanyWithoutTags_ShouldReturnExpectedCompany()
         {
             // Arrange
             var companyApi = this.fixture.GetService<ICompanyApi>();
@@ -57,7 +57,7 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
             var getCompanyTagsByIdResponse = new List<GetCompanyTagAssociationPayload>();
 
             // Act
-            Func<Task> act = async () => getCompanyTagsByIdResponse = (await companyApi.GetCompanyTagsByIdAsync(existingCompany.Id)).ToList();
+            Func<Task> act = async () => getCompanyTagsByIdResponse = (await companyApi.GetTagsOfCompanyAsync(existingCompany.Id)).ToList();
 
             // Assert
             await act.Should().NotThrowAsync();
@@ -66,7 +66,7 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
         }
 
         [Fact]
-        public async Task GetCompanyTagsByIdAsync_NotExistingCompany_ShouldReturnEmptyList()
+        public async Task GetTagsOfCompanyAsync_NotExistingCompany_ShouldReturnEmptyList()
         {
             // Arrange
             var companyApi = this.fixture.GetService<ICompanyApi>();
@@ -74,7 +74,7 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
             var getCompanyTagsByIdResponse = new List<GetCompanyTagAssociationPayload>();
 
             // Act
-            Func<Task> act = async () => getCompanyTagsByIdResponse = (await companyApi.GetCompanyTagsByIdAsync(Guid.NewGuid().ToString())).ToList();
+            Func<Task> act = async () => getCompanyTagsByIdResponse = (await companyApi.GetTagsOfCompanyAsync(Guid.NewGuid().ToString())).ToList();
 
             // Assert
             await act.Should().NotThrowAsync();

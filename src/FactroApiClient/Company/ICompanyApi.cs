@@ -64,7 +64,7 @@ namespace FactroApiClient.Company
         /// </summary>
         /// <param name="companyId">Id of the company whose tags should be fetched.</param>
         /// <returns>Returns the list of tags associated with the given company id.</returns>
-        public Task<IEnumerable<GetCompanyTagAssociationPayload>> GetCompanyTagsByIdAsync(string companyId);
+        public Task<IEnumerable<GetCompanyTagAssociationPayload>> GetTagsOfCompanyAsync(string companyId);
 
         /// <summary>
         /// Deletes the company tag with the given company tag id.
