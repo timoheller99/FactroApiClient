@@ -6,5 +6,6 @@ namespace FactroApiClient.Endpoints
     [SuppressMessage("Naming Rules", "VSTHRD200", Justification = "Improve readability with partial class.")]
     internal static partial class ApiEndpoints
     {
+        public static string BaseAddress = "https://cloud.factro.com/api/core/";
     }
 }
