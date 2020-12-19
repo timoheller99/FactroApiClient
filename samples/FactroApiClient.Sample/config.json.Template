@@ -1,0 +1,22 @@
+{
+    "FactroApiClient":
+    {
+        "ApiToken": "FactroApiToken"
+    },
+    "Serilog": {
+        "MinimumLevel": {
+            "Default": "Information",
+            "Override": {
+            }
+        },
+        "WriteTo": [
+            {
+                "Name": "Console",
+                "Args": {
+                    "outputTemplate": "[{Timestamp:HH:mm:ss} {SourceContext} - {Level}] {Message:lj}{Exception}{NewLine}",
+                    "theme": "Serilog.Sinks.SystemConsole.Themes.SystemConsoleTheme::Literate, Serilog.Sinks.Console"
+                }
+            }
+        ]
+    }
+}
