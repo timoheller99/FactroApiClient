@@ -586,7 +586,7 @@ namespace FactroApiClient.Package
             }
         }
 
-        public async Task RemoveContactAsync(string projectId, string packageId)
+        public async Task RemovePackageContactAsync(string projectId, string packageId)
         {
             if (string.IsNullOrWhiteSpace(projectId))
             {
