@@ -150,6 +150,11 @@ namespace FactroApiClient.Contact
                 throw new ArgumentNullException(nameof(contactId), $"{nameof(contactId)} can not be null, empty or whitespace.");
             }
 
+            if (updateContactRequest == null)
+            {
+                throw new ArgumentNullException(nameof(updateContactRequest), $"{nameof(updateContactRequest)} can not be null.");
+            }
+
             using (var client = this.httpClientFactory.CreateClient(BaseClientName))
             {
                 var requestRoute = ApiEndpoints.Contact.Update(contactId);
