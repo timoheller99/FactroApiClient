@@ -17,7 +17,7 @@ namespace FactroApiClient.UnitTests.ProjectApi
     public partial class ProjectApiTests
     {
         [Fact]
-        public async Task GrantWriteRightsAsync_ValidRequest_ShouldReturnWriteRightInformation()
+        public async Task GrantProjectWriteRightsToUserAsync_ValidRequest_ShouldReturnWriteRightInformation()
         {
             // Arrange
             var existingProject = new GetProjectPayload
@@ -40,7 +40,7 @@ namespace FactroApiClient.UnitTests.ProjectApi
             var getWriteRightsResponse = new AddProjectWriteRightsForUserResponse();
 
             // Act
-            Func<Task> act = async () => getWriteRightsResponse = await projectApi.GrantWriteRightsToUserAsync(existingProject.Id, addProjectWriteRightsForUserRequest);
+            Func<Task> act = async () => getWriteRightsResponse = await projectApi.GrantProjectWriteRightsToUserAsync(existingProject.Id, addProjectWriteRightsForUserRequest);
 
             // Assert
             await act.Should().NotThrowAsync();
@@ -50,7 +50,7 @@ namespace FactroApiClient.UnitTests.ProjectApi
 
         [Theory]
         [MemberData(nameof(ProjectApiTestFixture.InvalidProjectIds), MemberType = typeof(ProjectApiTestFixture))]
-        public async Task GrantWriteRightsAsync_InvalidProjectId_ShouldThrowArgumentNullException(string projectId)
+        public async Task GrantProjectWriteRightsToUserAsync_InvalidProjectId_ShouldThrowArgumentNullException(string projectId)
         {
             // Arrange
             var employeeId = Guid.NewGuid().ToString();
@@ -59,14 +59,14 @@ namespace FactroApiClient.UnitTests.ProjectApi
             var projectApi = this.fixture.GetProjectApi();
 
             // Act
-            Func<Task> act = async () => await projectApi.GrantWriteRightsToUserAsync(projectId, addProjectWriteRightsForUserRequest);
+            Func<Task> act = async () => await projectApi.GrantProjectWriteRightsToUserAsync(projectId, addProjectWriteRightsForUserRequest);
 
             // Assert
             await act.Should().ThrowAsync<ArgumentNullException>();
         }
 
         [Fact]
-        public async Task GrantWriteRightsAsync_NullRequestModel_ShouldThrowArgumentNullException()
+        public async Task GrantProjectWriteRightsToUserAsync_NullRequestModel_ShouldThrowArgumentNullException()
         {
             // Arrange
             var existingProject = new GetProjectPayload
@@ -77,14 +77,14 @@ namespace FactroApiClient.UnitTests.ProjectApi
             var projectApi = this.fixture.GetProjectApi();
 
             // Act
-            Func<Task> act = async () => await projectApi.GrantWriteRightsToUserAsync(existingProject.Id, addProjectWriteRightsForUserRequest: null);
+            Func<Task> act = async () => await projectApi.GrantProjectWriteRightsToUserAsync(existingProject.Id, addProjectWriteRightsForUserRequest: null);
 
             // Assert
             await act.Should().ThrowAsync<ArgumentNullException>();
         }
 
         [Fact]
-        public async Task GrantWriteRightsAsync_NullRequestModelEmployeeId_ShouldThrowArgumentNullException()
+        public async Task GrantProjectWriteRightsToUserAsync_NullRequestModelEmployeeId_ShouldThrowArgumentNullException()
         {
             // Arrange
             var existingProject = new GetProjectPayload
@@ -97,14 +97,14 @@ namespace FactroApiClient.UnitTests.ProjectApi
             var projectApi = this.fixture.GetProjectApi();
 
             // Act
-            Func<Task> act = async () => await projectApi.GrantWriteRightsToUserAsync(existingProject.Id, addProjectWriteRightsForUserRequest);
+            Func<Task> act = async () => await projectApi.GrantProjectWriteRightsToUserAsync(existingProject.Id, addProjectWriteRightsForUserRequest);
 
             // Assert
             await act.Should().ThrowAsync<ArgumentNullException>();
         }
 
         [Fact(Skip = "Throw of exception is not implemented yet.")]
-        public async Task GrantWriteRightsAsync_BadRequest_ShouldReturnProjectApiException()
+        public async Task GrantProjectWriteRightsToUserAsync_BadRequest_ShouldReturnProjectApiException()
         {
             // Arrange
             var projectId = Guid.NewGuid().ToString();
@@ -122,7 +122,7 @@ namespace FactroApiClient.UnitTests.ProjectApi
             var projectApi = this.fixture.GetProjectApi(expectedResponse);
 
             // Act
-            Func<Task> act = async () => await projectApi.GrantWriteRightsToUserAsync(projectId, addProjectWriteRightsForUserRequest);
+            Func<Task> act = async () => await projectApi.GrantProjectWriteRightsToUserAsync(projectId, addProjectWriteRightsForUserRequest);
 
             // Assert
             await act.Should().ThrowAsync<Exception>();
