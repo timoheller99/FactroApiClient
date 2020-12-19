@@ -1,8 +1,8 @@
-namespace FactroApiClient.Endpoints
+namespace FactroApiClient.Project.Endpoints
 {
-    internal static partial class ApiEndpoints
+    internal static partial class ProjectApiEndpoints
     {
-        internal static class Project
+        public static class Base
         {
             public static string Create()
             {

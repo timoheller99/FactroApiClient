@@ -6,7 +6,7 @@ namespace FactroApiClient.Contact
     using System.Threading.Tasks;
 
     using FactroApiClient.Contact.Contracts;
-    using FactroApiClient.Endpoints;
+    using FactroApiClient.Contact.Endpoints;
 
     using Microsoft.Extensions.Logging;
 
@@ -48,7 +48,7 @@ namespace FactroApiClient.Contact
 
             using (var client = this.httpClientFactory.CreateClient(BaseClientName))
             {
-                var requestRoute = ApiEndpoints.Contact.Create();
+                var requestRoute = ContactApiEndpoints.Base.Create();
 
                 var requestString = JsonConvert.SerializeObject(createContactRequest, this.jsonSerializerSettings);
                 var requestContent = ApiHelpers.GetStringContent(requestString);
@@ -81,7 +81,7 @@ namespace FactroApiClient.Contact
         {
             using (var client = this.httpClientFactory.CreateClient(BaseClientName))
             {
-                var requestRoute = ApiEndpoints.Contact.GetAll();
+                var requestRoute = ContactApiEndpoints.Base.GetAll();
 
                 var response = await client.GetAsync(requestRoute);
 
@@ -116,7 +116,7 @@ namespace FactroApiClient.Contact
 
             using (var client = this.httpClientFactory.CreateClient(BaseClientName))
             {
-                var requestRoute = ApiEndpoints.Contact.GetById(contactId);
+                var requestRoute = ContactApiEndpoints.Base.GetById(contactId);
 
                 var response = await client.GetAsync(requestRoute);
 
@@ -157,7 +157,7 @@ namespace FactroApiClient.Contact
 
             using (var client = this.httpClientFactory.CreateClient(BaseClientName))
             {
-                var requestRoute = ApiEndpoints.Contact.Update(contactId);
+                var requestRoute = ContactApiEndpoints.Base.Update(contactId);
 
                 var requestString = JsonConvert.SerializeObject(updateContactRequest, this.jsonSerializerSettings);
                 var requestContent = ApiHelpers.GetStringContent(requestString);
@@ -196,7 +196,7 @@ namespace FactroApiClient.Contact
 
             using (var client = this.httpClientFactory.CreateClient(BaseClientName))
             {
-                var requestRoute = ApiEndpoints.Contact.Delete(contactId);
+                var requestRoute = ContactApiEndpoints.Base.Delete(contactId);
 
                 var response = await client.DeleteAsync(requestRoute);
 

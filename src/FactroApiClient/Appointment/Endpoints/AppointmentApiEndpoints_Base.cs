@@ -1,8 +1,8 @@
-namespace FactroApiClient.Endpoints
+namespace FactroApiClient.Appointment.Endpoints
 {
-    internal static partial class ApiEndpoints
+    internal static partial class AppointmentApiEndpoints
     {
-        internal static class Appointment
+        public static class Base
         {
             public static string Create()
             {

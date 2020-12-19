@@ -1,8 +1,8 @@
-namespace FactroApiClient.Endpoints
+namespace FactroApiClient.Project.Endpoints
 {
-    internal static partial class ApiEndpoints
+    internal static partial class ProjectApiEndpoints
     {
-        internal static class ProjectStructure
+        public static class Structure
         {
             public static string GetStructure(string projectId)
             {

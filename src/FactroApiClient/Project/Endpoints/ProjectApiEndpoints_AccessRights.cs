@@ -1,8 +1,8 @@
-namespace FactroApiClient.Endpoints
+namespace FactroApiClient.Project.Endpoints
 {
-    internal static partial class ApiEndpoints
+    internal static partial class ProjectApiEndpoints
     {
-        internal static class ProjectsAccessRights
+        public static class AccessRights
         {
             public static string GetReadRights(string projectId)
             {
