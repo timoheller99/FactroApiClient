@@ -542,7 +542,7 @@ namespace FactroApiClient.Package
             }
         }
 
-        public async Task SetContactAsync(string projectId, string packageId, SetContactAssociationRequest setContactAssociationRequest)
+        public async Task SetPackageContactAsync(string projectId, string packageId, SetContactAssociationRequest setContactAssociationRequest)
         {
             if (string.IsNullOrWhiteSpace(projectId))
             {
