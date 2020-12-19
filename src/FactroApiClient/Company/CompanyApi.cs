@@ -8,8 +8,7 @@ namespace FactroApiClient.Company
     using FactroApiClient.Company.Contracts.Basic;
     using FactroApiClient.Company.Contracts.CompanyTag;
     using FactroApiClient.Company.Endpoints;
-
-    using Microsoft.Extensions.Logging;
+    using FactroApiClient.SharedContracts;
 
     using Newtonsoft.Json;
 
@@ -17,15 +16,12 @@ namespace FactroApiClient.Company
     {
         private const string BaseClientName = "BaseClient";
 
-        private readonly ILogger<CompanyApi> logger;
-
         private readonly IHttpClientFactory httpClientFactory;
 
         private readonly JsonSerializerSettings jsonSerializerSettings;
 
-        public CompanyApi(ILogger<CompanyApi> logger, IHttpClientFactory httpClientFactory)
+        public CompanyApi(IHttpClientFactory httpClientFactory)
         {
-            this.logger = logger;
             this.httpClientFactory = httpClientFactory;
             this.jsonSerializerSettings = SerializerSettings.JsonSerializerSettings;
         }
@@ -53,13 +49,11 @@ namespace FactroApiClient.Company
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not create company: '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        "Could not create company.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -83,13 +77,11 @@ namespace FactroApiClient.Company
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not fetch companies: '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        "Could not fetch companies.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -118,14 +110,11 @@ namespace FactroApiClient.Company
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not fetch company with id '{CompanyId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        companyId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        $"Could not get company with id '{companyId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -162,14 +151,11 @@ namespace FactroApiClient.Company
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not update company with id '{CompanyId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        companyId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        $"Could not update company with id '{companyId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -198,14 +184,11 @@ namespace FactroApiClient.Company
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not delete company with id '{CompanyId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        companyId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        $"Could not delete company with id '{companyId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -242,13 +225,11 @@ namespace FactroApiClient.Company
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not create company tag: '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        "Could not create company tag.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -272,13 +253,11 @@ namespace FactroApiClient.Company
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not fetch company tags: '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        "Could not fetch company tags.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -307,14 +286,11 @@ namespace FactroApiClient.Company
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not fetch company tags for company with ID '{CompanyId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        companyId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        $"Could not fetch tags of company with id '{companyId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -343,14 +319,11 @@ namespace FactroApiClient.Company
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not delete company tag with id '{CompanyTagId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        companyTagId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        $"Could not delete company tag with id '{companyTagId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -392,13 +365,11 @@ namespace FactroApiClient.Company
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not add company tag '{CompanyTagId}' to company '{CompanyId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        addCompanyTagAssociationRequest.TagId,
-                        companyId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
+                    throw new FactroApiException(
+                        $"Could not add tag with id '{addCompanyTagAssociationRequest.TagId}' to company with id '{companyId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
             }
         }
@@ -423,13 +394,11 @@ namespace FactroApiClient.Company
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not remove company tag '{CompanyTagId}' to company '{CompanyId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        companyTagId,
-                        companyId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
+                    throw new FactroApiException(
+                        $"Could not remove tag with id '{companyTagId}' from company with id '{companyId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
             }
         }

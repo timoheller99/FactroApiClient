@@ -6,6 +6,7 @@ namespace FactroApiClient.UnitTests.ContactApi
     using System.Threading.Tasks;
 
     using FactroApiClient.Contact.Contracts;
+    using FactroApiClient.SharedContracts;
 
     using FluentAssertions;
 
@@ -98,7 +99,7 @@ namespace FactroApiClient.UnitTests.ContactApi
             await act.Should().ThrowAsync<ArgumentNullException>();
         }
 
-        [Fact(Skip = "Throw of exception is not implemented yet.")]
+        [Fact]
         public async Task CreateContact_UnsuccessfulRequest_ShouldThrowContactApiException()
         {
             // Arrange
@@ -122,7 +123,7 @@ namespace FactroApiClient.UnitTests.ContactApi
             Func<Task> act = async () => await contactApi.CreateContactAsync(createContactRequest);
 
             // Assert
-            await act.Should().ThrowAsync<Exception>();
+            await act.Should().ThrowAsync<FactroApiException>();
         }
     }
 }

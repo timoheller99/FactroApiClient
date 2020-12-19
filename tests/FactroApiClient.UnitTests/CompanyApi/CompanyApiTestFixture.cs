@@ -8,8 +8,6 @@ namespace FactroApiClient.UnitTests.CompanyApi
 
     using FactroApiClient.Company;
 
-    using Microsoft.Extensions.Logging;
-
     using Moq;
     using Moq.Protected;
 
@@ -31,15 +29,9 @@ namespace FactroApiClient.UnitTests.CompanyApi
 
         public CompanyApi GetCompanyApi(HttpResponseMessage response = null)
         {
-            var loggerMock = this.GetLoggerMock();
             var httpClientFactoryMock = this.GetHttpClientFactoryMock(response);
 
-            return new CompanyApi(loggerMock.Object, httpClientFactoryMock.Object);
-        }
-
-        private Mock<ILogger<CompanyApi>> GetLoggerMock()
-        {
-            return new Mock<ILogger<CompanyApi>>();
+            return new CompanyApi(httpClientFactoryMock.Object);
         }
 
         private HttpClient GetHttpClient(HttpMessageHandler messageHandler)

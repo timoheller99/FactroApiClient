@@ -7,8 +7,7 @@ namespace FactroApiClient.Appointment
 
     using FactroApiClient.Appointment.Contracts;
     using FactroApiClient.Appointment.Endpoints;
-
-    using Microsoft.Extensions.Logging;
+    using FactroApiClient.SharedContracts;
 
     using Newtonsoft.Json;
 
@@ -16,15 +15,12 @@ namespace FactroApiClient.Appointment
     {
         private const string BaseClientName = "BaseClient";
 
-        private readonly ILogger<AppointmentApi> logger;
-
         private readonly IHttpClientFactory httpClientFactory;
 
         private readonly JsonSerializerSettings jsonSerializerSettings;
 
-        public AppointmentApi(ILogger<AppointmentApi> logger, IHttpClientFactory httpClientFactory)
+        public AppointmentApi(IHttpClientFactory httpClientFactory)
         {
-            this.logger = logger;
             this.httpClientFactory = httpClientFactory;
             this.jsonSerializerSettings = SerializerSettings.JsonSerializerSettings;
         }
@@ -59,13 +55,11 @@ namespace FactroApiClient.Appointment
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not create appointment: '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        "Could not create appointment.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -90,13 +84,11 @@ namespace FactroApiClient.Appointment
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not fetch appointments: '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        "Could not fetch appointments.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -127,14 +119,11 @@ namespace FactroApiClient.Appointment
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not fetch appointment with id '{AppointmentId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        appointmentId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        $"Could not fetch appointment with id '{appointmentId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -173,14 +162,11 @@ namespace FactroApiClient.Appointment
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not fetch appointment with id '{AppointmentId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        appointmentId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        $"Could not update appointment with id '{appointmentId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -211,14 +197,11 @@ namespace FactroApiClient.Appointment
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not delete appointment with id '{AppointmentId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        appointmentId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        $"Could not delete appointment with id '{appointmentId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();

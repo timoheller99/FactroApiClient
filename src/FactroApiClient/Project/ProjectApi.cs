@@ -13,8 +13,7 @@ namespace FactroApiClient.Project
     using FactroApiClient.Project.Contracts.Structure;
     using FactroApiClient.Project.Contracts.Tag;
     using FactroApiClient.Project.Endpoints;
-
-    using Microsoft.Extensions.Logging;
+    using FactroApiClient.SharedContracts;
 
     using Newtonsoft.Json;
 
@@ -22,15 +21,12 @@ namespace FactroApiClient.Project
     {
         private const string BaseClientName = "BaseClient";
 
-        private readonly ILogger<ProjectApi> logger;
-
         private readonly IHttpClientFactory httpClientFactory;
 
         private readonly JsonSerializerSettings jsonSerializerSettings;
 
-        public ProjectApi(ILogger<ProjectApi> logger, IHttpClientFactory httpClientFactory)
+        public ProjectApi(IHttpClientFactory httpClientFactory)
         {
-            this.logger = logger;
             this.httpClientFactory = httpClientFactory;
             this.jsonSerializerSettings = SerializerSettings.JsonSerializerSettings;
         }
@@ -58,13 +54,11 @@ namespace FactroApiClient.Project
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not create project: '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        "Could not create project.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -88,13 +82,11 @@ namespace FactroApiClient.Project
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not fetch projects: '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        "Could not fetch projects.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -123,14 +115,11 @@ namespace FactroApiClient.Project
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not fetch project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        projectId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        $"Could not fetch project with id '{projectId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -167,14 +156,11 @@ namespace FactroApiClient.Project
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not update project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        projectId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        $"Could not update project with id '{projectId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -203,14 +189,11 @@ namespace FactroApiClient.Project
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not delete project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        projectId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        $"Could not delete project with id '{projectId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -252,14 +235,11 @@ namespace FactroApiClient.Project
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not create comment in project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        projectId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        $"Could not create comment in project with id '{projectId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -288,14 +268,11 @@ namespace FactroApiClient.Project
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not fetch comments of project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        projectId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        $"Could not fetch comments of project with id '{projectId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -329,15 +306,11 @@ namespace FactroApiClient.Project
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not delete comment with id '{CommentId}' of project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        commentId,
-                        projectId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        $"Could not delete comment with id '{commentId}' of project with id '{projectId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -379,12 +352,11 @@ namespace FactroApiClient.Project
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not set company of project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        projectId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
+                    throw new FactroApiException(
+                        $"Could not set company with id '{setProjectCompanyAssociationRequest.CompanyId}' as company of project with id '{projectId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
             }
         }
@@ -404,12 +376,11 @@ namespace FactroApiClient.Project
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not remove company from project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        projectId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
+                    throw new FactroApiException(
+                        $"Could not remove company of project with id '{projectId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
             }
         }
@@ -442,12 +413,11 @@ namespace FactroApiClient.Project
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not set contact of project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        projectId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
+                    throw new FactroApiException(
+                        $"Could not set contact with id '{setProjectContactAssociationRequest.ContactId}' as contact of project with id '{projectId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
             }
         }
@@ -467,12 +437,11 @@ namespace FactroApiClient.Project
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not remove contact from project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        projectId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
+                    throw new FactroApiException(
+                        $"Could not remove contact of project with id '{projectId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
             }
         }
@@ -507,14 +476,11 @@ namespace FactroApiClient.Project
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not fetch read rights for project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        projectId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        $"Could not fetch read rights for project with id '{projectId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -558,15 +524,11 @@ namespace FactroApiClient.Project
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not grant read rights to employee with id '{EmployeeId}' for project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        addProjectReadRightsForUserRequest.EmployeeId,
-                        projectId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        $"Could not grant read rights for project with id '{projectId}' to employee with id '{addProjectReadRightsForUserRequest.EmployeeId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -600,13 +562,11 @@ namespace FactroApiClient.Project
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not revoke read rights from employee with id '{EmployeeId}' for project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        employeeId,
-                        projectId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
+                    throw new FactroApiException(
+                        $"Could not revoke read rights for project with id '{projectId}' from employee with id '{employeeId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
             }
         }
@@ -626,14 +586,11 @@ namespace FactroApiClient.Project
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not fetch write rights for project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        projectId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        $"Could not fetch write rights for project with id '{projectId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -677,15 +634,11 @@ namespace FactroApiClient.Project
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not grant write rights to employee with id '{EmployeeId}' for project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        addProjectWriteRightsForUserRequest.EmployeeId,
-                        projectId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        $"Could not grant write rights for project with id '{projectId}' to employee with id '{addProjectWriteRightsForUserRequest.EmployeeId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -719,13 +672,11 @@ namespace FactroApiClient.Project
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not revoke write rights from employee with id '{EmployeeId}' for project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        employeeId,
-                        projectId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
+                    throw new FactroApiException(
+                        $"Could not revoke write rights for project with id '{projectId}' from employee with id '{employeeId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
             }
         }
@@ -745,14 +696,11 @@ namespace FactroApiClient.Project
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not fetch structure of project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        projectId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        $"Could not fetch structure of project with id '{projectId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -789,13 +737,11 @@ namespace FactroApiClient.Project
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not create project tag: '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        "Could not create project tag.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -819,13 +765,11 @@ namespace FactroApiClient.Project
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not fetch project tags: '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        "Could not fetch project tags.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -854,14 +798,11 @@ namespace FactroApiClient.Project
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not fetch tags of project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        projectId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        $"Could not fetch tags of project with id '{projectId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -890,14 +831,11 @@ namespace FactroApiClient.Project
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not delete project tag with id '{ProjectTagId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        projectTagId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        $"Could not delete project tag with id '{projectTagId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -939,13 +877,11 @@ namespace FactroApiClient.Project
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not add project tag with id '{ProjectTagId}' to project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        addProjectTagAssociationRequest.TagId,
-                        projectId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
+                    throw new FactroApiException(
+                        $"Could not add tag with id '{addProjectTagAssociationRequest.TagId}' to project with id '{projectId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
             }
         }
@@ -970,13 +906,11 @@ namespace FactroApiClient.Project
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not remove project tag with id '{ProjectTagId}' from project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        tagId,
-                        projectId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
+                    throw new FactroApiException(
+                        $"Could not remove tag with id '{tagId}' from project with id '{projectId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
             }
         }

@@ -7,6 +7,7 @@ namespace FactroApiClient.UnitTests.ProjectApi
 
     using FactroApiClient.Project.Contracts.AccessRights;
     using FactroApiClient.Project.Contracts.Base;
+    using FactroApiClient.SharedContracts;
 
     using FluentAssertions;
 
@@ -103,7 +104,7 @@ namespace FactroApiClient.UnitTests.ProjectApi
             await act.Should().ThrowAsync<ArgumentNullException>();
         }
 
-        [Fact(Skip = "Throw of exception is not implemented yet.")]
+        [Fact]
         public async Task GrantProjectWriteRightsToUserAsync_BadRequest_ShouldReturnProjectApiException()
         {
             // Arrange
@@ -125,7 +126,7 @@ namespace FactroApiClient.UnitTests.ProjectApi
             Func<Task> act = async () => await projectApi.GrantProjectWriteRightsToUserAsync(projectId, addProjectWriteRightsForUserRequest);
 
             // Assert
-            await act.Should().ThrowAsync<Exception>();
+            await act.Should().ThrowAsync<FactroApiException>();
         }
     }
 }

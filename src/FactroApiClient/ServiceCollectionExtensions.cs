@@ -13,8 +13,6 @@ namespace FactroApiClient
 
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.DependencyInjection.Extensions;
-    using Microsoft.Extensions.Http;
 
     public static class ServiceCollectionExtensions
     {
@@ -47,7 +45,6 @@ namespace FactroApiClient
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(apiToken);
                 client.BaseAddress = new Uri(ApiEndpoints.BaseAddress);
             });
-            serviceCollection.RemoveAll<IHttpMessageHandlerBuilderFilter>();
         }
     }
 }
