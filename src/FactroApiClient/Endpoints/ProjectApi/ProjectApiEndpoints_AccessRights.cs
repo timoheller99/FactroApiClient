@@ -34,6 +34,5 @@ namespace FactroApiClient.Endpoints.ProjectApi
                 return $"projects/{projectId}/write_rights/{employeeId}";
             }
         }
-
     }
 }
