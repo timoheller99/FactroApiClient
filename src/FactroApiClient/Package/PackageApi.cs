@@ -823,7 +823,7 @@ namespace FactroApiClient.Package
             }
         }
 
-        public async Task RevokeReadRightsFromUserAsync(string projectId, string packageId, string employeeId)
+        public async Task RevokePackageReadRightsFromUserAsync(string projectId, string packageId, string employeeId)
         {
             if (string.IsNullOrWhiteSpace(projectId))
             {
