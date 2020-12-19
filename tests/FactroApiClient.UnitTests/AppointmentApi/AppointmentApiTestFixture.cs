@@ -8,8 +8,6 @@ namespace FactroApiClient.UnitTests.AppointmentApi
 
     using FactroApiClient.Appointment;
 
-    using Microsoft.Extensions.Logging;
-
     using Moq;
     using Moq.Protected;
 
@@ -31,15 +29,9 @@ namespace FactroApiClient.UnitTests.AppointmentApi
 
         public AppointmentApi GetAppointmentApi(HttpResponseMessage response = null)
         {
-            var loggerMock = this.GetLoggerMock();
             var httpClientFactoryMock = this.GetHttpClientFactoryMock(response);
 
-            return new AppointmentApi(loggerMock.Object, httpClientFactoryMock.Object);
-        }
-
-        private Mock<ILogger<AppointmentApi>> GetLoggerMock()
-        {
-            return new Mock<ILogger<AppointmentApi>>();
+            return new AppointmentApi(httpClientFactoryMock.Object);
         }
 
         private HttpClient GetHttpClient(HttpMessageHandler messageHandler)

@@ -8,8 +8,6 @@ namespace FactroApiClient.UnitTests.ProjectApi
 
     using FactroApiClient.Project;
 
-    using Microsoft.Extensions.Logging;
-
     using Moq;
     using Moq.Protected;
 
@@ -45,15 +43,9 @@ namespace FactroApiClient.UnitTests.ProjectApi
 
         public ProjectApi GetProjectApi(HttpResponseMessage response = null)
         {
-            var loggerMock = this.GetLoggerMock();
             var httpClientFactoryMock = this.GetHttpClientFactoryMock(response);
 
-            return new ProjectApi(loggerMock.Object, httpClientFactoryMock.Object);
-        }
-
-        private Mock<ILogger<ProjectApi>> GetLoggerMock()
-        {
-            return new Mock<ILogger<ProjectApi>>();
+            return new ProjectApi(httpClientFactoryMock.Object);
         }
 
         private HttpClient GetHttpClient(HttpMessageHandler messageHandler)

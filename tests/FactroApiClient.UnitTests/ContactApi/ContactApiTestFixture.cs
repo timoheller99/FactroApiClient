@@ -8,8 +8,6 @@ namespace FactroApiClient.UnitTests.ContactApi
 
     using FactroApiClient.Contact;
 
-    using Microsoft.Extensions.Logging;
-
     using Moq;
     using Moq.Protected;
 
@@ -24,15 +22,9 @@ namespace FactroApiClient.UnitTests.ContactApi
 
         public ContactApi GetContactApi(HttpResponseMessage response = null)
         {
-            var loggerMock = this.GetLoggerMock();
             var httpClientFactoryMock = this.GetHttpClientFactoryMock(response);
 
-            return new ContactApi(loggerMock.Object, httpClientFactoryMock.Object);
-        }
-
-        private Mock<ILogger<ContactApi>> GetLoggerMock()
-        {
-            return new Mock<ILogger<ContactApi>>();
+            return new ContactApi(httpClientFactoryMock.Object);
         }
 
         private HttpClient GetHttpClient(HttpMessageHandler messageHandler)
