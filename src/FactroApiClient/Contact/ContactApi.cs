@@ -7,8 +7,7 @@ namespace FactroApiClient.Contact
 
     using FactroApiClient.Contact.Contracts;
     using FactroApiClient.Contact.Endpoints;
-
-    using Microsoft.Extensions.Logging;
+    using FactroApiClient.SharedContracts;
 
     using Newtonsoft.Json;
 
@@ -16,15 +15,12 @@ namespace FactroApiClient.Contact
     {
         private const string BaseClientName = "BaseClient";
 
-        private readonly ILogger<ContactApi> logger;
-
         private readonly IHttpClientFactory httpClientFactory;
 
         private readonly JsonSerializerSettings jsonSerializerSettings;
 
-        public ContactApi(ILogger<ContactApi> logger, IHttpClientFactory httpClientFactory)
+        public ContactApi(IHttpClientFactory httpClientFactory)
         {
-            this.logger = logger;
             this.httpClientFactory = httpClientFactory;
             this.jsonSerializerSettings = SerializerSettings.JsonSerializerSettings;
         }
@@ -57,13 +53,11 @@ namespace FactroApiClient.Contact
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not create contact: '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        "Could not create contact.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -87,13 +81,11 @@ namespace FactroApiClient.Contact
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not fetch contacts: '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        "Could not fetch contacts.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -122,14 +114,11 @@ namespace FactroApiClient.Contact
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not fetch contact with id '{ContactId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        contactId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        $"Could not get contact with id '{contactId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -166,14 +155,11 @@ namespace FactroApiClient.Contact
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not fetch contact with id '{ContactId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        contactId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        $"Could not update contact with id '{contactId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -202,14 +188,11 @@ namespace FactroApiClient.Contact
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not delete contact with id '{ContactId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        contactId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        $"Could not delete contact with id '{contactId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();

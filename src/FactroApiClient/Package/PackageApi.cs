@@ -2,6 +2,7 @@ namespace FactroApiClient.Package
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Net.Http;
     using System.Threading.Tasks;
 
@@ -11,8 +12,7 @@ namespace FactroApiClient.Package
     using FactroApiClient.Package.Contracts.Comment;
     using FactroApiClient.Package.Contracts.Document;
     using FactroApiClient.Package.Entpoints;
-
-    using Microsoft.Extensions.Logging;
+    using FactroApiClient.SharedContracts;
 
     using Newtonsoft.Json;
 
@@ -20,15 +20,12 @@ namespace FactroApiClient.Package
     {
         private const string BaseClientName = "BaseClient";
 
-        private readonly ILogger<PackageApi> logger;
-
         private readonly IHttpClientFactory httpClientFactory;
 
         private readonly JsonSerializerSettings jsonSerializerSettings;
 
-        public PackageApi(ILogger<PackageApi> logger, IHttpClientFactory httpClientFactory)
+        public PackageApi(IHttpClientFactory httpClientFactory)
         {
-            this.logger = logger;
             this.httpClientFactory = httpClientFactory;
             this.jsonSerializerSettings = SerializerSettings.JsonSerializerSettings;
         }
@@ -61,13 +58,11 @@ namespace FactroApiClient.Package
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not create package: '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        "Could not create package.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -96,13 +91,11 @@ namespace FactroApiClient.Package
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not fetch packages: '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        "Could not fetch packages.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -131,14 +124,11 @@ namespace FactroApiClient.Package
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not fetch packages of project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        projectId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        $"Could not fetch packages of project with id '{projectId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -167,14 +157,11 @@ namespace FactroApiClient.Package
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not fetch package with id '{PackageId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        packageId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        $"Could not fetch package with id '{packageId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -208,15 +195,11 @@ namespace FactroApiClient.Package
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not fetch package with id '{PackageId}' in project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        packageId,
-                        projectId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        $"Could not fetch package with id '{packageId}' of project with id '{projectId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -258,15 +241,11 @@ namespace FactroApiClient.Package
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not update package with id '{PackageId}' inside project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        packageId,
-                        projectId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        $"Could not update package with id '{packageId}' of project with id '{projectId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -300,15 +279,11 @@ namespace FactroApiClient.Package
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not delete package with id '{PackageId}' inside project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        packageId,
-                        projectId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        $"Could not delete package with id '{packageId}' of project with id '{projectId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -355,15 +330,11 @@ namespace FactroApiClient.Package
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not create comment in package with id '{PackageId}' in project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        packageId,
-                        projectId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        $"Could not create comment in package with id '{packageId}' of project with id '{projectId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -397,15 +368,11 @@ namespace FactroApiClient.Package
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not fetch comments of package with id '{PackageId}' in project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        packageId,
-                        projectId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        $"Could not fetch comments of package with id '{packageId}' of project with id '{projectId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -444,16 +411,11 @@ namespace FactroApiClient.Package
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not delete comment with id '{CommentId}' in package with id '{PackageId}' in project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        commentId,
-                        packageId,
-                        projectId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        $"Could not delete comment with id '{commentId}' of package with id '{packageId}' of project with id '{projectId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -500,13 +462,11 @@ namespace FactroApiClient.Package
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not set company of package with id '{PackageId}' in project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        packageId,
-                        projectId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
+                    throw new FactroApiException(
+                        $"Could not set company with id '{setCompanyAssociationRequest.CompanyId}' as company of package with id '{packageId}' of project with id '{projectId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
             }
         }
@@ -531,13 +491,11 @@ namespace FactroApiClient.Package
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not remove company from package with id '{PackageId}' in project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        packageId,
-                        projectId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
+                    throw new FactroApiException(
+                        $"Could not remove company of package with id '{packageId}' of project with id '{projectId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
             }
         }
@@ -575,13 +533,11 @@ namespace FactroApiClient.Package
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not set contact of package with id '{PackageId}' in project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        packageId,
-                        projectId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
+                    throw new FactroApiException(
+                        $"Could not set contact with id '{setContactAssociationRequest.ContactId}' as contact of package with id '{packageId}' of project with id '{projectId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
             }
         }
@@ -606,13 +562,11 @@ namespace FactroApiClient.Package
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not remove contact from package with id '{PackageId}' in project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        packageId,
-                        projectId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
+                    throw new FactroApiException(
+                        $"Could not remove contact from package with id '{packageId}' of project with id '{projectId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
             }
         }
@@ -650,14 +604,11 @@ namespace FactroApiClient.Package
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not move package with id '{PackageId}' in project with id '{ProjectId}' into package with id '{ParentPackageId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        packageId,
-                        projectId,
-                        setPackageAssociationRequest.ParentPackageId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
+                    throw new FactroApiException(
+                        $"Could not move package with id '{packageId}' of project with id '{projectId}' into package with id '{setPackageAssociationRequest.ParentPackageId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
             }
         }
@@ -695,14 +646,11 @@ namespace FactroApiClient.Package
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not move package with id '{PackageId}' in project with id '{ProjectId}' into project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        packageId,
-                        projectId,
-                        setProjectAssociationRequest.ProjectId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
+                    throw new FactroApiException(
+                        $"Could not move package with id '{packageId}' of project with id '{projectId}' into project with id '{setProjectAssociationRequest.ProjectId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
             }
         }
@@ -742,15 +690,11 @@ namespace FactroApiClient.Package
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not fetch read rights for package with id '{PackageId}' in project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        packageId,
-                        projectId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        $"Could not fetch read rights for package with id '{packageId}' of project with id '{projectId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -800,16 +744,11 @@ namespace FactroApiClient.Package
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not grant read rights to employee with id '{EmployeeId}' for package with id '{PackageId}' in project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        addPackageReadRightsForUserRequest.EmployeeId,
-                        packageId,
-                        projectId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        $"Could not grant read rights to employee with id '{addPackageReadRightsForUserRequest.EmployeeId}' for package with id '{packageId}' of project with id '{projectId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -848,14 +787,11 @@ namespace FactroApiClient.Package
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not revoke read rights from employee with id '{EmployeeId}' for package with id '{PackageId}' in project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        employeeId,
-                        packageId,
-                        projectId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
+                    throw new FactroApiException(
+                        $"Could not revoke read rights to employee with id '{employeeId}' for package with id '{packageId}' of project with id '{projectId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
             }
         }
@@ -880,15 +816,11 @@ namespace FactroApiClient.Package
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not fetch write rights for package with id '{PackageId}' in project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        packageId,
-                        projectId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        $"Could not fetch write rights for package with id '{packageId}' of project with id '{projectId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -938,16 +870,11 @@ namespace FactroApiClient.Package
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not grant write rights to employee with id '{EmployeeId}' for package with id '{PackageId}' in project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        addPackageWriteRightsForUserRequest.EmployeeId,
-                        packageId,
-                        projectId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
-
-                    return null;
+                    throw new FactroApiException(
+                        $"Could not grant read rights to employee with id '{addPackageWriteRightsForUserRequest.EmployeeId}' for package with id '{packageId}' of project with id '{projectId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
 
                 var responseContentString = await response.Content.ReadAsStringAsync();
@@ -986,14 +913,11 @@ namespace FactroApiClient.Package
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not revoke write rights from employee with id '{EmployeeId}' for package with id '{PackageId}' in project with id '{ProjectId}': '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        employeeId,
-                        packageId,
-                        projectId,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
+                    throw new FactroApiException(
+                        $"Could not revoke read rights to employee with id '{employeeId}' for package with id '{packageId}' of project with id '{projectId}'.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
             }
         }
@@ -1029,14 +953,11 @@ namespace FactroApiClient.Package
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.logger.LogWarning(
-                        "Could not shift package with id '{PackageId}' in project with id '{ProjectId}' by '{DaysDelta}' days: '{RequestRoute}' {StatusCode} - '{ReasonPhrase}'}",
-                        packageId,
-                        projectId,
-                        shiftPackageWithSuccessorsRequest.DaysDelta,
-                        response.RequestMessage.RequestUri,
-                        (int)response.StatusCode,
-                        response.ReasonPhrase);
+                    throw new FactroApiException(
+                        $"Could not shift package with id '{packageId}' of project with id '{projectId}' by '{shiftPackageWithSuccessorsRequest.DaysDelta.ToString(CultureInfo.InvariantCulture)}' days.",
+                        response.RequestMessage.RequestUri.ToString(),
+                        response.StatusCode,
+                        response.Content == null ? null : await response.Content.ReadAsStringAsync());
                 }
             }
         }
