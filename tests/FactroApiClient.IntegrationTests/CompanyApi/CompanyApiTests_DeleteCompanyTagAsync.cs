@@ -5,6 +5,7 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
 
     using FactroApiClient.Company;
     using FactroApiClient.Company.Contracts.CompanyTag;
+    using FactroApiClient.SharedContracts;
 
     using FluentAssertions;
     using FluentAssertions.Execution;
@@ -39,18 +40,18 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
         }
 
         [Fact]
-        public async Task DeleteCompanyTagAsync_NotExistingCompanyTag_ShouldReturnNull()
+        public async Task DeleteCompanyTagAsync_NotExistingCompanyTag_ShouldThrowFactroApiException()
         {
             // Arrange
             var companyApi = this.fixture.GetService<ICompanyApi>();
 
-            var deleteCompanyTagResponse = new DeleteCompanyTagResponse();
+            var deleteCompanyTagResponse = default(DeleteCompanyTagResponse);
 
             // Act
             Func<Task> act = async () => deleteCompanyTagResponse = await companyApi.DeleteCompanyTagAsync(Guid.NewGuid().ToString());
 
             // Assert
-            await act.Should().NotThrowAsync();
+            await act.Should().ThrowAsync<FactroApiException>();
 
             deleteCompanyTagResponse.Should().BeNull();
         }

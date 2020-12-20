@@ -5,6 +5,7 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
 
     using FactroApiClient.Company;
     using FactroApiClient.Company.Contracts.Basic;
+    using FactroApiClient.SharedContracts;
 
     using FluentAssertions;
 
@@ -32,18 +33,18 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
         }
 
         [Fact]
-        public async Task GetCompanyAsync_NotExistingCompany_ShouldReturnNull()
+        public async Task GetCompanyAsync_NotExistingCompany_ShouldThrowFactroApiException()
         {
             // Arrange
             var companyApi = this.fixture.GetService<ICompanyApi>();
 
-            var getCompanyByIdResponse = new GetCompanyByIdResponse();
+            var getCompanyByIdResponse = default(GetCompanyByIdResponse);
 
             // Act
             Func<Task> act = async () => getCompanyByIdResponse = await companyApi.GetCompanyByIdAsync(Guid.NewGuid().ToString());
 
             // Assert
-            await act.Should().NotThrowAsync();
+            await act.Should().ThrowAsync<FactroApiException>();
 
             getCompanyByIdResponse.Should().BeNull();
         }

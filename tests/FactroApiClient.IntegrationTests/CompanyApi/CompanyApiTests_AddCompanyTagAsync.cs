@@ -5,6 +5,7 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
 
     using FactroApiClient.Company;
     using FactroApiClient.Company.Contracts.CompanyTag;
+    using FactroApiClient.SharedContracts;
 
     using FluentAssertions;
 
@@ -49,7 +50,7 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
             Func<Task> act = async () => await companyApi.AddTagToCompanyAsync(companyId, addCompanyTagRequest);
 
             // Assert
-            await act.Should().NotThrowAsync();
+            await act.Should().ThrowAsync<FactroApiException>();
 
             (await companyApi.GetTagsOfCompanyAsync(companyId)).Should().BeEmpty();
         }
