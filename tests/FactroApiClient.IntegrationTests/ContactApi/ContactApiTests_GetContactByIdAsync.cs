@@ -5,6 +5,7 @@ namespace FactroApiClient.IntegrationTests.ContactApi
 
     using FactroApiClient.Contact;
     using FactroApiClient.Contact.Contracts;
+    using FactroApiClient.SharedContracts;
 
     using FluentAssertions;
 
@@ -32,18 +33,18 @@ namespace FactroApiClient.IntegrationTests.ContactApi
         }
 
         [Fact]
-        public async Task GetContactAsync_NotExistingContact_ResultShouldBeNull()
+        public async Task GetContactAsync_NotExistingContact_ResultThrowFactroApiException()
         {
             // Arrange
             var contactApi = this.fixture.GetService<IContactApi>();
 
-            var getContactByIdResponse = new GetContactByIdResponse();
+            var getContactByIdResponse = default(GetContactByIdResponse);
 
             // Act
             Func<Task> act = async () => getContactByIdResponse = await contactApi.GetContactByIdAsync(Guid.NewGuid().ToString());
 
             // Assert
-            await act.Should().NotThrowAsync();
+            await act.Should().ThrowAsync<FactroApiException>();
 
             getContactByIdResponse.Should().BeNull();
         }

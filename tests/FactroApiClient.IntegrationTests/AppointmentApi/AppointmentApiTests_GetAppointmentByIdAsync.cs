@@ -5,6 +5,7 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
 
     using FactroApiClient.Appointment;
     using FactroApiClient.Appointment.Contracts;
+    using FactroApiClient.SharedContracts;
 
     using FluentAssertions;
 
@@ -32,18 +33,18 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
         }
 
         [Fact]
-        public async Task GetAppointmentAsync_NotExistingAppointment_ResultShouldBeNull()
+        public async Task GetAppointmentAsync_NotExistingAppointment_ShouldThrowFactroApiException()
         {
             // Arrange
             var appointmentApi = this.fixture.GetService<IAppointmentApi>();
 
-            var getAppointmentByIdResponse = new GetAppointmentByIdResponse();
+            var getAppointmentByIdResponse = default(GetAppointmentByIdResponse);
 
             // Act
             Func<Task> act = async () => getAppointmentByIdResponse = await appointmentApi.GetAppointmentByIdAsync(Guid.NewGuid().ToString());
 
             // Assert
-            await act.Should().NotThrowAsync();
+            await act.Should().ThrowAsync<FactroApiException>();
 
             getAppointmentByIdResponse.Should().BeNull();
         }

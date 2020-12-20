@@ -6,6 +6,7 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
 
     using FactroApiClient.Appointment;
     using FactroApiClient.Appointment.Contracts;
+    using FactroApiClient.SharedContracts;
 
     using FluentAssertions;
     using FluentAssertions.Execution;
@@ -45,7 +46,7 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
         }
 
         [Fact]
-        public async Task CreateAppointmentAsync_NotExistingEmployeeId_ShouldReturnNull()
+        public async Task CreateAppointmentAsync_NotExistingEmployeeId_ShouldThrowFactroApiException()
         {
             // Arrange
             var appointmentApi = this.fixture.GetService<IAppointmentApi>();
@@ -57,13 +58,13 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
 
             var createAppointmentRequest = new CreateAppointmentRequest(employeeId, startDate, endDate, subject);
 
-            var createAppointmentResponse = new CreateAppointmentResponse();
+            var createAppointmentResponse = default(CreateAppointmentResponse);
 
             // Act
             Func<Task> act = async () => createAppointmentResponse = await appointmentApi.CreateAppointmentAsync(createAppointmentRequest);
 
             // Assert
-            await act.Should().NotThrowAsync();
+            await act.Should().ThrowAsync<FactroApiException>();
 
             using (new AssertionScope())
             {
@@ -107,7 +108,7 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
         }
 
         [Fact]
-        public async Task CreateAppointmentAsync_EndTimeBeforeStartTime_ShouldNotStoreAppointmentAndReturnNull()
+        public async Task CreateAppointmentAsync_EndTimeBeforeStartTime_ShouldNotStoreAppointmentAndThrowFactroApiException()
         {
             // Arrange
             var appointmentApi = this.fixture.GetService<IAppointmentApi>();
@@ -119,13 +120,13 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
 
             var createAppointmentRequest = new CreateAppointmentRequest(employeeId, startDate, endDate, subject);
 
-            var createAppointmentResponse = new CreateAppointmentResponse();
+            var createAppointmentResponse = default(CreateAppointmentResponse);
 
             // Act
             Func<Task> act = async () => createAppointmentResponse = await appointmentApi.CreateAppointmentAsync(createAppointmentRequest);
 
             // Assert
-            await act.Should().NotThrowAsync();
+            await act.Should().ThrowAsync<FactroApiException>();
 
             using (new AssertionScope())
             {
