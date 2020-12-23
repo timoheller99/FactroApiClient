@@ -52,12 +52,12 @@ namespace FactroApiClient.UnitTests.PackageApi
                 Content = expectedResponseContent,
             };
 
-            var projectApi = this.fixture.GetPackageApi(expectedResponse);
+            var packageApi = this.fixture.GetPackageApi(expectedResponse);
 
             var getPackagesOfProjectResponse = default(IEnumerable<GetPackagePayload>);
 
             // Act
-            Func<Task> act = async () => getPackagesOfProjectResponse = await projectApi.GetPackagesOfProjectAsync(existingProject.Id);
+            Func<Task> act = async () => getPackagesOfProjectResponse = await packageApi.GetPackagesOfProjectAsync(existingProject.Id);
 
             // Assert
             await act.Should().NotThrowAsync();
@@ -70,10 +70,10 @@ namespace FactroApiClient.UnitTests.PackageApi
         public async Task GetPackagesOfProjectAsync_InvalidProjectId_ShouldThrowArgumentNullException(string projectId)
         {
             // Arrange
-            var projectApi = this.fixture.GetPackageApi();
+            var packageApi = this.fixture.GetPackageApi();
 
             // Act
-            Func<Task> act = async () => await projectApi.GetPackagesOfProjectAsync(projectId);
+            Func<Task> act = async () => await packageApi.GetPackagesOfProjectAsync(projectId);
 
             // Assert
             await act.Should().ThrowAsync<ArgumentNullException>();
@@ -94,10 +94,10 @@ namespace FactroApiClient.UnitTests.PackageApi
                 },
             };
 
-            var projectApi = this.fixture.GetPackageApi(expectedResponse);
+            var packageApi = this.fixture.GetPackageApi(expectedResponse);
 
             // Act
-            Func<Task> act = async () => await projectApi.GetPackagesOfProjectAsync(projectId);
+            Func<Task> act = async () => await packageApi.GetPackagesOfProjectAsync(projectId);
 
             // Assert
             await act.Should().ThrowAsync<FactroApiException>();
