@@ -386,7 +386,7 @@ namespace FactroApiClient.Package
             }
         }
 
-        public async Task<DeletePackageCommentResponse> DeletePackageCommentCommentAsync(string projectId, string packageId, string commentId)
+        public async Task<DeletePackageCommentResponse> DeletePackageCommentAsync(string projectId, string packageId, string commentId)
         {
             if (string.IsNullOrWhiteSpace(projectId))
             {
