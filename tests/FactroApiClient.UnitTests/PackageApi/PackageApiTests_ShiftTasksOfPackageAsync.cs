@@ -104,7 +104,7 @@ namespace FactroApiClient.UnitTests.PackageApi
             Func<Task> act = async () => await packageApi.ShiftTasksOfPackageAsync(existingProject.Id, existingPackage.Id, shiftPackageWithSuccessorsRequest: null);
 
             // Assert
-            await act.Should().NotThrowAsync();
+            await act.Should().ThrowAsync<ArgumentNullException>();
         }
 
         [Fact]
