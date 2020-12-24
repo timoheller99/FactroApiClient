@@ -31,7 +31,7 @@ namespace FactroApiClient.Package
 
         public Task<IEnumerable<GetPackageCommentPayload>> GetCommentsOfPackageAsync(string projectId, string packageId);
 
-        public Task<DeletePackageCommentResponse> DeletePackageCommentCommentAsync(string projectId, string packageId, string commentId);
+        public Task<DeletePackageCommentResponse> DeletePackageCommentAsync(string projectId, string packageId, string commentId);
 
         // Association
         public Task SetPackageCompanyAsync(string projectId, string packageId, SetCompanyAssociationRequest setCompanyAssociationRequest);
