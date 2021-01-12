@@ -31,9 +31,9 @@ namespace FactroApiClient.IntegrationTests.ContactApi
             return createContactResponse;
         }
 
-        public async Task<IEnumerable<GetContactPayload>> GetContactsAsync(IContactApi companyApi)
+        public async Task<IEnumerable<GetContactPayload>> GetContactsAsync(IContactApi contactApi)
         {
-            return (await companyApi.GetContactsAsync()).Where(x => x.Description.StartsWith(TestPrefix));
+            return (await contactApi.GetContactsAsync()).Where(x => x.Description.StartsWith(TestPrefix));
         }
 
         protected override async Task ClearFactroInstanceAsync()
