@@ -24,10 +24,14 @@ namespace FactroApiClient.Package
 
         private readonly JsonSerializerSettings jsonSerializerSettings;
 
+        private readonly HttpClient httpClient;
+
         public PackageApi(IHttpClientFactory httpClientFactory)
         {
             this.httpClientFactory = httpClientFactory;
             this.jsonSerializerSettings = SerializerSettings.JsonSerializerSettings;
+
+            this.httpClient = this.httpClientFactory.CreateClient(BaseClientName);
         }
 
         public async Task<CreatePackageResponse> CreatePackageAsync(string projectId, CreatePackageRequest createPackageRequest)
@@ -47,13 +51,12 @@ namespace FactroApiClient.Package
                 throw new ArgumentNullException(nameof(createPackageRequest), $"{nameof(createPackageRequest.Title)} can not be null.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = PackageApiEndpoints.Base.Create(projectId);
 
             var requestString = JsonConvert.SerializeObject(createPackageRequest, this.jsonSerializerSettings);
             var requestContent = ApiHelpers.GetStringContent(requestString);
 
-            var response = await client.PostAsync(requestRoute, requestContent);
+            var response = await this.httpClient.PostAsync(requestRoute, requestContent);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -81,10 +84,9 @@ namespace FactroApiClient.Package
                 throw new ArgumentNullException(nameof(projectId), $"{nameof(projectId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = PackageApiEndpoints.Base.GetAll(projectId);
 
-            var response = await client.GetAsync(requestRoute);
+            var response = await this.httpClient.GetAsync(requestRoute);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -112,10 +114,9 @@ namespace FactroApiClient.Package
                 throw new ArgumentNullException(nameof(projectId), $"{nameof(projectId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = PackageApiEndpoints.Base.GetByProject(projectId);
 
-            var response = await client.GetAsync(requestRoute);
+            var response = await this.httpClient.GetAsync(requestRoute);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -143,10 +144,9 @@ namespace FactroApiClient.Package
                 throw new ArgumentNullException(nameof(packageId), $"{nameof(packageId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = PackageApiEndpoints.Base.GetById(packageId);
 
-            var response = await client.GetAsync(requestRoute);
+            var response = await this.httpClient.GetAsync(requestRoute);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -179,10 +179,9 @@ namespace FactroApiClient.Package
                 throw new ArgumentNullException(nameof(packageId), $"{nameof(packageId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = PackageApiEndpoints.Base.GetById(projectId, packageId);
 
-            var response = await client.GetAsync(requestRoute);
+            var response = await this.httpClient.GetAsync(requestRoute);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -220,13 +219,12 @@ namespace FactroApiClient.Package
                 throw new ArgumentNullException(nameof(updatePackageRequest), $"{nameof(updatePackageRequest)} can not be null.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = PackageApiEndpoints.Base.Update(projectId, packageId);
 
             var requestString = JsonConvert.SerializeObject(updatePackageRequest, this.jsonSerializerSettings);
             var requestContent = ApiHelpers.GetStringContent(requestString);
 
-            var response = await client.PutAsync(requestRoute, requestContent);
+            var response = await this.httpClient.PutAsync(requestRoute, requestContent);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -259,10 +257,9 @@ namespace FactroApiClient.Package
                 throw new ArgumentNullException(nameof(packageId), $"{nameof(packageId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = PackageApiEndpoints.Base.Delete(projectId, packageId);
 
-            var response = await client.DeleteAsync(requestRoute);
+            var response = await this.httpClient.DeleteAsync(requestRoute);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -305,13 +302,12 @@ namespace FactroApiClient.Package
                 throw new ArgumentNullException(nameof(createPackageCommentRequest), $"{nameof(createPackageCommentRequest.Text)} can not be null.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = PackageApiEndpoints.Comment.Create(projectId, packageId);
 
             var requestString = JsonConvert.SerializeObject(createPackageCommentRequest, this.jsonSerializerSettings);
             var requestContent = ApiHelpers.GetStringContent(requestString);
 
-            var response = await client.PostAsync(requestRoute, requestContent);
+            var response = await this.httpClient.PostAsync(requestRoute, requestContent);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -344,10 +340,9 @@ namespace FactroApiClient.Package
                 throw new ArgumentNullException(nameof(packageId), $"{nameof(packageId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = PackageApiEndpoints.Comment.GetAll(projectId, packageId);
 
-            var response = await client.GetAsync(requestRoute);
+            var response = await this.httpClient.GetAsync(requestRoute);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -385,10 +380,9 @@ namespace FactroApiClient.Package
                 throw new ArgumentNullException(nameof(commentId), $"{nameof(commentId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = PackageApiEndpoints.Comment.Delete(projectId, packageId, commentId);
 
-            var response = await client.DeleteAsync(requestRoute);
+            var response = await this.httpClient.DeleteAsync(requestRoute);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -431,13 +425,12 @@ namespace FactroApiClient.Package
                 throw new ArgumentNullException(nameof(setCompanyAssociationRequest), $"{nameof(setCompanyAssociationRequest.CompanyId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = PackageApiEndpoints.Association.SetCompany(projectId, packageId);
 
             var requestString = JsonConvert.SerializeObject(setCompanyAssociationRequest, this.jsonSerializerSettings);
             var requestContent = ApiHelpers.GetStringContent(requestString);
 
-            var response = await client.PutAsync(requestRoute, requestContent);
+            var response = await this.httpClient.PutAsync(requestRoute, requestContent);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -461,10 +454,9 @@ namespace FactroApiClient.Package
                 throw new ArgumentNullException(nameof(packageId), $"{nameof(packageId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = PackageApiEndpoints.Association.RemoveCompany(projectId, packageId);
 
-            var response = await client.DeleteAsync(requestRoute);
+            var response = await this.httpClient.DeleteAsync(requestRoute);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -498,13 +490,12 @@ namespace FactroApiClient.Package
                 throw new ArgumentNullException(nameof(setContactAssociationRequest), $"{nameof(setContactAssociationRequest.ContactId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = PackageApiEndpoints.Association.SetContact(projectId, packageId);
 
             var requestString = JsonConvert.SerializeObject(setContactAssociationRequest, this.jsonSerializerSettings);
             var requestContent = ApiHelpers.GetStringContent(requestString);
 
-            var response = await client.PutAsync(requestRoute, requestContent);
+            var response = await this.httpClient.PutAsync(requestRoute, requestContent);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -528,10 +519,9 @@ namespace FactroApiClient.Package
                 throw new ArgumentNullException(nameof(packageId), $"{nameof(packageId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = PackageApiEndpoints.Association.RemoveContact(projectId, packageId);
 
-            var response = await client.DeleteAsync(requestRoute);
+            var response = await this.httpClient.DeleteAsync(requestRoute);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -565,13 +555,12 @@ namespace FactroApiClient.Package
                 throw new ArgumentNullException(nameof(setPackageAssociationRequest), $"{nameof(setPackageAssociationRequest.ParentPackageId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = PackageApiEndpoints.Association.MoveIntoPackage(projectId, packageId);
 
             var requestString = JsonConvert.SerializeObject(setPackageAssociationRequest, this.jsonSerializerSettings);
             var requestContent = ApiHelpers.GetStringContent(requestString);
 
-            var response = await client.PutAsync(requestRoute, requestContent);
+            var response = await this.httpClient.PutAsync(requestRoute, requestContent);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -605,13 +594,12 @@ namespace FactroApiClient.Package
                 throw new ArgumentNullException(nameof(setProjectAssociationRequest), $"{nameof(setProjectAssociationRequest.ProjectId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = PackageApiEndpoints.Association.MoveIntoProject(projectId, packageId);
 
             var requestString = JsonConvert.SerializeObject(setProjectAssociationRequest, this.jsonSerializerSettings);
             var requestContent = ApiHelpers.GetStringContent(requestString);
 
-            var response = await client.PutAsync(requestRoute, requestContent);
+            var response = await this.httpClient.PutAsync(requestRoute, requestContent);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -650,10 +638,9 @@ namespace FactroApiClient.Package
                 throw new ArgumentNullException(nameof(projectId), $"{nameof(packageId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = PackageApiEndpoints.AccessRights.GetReadRights(projectId, packageId);
 
-            var response = await client.GetAsync(requestRoute);
+            var response = await this.httpClient.GetAsync(requestRoute);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -699,13 +686,12 @@ namespace FactroApiClient.Package
                 throw new ArgumentNullException(nameof(addPackageReadRightsForUserRequest), $"{nameof(addPackageReadRightsForUserRequest.EmployeeId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = PackageApiEndpoints.AccessRights.GrantReadRights(projectId, packageId);
 
             var requestString = JsonConvert.SerializeObject(addPackageReadRightsForUserRequest, this.jsonSerializerSettings);
             var requestContent = ApiHelpers.GetStringContent(requestString);
 
-            var response = await client.PutAsync(requestRoute, requestContent);
+            var response = await this.httpClient.PutAsync(requestRoute, requestContent);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -743,10 +729,9 @@ namespace FactroApiClient.Package
                 throw new ArgumentNullException(nameof(employeeId), $"{nameof(employeeId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = PackageApiEndpoints.AccessRights.RevokeReadRights(projectId, packageId, employeeId);
 
-            var response = await client.DeleteAsync(requestRoute);
+            var response = await this.httpClient.DeleteAsync(requestRoute);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -770,10 +755,9 @@ namespace FactroApiClient.Package
                 throw new ArgumentNullException(nameof(projectId), $"{nameof(packageId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = PackageApiEndpoints.AccessRights.GetWriteRights(projectId, packageId);
 
-            var response = await client.GetAsync(requestRoute);
+            var response = await this.httpClient.GetAsync(requestRoute);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -819,13 +803,12 @@ namespace FactroApiClient.Package
                 throw new ArgumentNullException(nameof(addPackageWriteRightsForUserRequest), $"{nameof(addPackageWriteRightsForUserRequest.EmployeeId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = PackageApiEndpoints.AccessRights.GrantWriteRights(projectId, packageId);
 
             var requestString = JsonConvert.SerializeObject(addPackageWriteRightsForUserRequest, this.jsonSerializerSettings);
             var requestContent = ApiHelpers.GetStringContent(requestString);
 
-            var response = await client.PutAsync(requestRoute, requestContent);
+            var response = await this.httpClient.PutAsync(requestRoute, requestContent);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -863,10 +846,9 @@ namespace FactroApiClient.Package
                 throw new ArgumentNullException(nameof(employeeId), $"{nameof(employeeId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = PackageApiEndpoints.AccessRights.RevokeWriteRights(projectId, packageId, employeeId);
 
-            var response = await client.DeleteAsync(requestRoute);
+            var response = await this.httpClient.DeleteAsync(requestRoute);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -898,13 +880,12 @@ namespace FactroApiClient.Package
                 throw new ArgumentNullException(nameof(shiftPackageWithSuccessorsRequest), $"{nameof(shiftPackageWithSuccessorsRequest)} can not be null.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = PackageApiEndpoints.ShiftTasksOfPackage.ShiftTasksWithSuccessors(projectId, packageId);
 
             var requestString = JsonConvert.SerializeObject(shiftPackageWithSuccessorsRequest, this.jsonSerializerSettings);
             var requestContent = ApiHelpers.GetStringContent(requestString);
 
-            var response = await client.PostAsync(requestRoute, requestContent);
+            var response = await this.httpClient.PostAsync(requestRoute, requestContent);
 
             if (!response.IsSuccessStatusCode)
             {

@@ -19,10 +19,14 @@ namespace FactroApiClient.Contact
 
         private readonly JsonSerializerSettings jsonSerializerSettings;
 
+        private readonly HttpClient httpClient;
+
         public ContactApi(IHttpClientFactory httpClientFactory)
         {
             this.httpClientFactory = httpClientFactory;
             this.jsonSerializerSettings = SerializerSettings.JsonSerializerSettings;
+
+            this.httpClient = this.httpClientFactory.CreateClient(BaseClientName);
         }
 
         public async Task<CreateContactResponse> CreateContactAsync(CreateContactRequest createContactRequest)
@@ -42,13 +46,12 @@ namespace FactroApiClient.Contact
                 throw new ArgumentNullException(nameof(createContactRequest), $"{nameof(createContactRequest.LastName)} can not be null.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = ContactApiEndpoints.Base.Create();
 
             var requestString = JsonConvert.SerializeObject(createContactRequest, this.jsonSerializerSettings);
             var requestContent = ApiHelpers.GetStringContent(requestString);
 
-            var response = await client.PostAsync(requestRoute, requestContent);
+            var response = await this.httpClient.PostAsync(requestRoute, requestContent);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -71,10 +74,9 @@ namespace FactroApiClient.Contact
 
         public async Task<IEnumerable<GetContactPayload>> GetContactsAsync()
         {
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = ContactApiEndpoints.Base.GetAll();
 
-            var response = await client.GetAsync(requestRoute);
+            var response = await this.httpClient.GetAsync(requestRoute);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -102,10 +104,9 @@ namespace FactroApiClient.Contact
                 throw new ArgumentNullException(nameof(contactId), $"{nameof(contactId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = ContactApiEndpoints.Base.GetById(contactId);
 
-            var response = await client.GetAsync(requestRoute);
+            var response = await this.httpClient.GetAsync(requestRoute);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -138,13 +139,12 @@ namespace FactroApiClient.Contact
                 throw new ArgumentNullException(nameof(updateContactRequest), $"{nameof(updateContactRequest)} can not be null.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = ContactApiEndpoints.Base.Update(contactId);
 
             var requestString = JsonConvert.SerializeObject(updateContactRequest, this.jsonSerializerSettings);
             var requestContent = ApiHelpers.GetStringContent(requestString);
 
-            var response = await client.PutAsync(requestRoute, requestContent);
+            var response = await this.httpClient.PutAsync(requestRoute, requestContent);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -172,10 +172,9 @@ namespace FactroApiClient.Contact
                 throw new ArgumentNullException(nameof(contactId), $"{nameof(contactId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = ContactApiEndpoints.Base.Delete(contactId);
 
-            var response = await client.DeleteAsync(requestRoute);
+            var response = await this.httpClient.DeleteAsync(requestRoute);
 
             if (!response.IsSuccessStatusCode)
             {

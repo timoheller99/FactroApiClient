@@ -19,10 +19,14 @@ namespace FactroApiClient.Appointment
 
         private readonly JsonSerializerSettings jsonSerializerSettings;
 
+        private readonly HttpClient httpClient;
+
         public AppointmentApi(IHttpClientFactory httpClientFactory)
         {
             this.httpClientFactory = httpClientFactory;
             this.jsonSerializerSettings = SerializerSettings.JsonSerializerSettings;
+
+            this.httpClient = this.httpClientFactory.CreateClient(BaseClientName);
         }
 
         /// <inheritdoc/>
@@ -44,13 +48,12 @@ namespace FactroApiClient.Appointment
                 throw new ArgumentNullException(nameof(createAppointmentRequest), $"{nameof(createAppointmentRequest.Subject)} can not be null.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = AppointmentApiEndpoints.Base.Create();
 
             var requestString = JsonConvert.SerializeObject(createAppointmentRequest, this.jsonSerializerSettings);
             var requestContent = ApiHelpers.GetStringContent(requestString);
 
-            var response = await client.PostAsync(requestRoute, requestContent);
+            var response = await this.httpClient.PostAsync(requestRoute, requestContent);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -74,10 +77,9 @@ namespace FactroApiClient.Appointment
         /// <inheritdoc />
         public async Task<IEnumerable<GetAppointmentPayload>> GetAppointmentsAsync()
         {
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = AppointmentApiEndpoints.Base.GetAll();
 
-            var response = await client.GetAsync(requestRoute);
+            var response = await this.httpClient.GetAsync(requestRoute);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -107,10 +109,9 @@ namespace FactroApiClient.Appointment
                 throw new ArgumentNullException(nameof(appointmentId), $"{nameof(appointmentId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = AppointmentApiEndpoints.Base.GetById(appointmentId);
 
-            var response = await client.GetAsync(requestRoute);
+            var response = await this.httpClient.GetAsync(requestRoute);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -145,13 +146,12 @@ namespace FactroApiClient.Appointment
                 throw new ArgumentNullException(nameof(updateAppointmentRequest), $"{nameof(updateAppointmentRequest)} can not be null.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = AppointmentApiEndpoints.Base.Update(appointmentId);
 
             var requestString = JsonConvert.SerializeObject(updateAppointmentRequest, this.jsonSerializerSettings);
             var requestContent = ApiHelpers.GetStringContent(requestString);
 
-            var response = await client.PutAsync(requestRoute, requestContent);
+            var response = await this.httpClient.PutAsync(requestRoute, requestContent);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -181,10 +181,9 @@ namespace FactroApiClient.Appointment
                 throw new ArgumentNullException(nameof(appointmentId), $"{nameof(appointmentId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = AppointmentApiEndpoints.Base.Delete(appointmentId);
 
-            var response = await client.DeleteAsync(requestRoute);
+            var response = await this.httpClient.DeleteAsync(requestRoute);
 
             if (!response.IsSuccessStatusCode)
             {

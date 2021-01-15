@@ -25,10 +25,14 @@ namespace FactroApiClient.Project
 
         private readonly JsonSerializerSettings jsonSerializerSettings;
 
+        private readonly HttpClient httpClient;
+
         public ProjectApi(IHttpClientFactory httpClientFactory)
         {
             this.httpClientFactory = httpClientFactory;
             this.jsonSerializerSettings = SerializerSettings.JsonSerializerSettings;
+
+            this.httpClient = this.httpClientFactory.CreateClient(BaseClientName);
         }
 
         public async Task<CreateProjectResponse> CreateProjectAsync(CreateProjectRequest createProjectRequest)
@@ -43,13 +47,12 @@ namespace FactroApiClient.Project
                 throw new ArgumentNullException(nameof(createProjectRequest), $"{nameof(createProjectRequest.Title)} can not be null.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = ProjectApiEndpoints.Base.Create();
 
             var requestString = JsonConvert.SerializeObject(createProjectRequest, this.jsonSerializerSettings);
             var requestContent = ApiHelpers.GetStringContent(requestString);
 
-            var response = await client.PostAsync(requestRoute, requestContent);
+            var response = await this.httpClient.PostAsync(requestRoute, requestContent);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -72,10 +75,9 @@ namespace FactroApiClient.Project
 
         public async Task<IEnumerable<GetProjectPayload>> GetProjectsAsync()
         {
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = ProjectApiEndpoints.Base.GetAll();
 
-            var response = await client.GetAsync(requestRoute);
+            var response = await this.httpClient.GetAsync(requestRoute);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -103,10 +105,9 @@ namespace FactroApiClient.Project
                 throw new ArgumentNullException(nameof(projectId), $"{nameof(projectId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = ProjectApiEndpoints.Base.GetById(projectId);
 
-            var response = await client.GetAsync(requestRoute);
+            var response = await this.httpClient.GetAsync(requestRoute);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -139,13 +140,12 @@ namespace FactroApiClient.Project
                 throw new ArgumentNullException(nameof(updateProjectRequest), $"{nameof(updateProjectRequest)} can not be null.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = ProjectApiEndpoints.Base.Update(projectId);
 
             var requestString = JsonConvert.SerializeObject(updateProjectRequest, this.jsonSerializerSettings);
             var requestContent = ApiHelpers.GetStringContent(requestString);
 
-            var response = await client.PutAsync(requestRoute, requestContent);
+            var response = await this.httpClient.PutAsync(requestRoute, requestContent);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -173,10 +173,9 @@ namespace FactroApiClient.Project
                 throw new ArgumentNullException(nameof(projectId), $"{nameof(projectId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = ProjectApiEndpoints.Base.Delete(projectId);
 
-            var response = await client.DeleteAsync(requestRoute);
+            var response = await this.httpClient.DeleteAsync(requestRoute);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -214,13 +213,12 @@ namespace FactroApiClient.Project
                 throw new ArgumentNullException(nameof(createProjectCommentRequest), $"{nameof(createProjectCommentRequest.Text)} can not be null.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = ProjectApiEndpoints.Comment.Create(projectId);
 
             var requestString = JsonConvert.SerializeObject(createProjectCommentRequest, this.jsonSerializerSettings);
             var requestContent = ApiHelpers.GetStringContent(requestString);
 
-            var response = await client.PostAsync(requestRoute, requestContent);
+            var response = await this.httpClient.PostAsync(requestRoute, requestContent);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -248,10 +246,9 @@ namespace FactroApiClient.Project
                 throw new ArgumentNullException(nameof(projectId), $"{nameof(projectId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = ProjectApiEndpoints.Comment.GetAll(projectId);
 
-            var response = await client.GetAsync(requestRoute);
+            var response = await this.httpClient.GetAsync(requestRoute);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -284,10 +281,9 @@ namespace FactroApiClient.Project
                 throw new ArgumentNullException(nameof(projectId), $"{nameof(projectId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = ProjectApiEndpoints.Comment.Delete(projectId, commentId);
 
-            var response = await client.DeleteAsync(requestRoute);
+            var response = await this.httpClient.DeleteAsync(requestRoute);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -325,13 +321,12 @@ namespace FactroApiClient.Project
                 throw new ArgumentNullException(nameof(setProjectCompanyAssociationRequest), $"{nameof(setProjectCompanyAssociationRequest.CompanyId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = ProjectApiEndpoints.Association.SetCompany(projectId);
 
             var requestString = JsonConvert.SerializeObject(setProjectCompanyAssociationRequest, this.jsonSerializerSettings);
             var requestContent = ApiHelpers.GetStringContent(requestString);
 
-            var response = await client.PutAsync(requestRoute, requestContent);
+            var response = await this.httpClient.PutAsync(requestRoute, requestContent);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -350,10 +345,9 @@ namespace FactroApiClient.Project
                 throw new ArgumentNullException(nameof(projectId), $"{nameof(projectId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = ProjectApiEndpoints.Association.RemoveCompany(projectId);
 
-            var response = await client.DeleteAsync(requestRoute);
+            var response = await this.httpClient.DeleteAsync(requestRoute);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -382,13 +376,12 @@ namespace FactroApiClient.Project
                 throw new ArgumentNullException(nameof(setProjectContactAssociationRequest), $"{nameof(setProjectContactAssociationRequest.ContactId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = ProjectApiEndpoints.Association.SetContact(projectId);
 
             var requestString = JsonConvert.SerializeObject(setProjectContactAssociationRequest, this.jsonSerializerSettings);
             var requestContent = ApiHelpers.GetStringContent(requestString);
 
-            var response = await client.PutAsync(requestRoute, requestContent);
+            var response = await this.httpClient.PutAsync(requestRoute, requestContent);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -407,10 +400,9 @@ namespace FactroApiClient.Project
                 throw new ArgumentNullException(nameof(projectId), $"{nameof(projectId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = ProjectApiEndpoints.Association.RemoveContact(projectId);
 
-            var response = await client.DeleteAsync(requestRoute);
+            var response = await this.httpClient.DeleteAsync(requestRoute);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -444,10 +436,9 @@ namespace FactroApiClient.Project
                 throw new ArgumentNullException(nameof(projectId), $"{nameof(projectId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = ProjectApiEndpoints.AccessRights.GetReadRights(projectId);
 
-            var response = await client.GetAsync(requestRoute);
+            var response = await this.httpClient.GetAsync(requestRoute);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -487,13 +478,12 @@ namespace FactroApiClient.Project
                 throw new ArgumentNullException(nameof(addProjectReadRightsForUserRequest), $"{nameof(addProjectReadRightsForUserRequest.EmployeeId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = ProjectApiEndpoints.AccessRights.GrantReadRights(projectId);
 
             var requestString = JsonConvert.SerializeObject(addProjectReadRightsForUserRequest, this.jsonSerializerSettings);
             var requestContent = ApiHelpers.GetStringContent(requestString);
 
-            var response = await client.PutAsync(requestRoute, requestContent);
+            var response = await this.httpClient.PutAsync(requestRoute, requestContent);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -526,10 +516,9 @@ namespace FactroApiClient.Project
                 throw new ArgumentNullException(nameof(employeeId), $"{nameof(employeeId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = ProjectApiEndpoints.AccessRights.RevokeReadRights(projectId, employeeId);
 
-            var response = await client.DeleteAsync(requestRoute);
+            var response = await this.httpClient.DeleteAsync(requestRoute);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -548,10 +537,9 @@ namespace FactroApiClient.Project
                 throw new ArgumentNullException(nameof(projectId), $"{nameof(projectId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = ProjectApiEndpoints.AccessRights.GetWriteRights(projectId);
 
-            var response = await client.GetAsync(requestRoute);
+            var response = await this.httpClient.GetAsync(requestRoute);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -591,13 +579,12 @@ namespace FactroApiClient.Project
                 throw new ArgumentNullException(nameof(addProjectWriteRightsForUserRequest), $"{nameof(addProjectWriteRightsForUserRequest.EmployeeId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = ProjectApiEndpoints.AccessRights.GrantWriteRights(projectId);
 
             var requestString = JsonConvert.SerializeObject(addProjectWriteRightsForUserRequest, this.jsonSerializerSettings);
             var requestContent = ApiHelpers.GetStringContent(requestString);
 
-            var response = await client.PutAsync(requestRoute, requestContent);
+            var response = await this.httpClient.PutAsync(requestRoute, requestContent);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -630,10 +617,9 @@ namespace FactroApiClient.Project
                 throw new ArgumentNullException(nameof(employeeId), $"{nameof(employeeId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = ProjectApiEndpoints.AccessRights.RevokeWriteRights(projectId, employeeId);
 
-            var response = await client.DeleteAsync(requestRoute);
+            var response = await this.httpClient.DeleteAsync(requestRoute);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -652,10 +638,9 @@ namespace FactroApiClient.Project
                 throw new ArgumentNullException(nameof(projectId), $"{nameof(projectId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = ProjectApiEndpoints.Structure.GetStructure(projectId);
 
-            var response = await client.GetAsync(requestRoute);
+            var response = await this.httpClient.GetAsync(requestRoute);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -688,13 +673,12 @@ namespace FactroApiClient.Project
                 throw new ArgumentNullException(nameof(createProjectTagRequest), $"{nameof(createProjectTagRequest.Name)} can not be null.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = ProjectApiEndpoints.Tag.Create();
 
             var requestString = JsonConvert.SerializeObject(createProjectTagRequest, this.jsonSerializerSettings);
             var requestContent = ApiHelpers.GetStringContent(requestString);
 
-            var response = await client.PostAsync(requestRoute, requestContent);
+            var response = await this.httpClient.PostAsync(requestRoute, requestContent);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -717,10 +701,9 @@ namespace FactroApiClient.Project
 
         public async Task<IEnumerable<GetProjectTagPayload>> GetProjectTagsAsync()
         {
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = ProjectApiEndpoints.Tag.GetAll();
 
-            var response = await client.GetAsync(requestRoute);
+            var response = await this.httpClient.GetAsync(requestRoute);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -748,10 +731,9 @@ namespace FactroApiClient.Project
                 throw new ArgumentNullException(nameof(projectId), $"{nameof(projectId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = ProjectApiEndpoints.Tag.GetById(projectId);
 
-            var response = await client.GetAsync(requestRoute);
+            var response = await this.httpClient.GetAsync(requestRoute);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -779,10 +761,9 @@ namespace FactroApiClient.Project
                 throw new ArgumentNullException(nameof(projectTagId), $"{nameof(projectTagId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = ProjectApiEndpoints.Tag.Delete(projectTagId);
 
-            var response = await client.DeleteAsync(requestRoute);
+            var response = await this.httpClient.DeleteAsync(requestRoute);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -820,13 +801,12 @@ namespace FactroApiClient.Project
                 throw new ArgumentNullException(nameof(addProjectTagAssociationRequest), $"{nameof(addProjectTagAssociationRequest.TagId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = ProjectApiEndpoints.Tag.AddToProject(projectId);
 
             var requestString = JsonConvert.SerializeObject(addProjectTagAssociationRequest, this.jsonSerializerSettings);
             var requestContent = ApiHelpers.GetStringContent(requestString);
 
-            var response = await client.PutAsync(requestRoute, requestContent);
+            var response = await this.httpClient.PutAsync(requestRoute, requestContent);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -850,10 +830,9 @@ namespace FactroApiClient.Project
                 throw new ArgumentNullException(nameof(tagId), $"{nameof(tagId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = ProjectApiEndpoints.Tag.RemoveFromProject(projectId, tagId);
 
-            var response = await client.DeleteAsync(requestRoute);
+            var response = await this.httpClient.DeleteAsync(requestRoute);
 
             if (!response.IsSuccessStatusCode)
             {

@@ -20,10 +20,14 @@ namespace FactroApiClient.Company
 
         private readonly JsonSerializerSettings jsonSerializerSettings;
 
+        private readonly HttpClient httpClient;
+
         public CompanyApi(IHttpClientFactory httpClientFactory)
         {
             this.httpClientFactory = httpClientFactory;
             this.jsonSerializerSettings = SerializerSettings.JsonSerializerSettings;
+
+            this.httpClient = this.httpClientFactory.CreateClient(BaseClientName);
         }
 
         public async Task<CreateCompanyResponse> CreateCompanyAsync(CreateCompanyRequest createCompanyRequest)
@@ -38,13 +42,12 @@ namespace FactroApiClient.Company
                 throw new ArgumentNullException(nameof(createCompanyRequest), $"{nameof(createCompanyRequest.Name)} can not be null.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = CompanyApiEndpoints.Base.Create();
 
             var requestString = JsonConvert.SerializeObject(createCompanyRequest, this.jsonSerializerSettings);
             var requestContent = ApiHelpers.GetStringContent(requestString);
 
-            var response = await client.PostAsync(requestRoute, requestContent);
+            var response = await this.httpClient.PostAsync(requestRoute, requestContent);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -67,10 +70,9 @@ namespace FactroApiClient.Company
 
         public async Task<IEnumerable<GetCompanyPayload>> GetCompaniesAsync()
         {
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRute = CompanyApiEndpoints.Base.GetAll();
 
-            var response = await client.GetAsync(requestRute);
+            var response = await this.httpClient.GetAsync(requestRute);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -98,10 +100,9 @@ namespace FactroApiClient.Company
                 throw new ArgumentNullException(nameof(companyId), $"{nameof(companyId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = CompanyApiEndpoints.Base.GetById(companyId);
 
-            var response = await client.GetAsync(requestRoute);
+            var response = await this.httpClient.GetAsync(requestRoute);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -134,13 +135,12 @@ namespace FactroApiClient.Company
                 throw new ArgumentNullException(nameof(updateCompanyRequest), $"{nameof(updateCompanyRequest)} can not be null.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = CompanyApiEndpoints.Base.Update(companyId);
 
             var requestString = JsonConvert.SerializeObject(updateCompanyRequest, this.jsonSerializerSettings);
             var requestContent = ApiHelpers.GetStringContent(requestString);
 
-            var response = await client.PutAsync(requestRoute, requestContent);
+            var response = await this.httpClient.PutAsync(requestRoute, requestContent);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -168,10 +168,9 @@ namespace FactroApiClient.Company
                 throw new ArgumentNullException(nameof(companyId), $"{nameof(companyId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = CompanyApiEndpoints.Base.Delete(companyId);
 
-            var response = await client.DeleteAsync(requestRoute);
+            var response = await this.httpClient.DeleteAsync(requestRoute);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -204,13 +203,12 @@ namespace FactroApiClient.Company
                 throw new ArgumentNullException(nameof(createCompanyTagRequest), $"{nameof(createCompanyTagRequest.Name)} can not be null.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = CompanyApiEndpoints.Tag.Create();
 
             var requestString = JsonConvert.SerializeObject(createCompanyTagRequest, this.jsonSerializerSettings);
             var requestContent = ApiHelpers.GetStringContent(requestString);
 
-            var response = await client.PostAsync(requestRoute, requestContent);
+            var response = await this.httpClient.PostAsync(requestRoute, requestContent);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -233,10 +231,9 @@ namespace FactroApiClient.Company
 
         public async Task<IEnumerable<GetCompanyTagPayload>> GetCompanyTagsAsync()
         {
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRute = CompanyApiEndpoints.Tag.GetAll();
 
-            var response = await client.GetAsync(requestRute);
+            var response = await this.httpClient.GetAsync(requestRute);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -264,10 +261,9 @@ namespace FactroApiClient.Company
                 throw new ArgumentNullException(nameof(companyId), $"{nameof(companyId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRute = CompanyApiEndpoints.Tag.GetById(companyId);
 
-            var response = await client.GetAsync(requestRute);
+            var response = await this.httpClient.GetAsync(requestRute);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -295,10 +291,9 @@ namespace FactroApiClient.Company
                 throw new ArgumentNullException(nameof(companyTagId), $"{nameof(companyTagId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = CompanyApiEndpoints.Tag.Delete(companyTagId);
 
-            var response = await client.DeleteAsync(requestRoute);
+            var response = await this.httpClient.DeleteAsync(requestRoute);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -336,13 +331,12 @@ namespace FactroApiClient.Company
                 throw new ArgumentNullException(nameof(addCompanyTagAssociationRequest), $"{nameof(addCompanyTagAssociationRequest.TagId)} can not be null.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = CompanyApiEndpoints.Tag.Add(companyId);
 
             var requestString = JsonConvert.SerializeObject(addCompanyTagAssociationRequest, this.jsonSerializerSettings);
             var requestContent = ApiHelpers.GetStringContent(requestString);
 
-            var response = await client.PutAsync(requestRoute, requestContent);
+            var response = await this.httpClient.PutAsync(requestRoute, requestContent);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -366,10 +360,9 @@ namespace FactroApiClient.Company
                 throw new ArgumentNullException(nameof(companyTagId), $"{nameof(companyTagId)} can not be null, empty or whitespace.");
             }
 
-            using var client = this.httpClientFactory.CreateClient(BaseClientName);
             var requestRoute = CompanyApiEndpoints.Tag.Remove(companyId, companyTagId);
 
-            var response = await client.DeleteAsync(requestRoute);
+            var response = await this.httpClient.DeleteAsync(requestRoute);
 
             if (!response.IsSuccessStatusCode)
             {
