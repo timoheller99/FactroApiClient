@@ -68,7 +68,6 @@ namespace FactroApiClient.Appointment
                     responseContentString,
                     this.jsonSerializerSettings);
 
-            client.Dispose();
             return result;
         }
 
@@ -96,7 +95,6 @@ namespace FactroApiClient.Appointment
                     responseContentString,
                     this.jsonSerializerSettings);
 
-            client.Dispose();
             return result;
         }
 
@@ -130,7 +128,6 @@ namespace FactroApiClient.Appointment
                     responseContentString,
                     this.jsonSerializerSettings);
 
-            client.Dispose();
             return result;
         }
 
@@ -172,7 +169,6 @@ namespace FactroApiClient.Appointment
                     responseContentString,
                     this.jsonSerializerSettings);
 
-            client.Dispose();
             return result;
         }
 
@@ -206,7 +202,6 @@ namespace FactroApiClient.Appointment
                     responseContentString,
                     this.jsonSerializerSettings);
 
-            client.Dispose();
             return result;
         }
     }
