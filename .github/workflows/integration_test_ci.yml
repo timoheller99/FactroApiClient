@@ -39,7 +39,7 @@ jobs:
         run: dotnet build -c Release --no-restore
 
       - name: Test sources (Integration Tests)
-        timeout-minutes: 2
+        timeout-minutes: 5
         run: dotnet test -c Release --no-restore --no-build
         working-directory: ./tests/FactroApiClient.IntegrationTests
         env:
