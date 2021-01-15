@@ -3,10 +3,6 @@ name: Nightly Tests
 on:
   schedule:
     - cron: "0 0 * * *"
-  push:
-    branches:
-      - "*"
-      - "*/*"
 
 env:
   CI_TOOLS_VERSION: "3.2.0-beta.2"
