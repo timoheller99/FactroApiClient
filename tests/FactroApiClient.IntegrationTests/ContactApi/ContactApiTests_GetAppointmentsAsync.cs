@@ -18,6 +18,8 @@ namespace FactroApiClient.IntegrationTests.ContactApi
         public async Task GetContactsAsync_ExistingContacts_ShouldReturnExistingContacts()
         {
             // Arrange
+            await this.fixture.ClearFactroInstanceAsync();
+
             var contactApi = this.fixture.GetService<IContactApi>();
 
             var existingContacts = new List<CreateContactResponse>();
@@ -41,6 +43,8 @@ namespace FactroApiClient.IntegrationTests.ContactApi
             {
                 getContactsResponse.Should().ContainEquivalentOf(existingContact);
             }
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
     }
 }

@@ -10,11 +10,6 @@ namespace FactroApiClient.IntegrationTests.ProjectApi
 
     public sealed class ProjectApiTestFixture : BaseTestFixture
     {
-        public ProjectApiTestFixture()
-        {
-            this.ClearFactroInstanceAsync().GetAwaiter().GetResult();
-        }
-
         public async Task<CreateProjectResponse> CreateTestProjectAsync(IProjectApi projectApi)
         {
             var title = $"{TestPrefix}{Guid.NewGuid().ToString()}";
@@ -31,7 +26,7 @@ namespace FactroApiClient.IntegrationTests.ProjectApi
             return (await projectApi.GetProjectsAsync()).Where(x => x.Title.StartsWith(TestPrefix));
         }
 
-        protected override async Task ClearFactroInstanceAsync()
+        public override async Task ClearFactroInstanceAsync()
         {
             await this.ClearProjectsAsync();
         }

@@ -18,6 +18,8 @@ namespace FactroApiClient.IntegrationTests.ProjectApi
         public async Task DeleteProjectAsync_ExistingProject_ShouldDeleteProject()
         {
             // Arrange
+            await this.fixture.ClearFactroInstanceAsync();
+
             var projectApi = this.fixture.GetService<IProjectApi>();
 
             var createdProject = await this.fixture.CreateTestProjectAsync(projectApi);
@@ -38,12 +40,16 @@ namespace FactroApiClient.IntegrationTests.ProjectApi
 
                 projects.Should().NotContain(project => project.Id == createdProject.Id);
             }
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
 
         [Fact]
         public async Task DeleteProjectAsync_NotExistingProject_ShouldThrowFactroApiException()
         {
             // Arrange
+            await this.fixture.ClearFactroInstanceAsync();
+
             var projectApi = this.fixture.GetService<IProjectApi>();
 
             var notExistingProjectId = Guid.NewGuid().ToString();
@@ -53,6 +59,8 @@ namespace FactroApiClient.IntegrationTests.ProjectApi
 
             // Assert
             await act.Should().ThrowAsync<FactroApiException>();
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
     }
 }

@@ -19,6 +19,8 @@ namespace FactroApiClient.IntegrationTests.ContactApi
         public async Task UpdateContactAsync_ValidUpdate_ShouldReturnUpdatedContact()
         {
             // Arrange
+            await this.fixture.ClearFactroInstanceAsync();
+
             var contactApi = this.fixture.GetService<IContactApi>();
 
             var existingContact = await this.fixture.CreateTestContactAsync(contactApi);
@@ -45,12 +47,16 @@ namespace FactroApiClient.IntegrationTests.ContactApi
 
                 contacts.Single(x => x.Id == existingContact.Id).Description.Should().Be(updatedDescription);
             }
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
 
         [Fact]
         public async Task UpdateContactAsync_InvalidUpdate_ShouldNotUpdateContact()
         {
             // Arrange
+            await this.fixture.ClearFactroInstanceAsync();
+
             var contactApi = this.fixture.GetService<IContactApi>();
 
             var existingContact = await this.fixture.CreateTestContactAsync(contactApi);
@@ -70,12 +76,16 @@ namespace FactroApiClient.IntegrationTests.ContactApi
             var contacts = await this.fixture.GetContactsAsync(contactApi);
 
             contacts.Single(x => x.Id == existingContact.Id).Should().BeEquivalentTo(existingContact);
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
 
         [Fact]
         public async Task UpdateContactAsync_NotExistingContactId_ShouldThrowFactroApiException()
         {
             // Arrange
+            await this.fixture.ClearFactroInstanceAsync();
+
             var contactApi = this.fixture.GetService<IContactApi>();
 
             var updatedDescription = $"{BaseTestFixture.TestPrefix}{Guid.NewGuid().ToString()}";
@@ -100,6 +110,8 @@ namespace FactroApiClient.IntegrationTests.ContactApi
 
                 updateContactResponse.Should().BeNull();
             }
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
     }
 }

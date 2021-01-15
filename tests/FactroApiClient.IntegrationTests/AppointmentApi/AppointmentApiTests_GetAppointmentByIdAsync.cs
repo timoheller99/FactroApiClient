@@ -17,6 +17,8 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
         public async Task GetAppointmentAsync_ExistingAppointment_ShouldReturnExpectedAppointment()
         {
             // Arrange
+            await this.fixture.ClearFactroInstanceAsync();
+
             var appointmentApi = this.fixture.GetService<IAppointmentApi>();
 
             var existingAppointment = await this.fixture.CreateTestAppointmentAsync(appointmentApi);
@@ -30,12 +32,16 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
             await act.Should().NotThrowAsync();
 
             getAppointmentByIdResponse.Should().BeEquivalentTo(existingAppointment);
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
 
         [Fact]
         public async Task GetAppointmentAsync_NotExistingAppointment_ShouldThrowFactroApiException()
         {
             // Arrange
+            await this.fixture.ClearFactroInstanceAsync();
+
             var appointmentApi = this.fixture.GetService<IAppointmentApi>();
 
             var getAppointmentByIdResponse = default(GetAppointmentByIdResponse);
@@ -47,6 +53,8 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
             await act.Should().ThrowAsync<FactroApiException>();
 
             getAppointmentByIdResponse.Should().BeNull();
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
     }
 }

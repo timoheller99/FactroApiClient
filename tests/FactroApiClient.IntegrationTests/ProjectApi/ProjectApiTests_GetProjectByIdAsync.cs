@@ -17,6 +17,8 @@ namespace FactroApiClient.IntegrationTests.ProjectApi
         public async Task GetProjectByIdAsync_ExistingProject_ShouldReturnExpectedProject()
         {
             // Arrange
+            await this.fixture.ClearFactroInstanceAsync();
+
             var projectApi = this.fixture.GetService<IProjectApi>();
 
             var createdProject = await this.fixture.CreateTestProjectAsync(projectApi);
@@ -30,12 +32,16 @@ namespace FactroApiClient.IntegrationTests.ProjectApi
             await act.Should().NotThrowAsync();
 
             getProjectByIdResponse.Should().BeEquivalentTo(createdProject);
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
 
         [Fact]
         public async Task GetProjectByIdAsync_NotExistingProject_Should()
         {
             // Arrange
+            await this.fixture.ClearFactroInstanceAsync();
+
             var projectApi = this.fixture.GetService<IProjectApi>();
 
             var notExistingProjectId = Guid.NewGuid().ToString();
@@ -49,6 +55,8 @@ namespace FactroApiClient.IntegrationTests.ProjectApi
             await act.Should().ThrowAsync<FactroApiException>();
 
             getProjectByIdResponse.Should().BeNull();
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
     }
 }

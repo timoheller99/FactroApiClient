@@ -18,6 +18,8 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
         public async Task GetTagsOfCompanyAsync_ExistingCompanyWithTags_ShouldReturnExpectedCompany()
         {
             // Arrange
+            await this.fixture.ClearFactroInstanceAsync();
+
             var companyApi = this.fixture.GetService<ICompanyApi>();
 
             var existingCompany = await this.fixture.CreateTestCompanyAsync(companyApi);
@@ -44,12 +46,16 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
             await act.Should().NotThrowAsync();
 
             getCompanyTagsByIdResponse.Should().BeEquivalentTo(existingCompanyTags);
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
 
         [Fact]
         public async Task GetTagsOfCompanyAsync_ExistingCompanyWithoutTags_ShouldReturnExpectedCompany()
         {
             // Arrange
+            await this.fixture.ClearFactroInstanceAsync();
+
             var companyApi = this.fixture.GetService<ICompanyApi>();
 
             var existingCompany = await this.fixture.CreateTestCompanyAsync(companyApi);
@@ -63,12 +69,16 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
             await act.Should().NotThrowAsync();
 
             getCompanyTagsByIdResponse.Should().BeEmpty();
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
 
         [Fact]
         public async Task GetTagsOfCompanyAsync_NotExistingCompany_ShouldReturnEmptyList()
         {
             // Arrange
+            await this.fixture.ClearFactroInstanceAsync();
+
             var companyApi = this.fixture.GetService<ICompanyApi>();
 
             var getCompanyTagsByIdResponse = new List<GetCompanyTagAssociationPayload>();
@@ -80,6 +90,8 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
             await act.Should().NotThrowAsync();
 
             getCompanyTagsByIdResponse.Should().BeEmpty();
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
     }
 }

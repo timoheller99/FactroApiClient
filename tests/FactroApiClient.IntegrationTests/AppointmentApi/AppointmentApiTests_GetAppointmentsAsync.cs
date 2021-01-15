@@ -18,6 +18,8 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
         public async Task GetAppointmentsAsync_ExistingAppointments_ShouldReturnExistingAppointments()
         {
             // Arrange
+            await this.fixture.ClearFactroInstanceAsync();
+
             var appointmentApi = this.fixture.GetService<IAppointmentApi>();
 
             var existingAppointments = new List<CreateAppointmentResponse>();
@@ -41,6 +43,8 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
             {
                 getAppointmentsResponse.Should().ContainEquivalentOf(existingAppointment);
             }
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
     }
 }

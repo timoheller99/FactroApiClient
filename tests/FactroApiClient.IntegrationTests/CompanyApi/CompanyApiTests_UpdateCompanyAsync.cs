@@ -19,6 +19,8 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
         public async Task UpdateCompanyAsync_ValidUpdate_ShouldReturnUpdatedCompany()
         {
             // Arrange
+            await this.fixture.ClearFactroInstanceAsync();
+
             var companyApi = this.fixture.GetService<ICompanyApi>();
 
             var existingCompany = await this.fixture.CreateTestCompanyAsync(companyApi);
@@ -46,12 +48,16 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
 
                 companies.Single(x => x.Id == existingCompany.Id).Name.Should().Be(updatedName);
             }
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
 
         [Fact]
         public async Task UpdateCompanyAsync_InvalidUpdate_ShouldNotUpdateCompany()
         {
             // Arrange
+            await this.fixture.ClearFactroInstanceAsync();
+
             var companyApi = this.fixture.GetService<ICompanyApi>();
 
             var existingCompany = await this.fixture.CreateTestCompanyAsync(companyApi);
@@ -75,12 +81,16 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
 
                 companies.Single(x => x.Id == existingCompany.Id).Should().BeEquivalentTo(existingCompany);
             }
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
 
         [Fact]
         public async Task UpdateCompanyAsync_NotExistingCompanyId_ShouldThrowFactroApiException()
         {
             // Arrange
+            await this.fixture.ClearFactroInstanceAsync();
+
             var companyApi = this.fixture.GetService<ICompanyApi>();
 
             var updatedName = $"{BaseTestFixture.TestPrefix}{Guid.NewGuid().ToString()}";
@@ -106,6 +116,8 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
 
                 updateCompanyResponse.Should().BeNull();
             }
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
     }
 }

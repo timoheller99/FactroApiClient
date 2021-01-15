@@ -10,11 +10,6 @@ namespace FactroApiClient.IntegrationTests.ContactApi
 
     public sealed class ContactApiTestFixture : BaseTestFixture
     {
-        public ContactApiTestFixture()
-        {
-            this.ClearFactroInstanceAsync().GetAwaiter().GetResult();
-        }
-
         public async Task<CreateContactResponse> CreateTestContactAsync(IContactApi contactApi)
         {
             var firstName = Guid.NewGuid().ToString();
@@ -36,7 +31,7 @@ namespace FactroApiClient.IntegrationTests.ContactApi
             return (await contactApi.GetContactsAsync()).Where(x => x.Description.StartsWith(TestPrefix));
         }
 
-        protected override async Task ClearFactroInstanceAsync()
+        public override async Task ClearFactroInstanceAsync()
         {
             await this.ClearContactsAsync();
         }

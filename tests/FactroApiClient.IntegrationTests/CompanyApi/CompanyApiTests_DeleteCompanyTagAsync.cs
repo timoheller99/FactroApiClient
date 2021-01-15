@@ -18,6 +18,8 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
         public async Task DeleteCompanyTagAsync_ExistingCompanyTag_ShouldDeleteCompanyTag()
         {
             // Arrange
+            await this.fixture.ClearFactroInstanceAsync();
+
             var companyApi = this.fixture.GetService<ICompanyApi>();
 
             var existingCompanyTag = await this.fixture.CreateTestCompanyTagAsync(companyApi);
@@ -37,12 +39,16 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
                 var companyTags = await this.fixture.GetCompanyTagsAsync(companyApi);
                 companyTags.Should().NotContain(x => x.Id == existingCompanyTag.Id);
             }
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
 
         [Fact]
         public async Task DeleteCompanyTagAsync_NotExistingCompanyTag_ShouldThrowFactroApiException()
         {
             // Arrange
+            await this.fixture.ClearFactroInstanceAsync();
+
             var companyApi = this.fixture.GetService<ICompanyApi>();
 
             var deleteCompanyTagResponse = default(DeleteCompanyTagResponse);
@@ -54,12 +60,16 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
             await act.Should().ThrowAsync<FactroApiException>();
 
             deleteCompanyTagResponse.Should().BeNull();
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
 
         [Fact]
         public async Task DeleteCompanyTagAsync_ExistingCompanyTagWithAssociation_ShouldDeleteCompanyTag()
         {
             // Arrange
+            await this.fixture.ClearFactroInstanceAsync();
+
             var companyApi = this.fixture.GetService<ICompanyApi>();
 
             var existingCompany = await this.fixture.CreateTestCompanyAsync(companyApi);
@@ -82,6 +92,8 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
 
                 (await this.fixture.GetCompanyTagsAsync(companyApi)).Should().NotContain(x => x.Id == existingCompanyTag.Id);
             }
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
     }
 }
