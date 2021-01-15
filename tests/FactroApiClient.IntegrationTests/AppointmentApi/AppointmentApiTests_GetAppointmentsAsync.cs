@@ -43,8 +43,6 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
             {
                 getAppointmentsResponse.Should().ContainEquivalentOf(existingAppointment);
             }
-
-            await this.fixture.ClearFactroInstanceAsync();
         }
     }
 }

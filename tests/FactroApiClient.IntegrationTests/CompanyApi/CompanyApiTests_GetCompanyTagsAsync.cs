@@ -47,8 +47,6 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
                     getCompanyTagsResponse.Should().ContainEquivalentOf(existingCompanyTag);
                 }
             }
-
-            await this.fixture.ClearFactroInstanceAsync();
         }
     }
 }

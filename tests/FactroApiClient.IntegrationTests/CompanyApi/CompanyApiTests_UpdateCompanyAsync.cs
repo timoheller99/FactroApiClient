@@ -48,8 +48,6 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
 
                 companies.Single(x => x.Id == existingCompany.Id).Name.Should().Be(updatedName);
             }
-
-            await this.fixture.ClearFactroInstanceAsync();
         }
 
         [Fact]
@@ -81,8 +79,6 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
 
                 companies.Single(x => x.Id == existingCompany.Id).Should().BeEquivalentTo(existingCompany);
             }
-
-            await this.fixture.ClearFactroInstanceAsync();
         }
 
         [Fact]
@@ -116,8 +112,6 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
 
                 updateCompanyResponse.Should().BeNull();
             }
-
-            await this.fixture.ClearFactroInstanceAsync();
         }
     }
 }

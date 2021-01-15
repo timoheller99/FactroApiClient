@@ -41,8 +41,6 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
 
                 companies.Should().ContainEquivalentOf(createCompanyResponse);
             }
-
-            await this.fixture.ClearFactroInstanceAsync();
         }
 
         [Fact]

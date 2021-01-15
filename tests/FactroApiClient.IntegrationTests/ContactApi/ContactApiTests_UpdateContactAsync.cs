@@ -47,8 +47,6 @@ namespace FactroApiClient.IntegrationTests.ContactApi
 
                 contacts.Single(x => x.Id == existingContact.Id).Description.Should().Be(updatedDescription);
             }
-
-            await this.fixture.ClearFactroInstanceAsync();
         }
 
         [Fact]
@@ -76,8 +74,6 @@ namespace FactroApiClient.IntegrationTests.ContactApi
             var contacts = await this.fixture.GetContactsAsync(contactApi);
 
             contacts.Single(x => x.Id == existingContact.Id).Should().BeEquivalentTo(existingContact);
-
-            await this.fixture.ClearFactroInstanceAsync();
         }
 
         [Fact]
@@ -110,8 +106,6 @@ namespace FactroApiClient.IntegrationTests.ContactApi
 
                 updateContactResponse.Should().BeNull();
             }
-
-            await this.fixture.ClearFactroInstanceAsync();
         }
     }
 }
