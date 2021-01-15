@@ -1,6 +1,9 @@
 |Stable|Beta|Alpha|
 |---|---|---|
-|![stable-ci]|![beta-ci]|![alpha-ci]|
+|![release-stable-ci]|![release-beta-ci]|![release-alpha-ci]|
+|![unit-test-stable-ci]|![unit-test-beta-ci]|![unit-test-alpha-ci]|
+|![integration-test-stable-ci]|![integration-test-beta-ci]|![integration-test-alpha-ci]|
+|![nightly-test-stable-ci]|![nightly-test-beta-ci]|![nightly-test-alpha-ci]|
 
 # FactroApiClient
 The **FactroApiClient** is a simple API wrapper written in C# to interact with the [Factro REST API][factro-api-url].
@@ -160,11 +163,23 @@ var appointmentApi = serviceProvider.GetRequiredService<IAppointmentApi>();
 [bug-report-issue-template-url]: https://github.com/timoheller99/FactroApiClient/issues/new?assignees=timoheller99&labels=bug&template=bug_report.md&title=
 [feature-request-issue-template-url]: https://github.com/timoheller99/FactroApiClient/issues/new?assignees=timoheller99&labels=enhancement&template=feature_request.md&title=
 
-[alpha-ci]: https://github.com/timoheller99/FactroApiClient/workflows/FactroApiClient%20CI/badge.svg?branch=develop
-[beta-ci]: https://github.com/timoheller99/FactroApiClient/workflows/FactroApiClient%20CI/badge.svg?branch=beta
-[stable-ci]: https://github.com/timoheller99/FactroApiClient/workflows/FactroApiClient%20CI/badge.svg?branch=main
-
 [projects-url]: https://github.com/timoheller99/FactroApiClient/projects
 [roadmap-project-url]: https://github.com/timoheller99/FactroApiClient/projects/1
 [development-project-url]: https://github.com/timoheller99/FactroApiClient/projects/2
 [bug-tracker-project-url]: https://github.com/timoheller99/FactroApiClient/projects/3
+
+[release-stable-ci]: https://github.com/timoheller99/FactroApiClient/workflows/Release%20CI/badge.svg?branch=develop
+[release-beta-ci]: https://github.com/timoheller99/FactroApiClient/workflows/Release%20CI/badge.svg?branch=beta
+[release-alpha-ci]: https://github.com/timoheller99/FactroApiClient/workflows/Release%20CI/badge.svg?branch=main
+
+[unit-test-stable-ci]: https://github.com/timoheller99/FactroApiClient/workflows/Unit%20Tests/badge.svg?branch=develop
+[unit-test-beta-ci]: https://github.com/timoheller99/FactroApiClient/workflows/Unit%20Tests/badge.svg?branch=beta
+[unit-test-alpha-ci]: https://github.com/timoheller99/FactroApiClient/workflows/Unit%20Tests/badge.svg?branch=main
+
+[integration-test-stable-ci]: https://github.com/timoheller99/FactroApiClient/workflows/Integration%20Tests/badge.svg?branch=develop
+[integration-test-beta-ci]: https://github.com/timoheller99/FactroApiClient/workflows/Integration%20Tests/badge.svg?branch=beta
+[integration-test-alpha-ci]: https://github.com/timoheller99/FactroApiClient/workflows/Integration%20Tests/badge.svg?branch=stable
+
+[nightly-test-stable-ci]: https://github.com/timoheller99/FactroApiClient/workflows/Nightly%20Tests/badge.svg?branch=develop
+[nightly-test-beta-ci]: https://github.com/timoheller99/FactroApiClient/workflows/Nightly%20Tests/badge.svg?branch=beta
+[nightly-test-alpha-ci]: https://github.com/timoheller99/FactroApiClient/workflows/Nightly%20Tests/badge.svg?branch=main
