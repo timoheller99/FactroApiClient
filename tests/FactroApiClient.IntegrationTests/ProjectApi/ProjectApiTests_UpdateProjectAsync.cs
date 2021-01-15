@@ -47,6 +47,8 @@ namespace FactroApiClient.IntegrationTests.ProjectApi
 
                 projects.Single(x => x.Id == existingProject.Id).Title.Should().Be(updatedTitle);
             }
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
 
         [Fact]
@@ -78,6 +80,8 @@ namespace FactroApiClient.IntegrationTests.ProjectApi
 
                 projects.Should().ContainEquivalentOf(existingProject);
             }
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
 
         [Fact]
@@ -108,6 +112,8 @@ namespace FactroApiClient.IntegrationTests.ProjectApi
 
                 projects.Should().NotContain(project => project.Id == notExistingProjectId);
             }
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
     }
 }

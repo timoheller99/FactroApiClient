@@ -46,6 +46,8 @@ namespace FactroApiClient.IntegrationTests.ContactApi
 
                 contacts.Should().ContainEquivalentOf(createContactResponse);
             }
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
 
         [Fact]
@@ -81,6 +83,8 @@ namespace FactroApiClient.IntegrationTests.ContactApi
                 var matchingContacts = contacts.Where(x => x.Description == description);
                 matchingContacts.Should().HaveCount(2);
             }
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
     }
 }

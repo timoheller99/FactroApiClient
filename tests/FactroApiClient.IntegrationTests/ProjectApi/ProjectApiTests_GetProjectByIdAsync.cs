@@ -32,6 +32,8 @@ namespace FactroApiClient.IntegrationTests.ProjectApi
             await act.Should().NotThrowAsync();
 
             getProjectByIdResponse.Should().BeEquivalentTo(createdProject);
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
 
         [Fact]
@@ -53,6 +55,8 @@ namespace FactroApiClient.IntegrationTests.ProjectApi
             await act.Should().ThrowAsync<FactroApiException>();
 
             getProjectByIdResponse.Should().BeNull();
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
     }
 }

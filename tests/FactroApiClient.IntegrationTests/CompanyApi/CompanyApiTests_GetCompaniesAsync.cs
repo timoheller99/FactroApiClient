@@ -43,6 +43,8 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
             {
                 getCompaniesResponse.Should().ContainEquivalentOf(existingCompany);
             }
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
     }
 }

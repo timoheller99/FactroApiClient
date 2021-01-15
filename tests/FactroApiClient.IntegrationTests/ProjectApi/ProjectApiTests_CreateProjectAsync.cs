@@ -40,6 +40,8 @@ namespace FactroApiClient.IntegrationTests.ProjectApi
 
                 projects.Should().ContainEquivalentOf(createProjectResponse);
             }
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
 
         [Fact]
@@ -68,6 +70,8 @@ namespace FactroApiClient.IntegrationTests.ProjectApi
 
                 projects.Where(project => project.Title == title).Should().HaveCount(2);
             }
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
     }
 }
