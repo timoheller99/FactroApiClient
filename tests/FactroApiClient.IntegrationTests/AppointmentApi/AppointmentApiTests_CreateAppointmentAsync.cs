@@ -45,8 +45,6 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
 
                 appointments.Should().ContainEquivalentOf(createAppointmentResponse);
             }
-
-            await this.fixture.ClearFactroInstanceAsync();
         }
 
         [Fact]
@@ -80,8 +78,6 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
                 appointments.Should().NotContain(x => x.EmployeeId == employeeId && x.Subject == subject);
                 createAppointmentResponse.Should().BeNull();
             }
-
-            await this.fixture.ClearFactroInstanceAsync();
         }
 
         [Fact]
@@ -115,8 +111,6 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
                 var matchingAppointments = appointments.Where(x => x.Subject == subject);
                 matchingAppointments.Should().HaveCount(2);
             }
-
-            await this.fixture.ClearFactroInstanceAsync();
         }
 
         [Fact]
@@ -151,8 +145,6 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
 
                 createAppointmentResponse.Should().BeNull();
             }
-
-            await this.fixture.ClearFactroInstanceAsync();
         }
     }
 }

@@ -43,8 +43,6 @@ namespace FactroApiClient.IntegrationTests.ContactApi
             {
                 getContactsResponse.Should().ContainEquivalentOf(existingContact);
             }
-
-            await this.fixture.ClearFactroInstanceAsync();
         }
     }
 }

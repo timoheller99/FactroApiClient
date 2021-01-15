@@ -36,8 +36,6 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
             var companyTags = await this.fixture.GetCompanyTagsAsync(companyApi);
 
             companyTags.Should().ContainEquivalentOf(createCompanyTagResponse);
-
-            await this.fixture.ClearFactroInstanceAsync();
         }
 
         [Fact]
@@ -72,8 +70,6 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
                     .Contain(x => x.Id == firstCreatedCompanyTag.Id).And
                     .Contain(x => x.Id == secondCreatedCompanyTag.Id);
             }
-
-            await this.fixture.ClearFactroInstanceAsync();
         }
     }
 }

@@ -32,8 +32,6 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
             await act.Should().NotThrowAsync();
 
             getCompanyByIdResponse.Should().BeEquivalentTo(existingCompany);
-
-            await this.fixture.ClearFactroInstanceAsync();
         }
 
         [Fact]
@@ -53,8 +51,6 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
             await act.Should().ThrowAsync<FactroApiException>();
 
             getCompanyByIdResponse.Should().BeNull();
-
-            await this.fixture.ClearFactroInstanceAsync();
         }
     }
 }
