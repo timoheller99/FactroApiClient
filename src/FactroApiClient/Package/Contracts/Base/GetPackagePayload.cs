@@ -1,4 +1,4 @@
-namespace FactroApiClient.Package.Contracts
+namespace FactroApiClient.Package.Contracts.Base
 {
     using System;
 

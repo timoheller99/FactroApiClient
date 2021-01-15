@@ -1,4 +1,4 @@
-namespace FactroApiClient.Endpoints
+namespace FactroApiClient
 {
     internal static class ApiEndpoints
     {

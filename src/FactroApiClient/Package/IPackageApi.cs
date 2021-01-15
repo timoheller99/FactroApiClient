@@ -6,6 +6,7 @@ namespace FactroApiClient.Package
     using FactroApiClient.Package.Contracts;
     using FactroApiClient.Package.Contracts.AccessRights;
     using FactroApiClient.Package.Contracts.Association;
+    using FactroApiClient.Package.Contracts.Base;
     using FactroApiClient.Package.Contracts.Comment;
     using FactroApiClient.Package.Contracts.Document;
 
