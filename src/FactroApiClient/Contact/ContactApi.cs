@@ -66,6 +66,7 @@ namespace FactroApiClient.Contact
                     responseContentString,
                     this.jsonSerializerSettings);
 
+            client.Dispose();
             return result;
         }
 
@@ -92,6 +93,7 @@ namespace FactroApiClient.Contact
                     responseContentString,
                     this.jsonSerializerSettings);
 
+            client.Dispose();
             return result;
         }
 
@@ -123,6 +125,7 @@ namespace FactroApiClient.Contact
                     responseContentString,
                     this.jsonSerializerSettings);
 
+            client.Dispose();
             return result;
         }
 
@@ -162,6 +165,7 @@ namespace FactroApiClient.Contact
                     responseContentString,
                     this.jsonSerializerSettings);
 
+            client.Dispose();
             return result;
         }
 
@@ -193,6 +197,7 @@ namespace FactroApiClient.Contact
                     responseContentString,
                     this.jsonSerializerSettings);
 
+            client.Dispose();
             return result;
         }
     }

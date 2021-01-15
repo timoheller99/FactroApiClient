@@ -71,6 +71,7 @@ namespace FactroApiClient.Package
                     responseContentString,
                     this.jsonSerializerSettings);
 
+            client.Dispose();
             return result;
         }
 
@@ -102,6 +103,7 @@ namespace FactroApiClient.Package
                     responseContentString,
                     this.jsonSerializerSettings);
 
+            client.Dispose();
             return result;
         }
 
@@ -133,6 +135,7 @@ namespace FactroApiClient.Package
                     responseContentString,
                     this.jsonSerializerSettings);
 
+            client.Dispose();
             return result;
         }
 
@@ -164,6 +167,7 @@ namespace FactroApiClient.Package
                     responseContentString,
                     this.jsonSerializerSettings);
 
+            client.Dispose();
             return result;
         }
 
@@ -200,6 +204,7 @@ namespace FactroApiClient.Package
                     responseContentString,
                     this.jsonSerializerSettings);
 
+            client.Dispose();
             return result;
         }
 
@@ -244,6 +249,7 @@ namespace FactroApiClient.Package
                     responseContentString,
                     this.jsonSerializerSettings);
 
+            client.Dispose();
             return result;
         }
 
@@ -280,6 +286,7 @@ namespace FactroApiClient.Package
                     responseContentString,
                     this.jsonSerializerSettings);
 
+            client.Dispose();
             return result;
         }
 
@@ -329,6 +336,7 @@ namespace FactroApiClient.Package
                     responseContentString,
                     this.jsonSerializerSettings);
 
+            client.Dispose();
             return result;
         }
 
@@ -365,6 +373,7 @@ namespace FactroApiClient.Package
                     responseContentString,
                     this.jsonSerializerSettings);
 
+            client.Dispose();
             return result;
         }
 
@@ -406,6 +415,7 @@ namespace FactroApiClient.Package
                     responseContentString,
                     this.jsonSerializerSettings);
 
+            client.Dispose();
             return result;
         }
 
@@ -671,6 +681,7 @@ namespace FactroApiClient.Package
                     responseContentString,
                     this.jsonSerializerSettings);
 
+            client.Dispose();
             return result;
         }
 
@@ -723,6 +734,7 @@ namespace FactroApiClient.Package
                     responseContentString,
                     this.jsonSerializerSettings);
 
+            client.Dispose();
             return result;
         }
 
@@ -791,6 +803,7 @@ namespace FactroApiClient.Package
                     responseContentString,
                     this.jsonSerializerSettings);
 
+            client.Dispose();
             return result;
         }
 
@@ -843,6 +856,7 @@ namespace FactroApiClient.Package
                     responseContentString,
                     this.jsonSerializerSettings);
 
+            client.Dispose();
             return result;
         }
 

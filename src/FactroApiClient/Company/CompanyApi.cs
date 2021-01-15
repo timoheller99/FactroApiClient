@@ -62,6 +62,7 @@ namespace FactroApiClient.Company
                     responseContentString,
                     this.jsonSerializerSettings);
 
+            client.Dispose();
             return result;
         }
 
@@ -88,6 +89,7 @@ namespace FactroApiClient.Company
                     responseContentString,
                     this.jsonSerializerSettings);
 
+            client.Dispose();
             return result;
         }
 
@@ -119,6 +121,7 @@ namespace FactroApiClient.Company
                     responseContentString,
                     this.jsonSerializerSettings);
 
+            client.Dispose();
             return result;
         }
 
@@ -158,6 +161,7 @@ namespace FactroApiClient.Company
                     responseContentString,
                     this.jsonSerializerSettings);
 
+            client.Dispose();
             return result;
         }
 
@@ -189,6 +193,7 @@ namespace FactroApiClient.Company
                     responseContentString,
                     this.jsonSerializerSettings);
 
+            client.Dispose();
             return result;
         }
 
@@ -228,6 +233,7 @@ namespace FactroApiClient.Company
                     responseContentString,
                     this.jsonSerializerSettings);
 
+            client.Dispose();
             return result;
         }
 
@@ -254,6 +260,7 @@ namespace FactroApiClient.Company
                     responseContentString,
                     this.jsonSerializerSettings);
 
+            client.Dispose();
             return result;
         }
 
@@ -285,6 +292,7 @@ namespace FactroApiClient.Company
                     responseContentString,
                     this.jsonSerializerSettings);
 
+            client.Dispose();
             return result;
         }
 
@@ -316,6 +324,7 @@ namespace FactroApiClient.Company
                     responseContentString,
                     this.jsonSerializerSettings);
 
+            client.Dispose();
             return result;
         }
 
