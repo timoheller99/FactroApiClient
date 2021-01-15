@@ -41,6 +41,8 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
 
                 (await this.fixture.GetCompanyTagsAsync(companyApi)).Should().ContainEquivalentOf(createdCompanyTag);
             }
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
 
         [Fact]
@@ -62,6 +64,8 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
             await act.Should().NotThrowAsync();
 
             (await companyApi.GetTagsOfCompanyAsync(existingCompany.Id)).Should().NotContain(x => x.Id == createdCompanyTag.Id);
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
 
         [Fact]
@@ -81,6 +85,8 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
 
             // Assert
             await act.Should().NotThrowAsync();
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
     }
 }

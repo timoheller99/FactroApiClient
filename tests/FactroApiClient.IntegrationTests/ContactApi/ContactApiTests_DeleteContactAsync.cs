@@ -32,6 +32,8 @@ namespace FactroApiClient.IntegrationTests.ContactApi
             await act.Should().NotThrowAsync();
 
             deleteContactResponse.Should().BeEquivalentTo(existingContact);
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
 
         [Fact]
@@ -51,6 +53,8 @@ namespace FactroApiClient.IntegrationTests.ContactApi
             await act.Should().ThrowAsync<FactroApiException>();
 
             deleteContactResponse.Should().BeNull();
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
     }
 }

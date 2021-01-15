@@ -48,6 +48,8 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
 
                 appointments.Single(x => x.Id == existingAppointment.Id).Subject.Should().Be(updatedSubject);
             }
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
 
         [Fact]
@@ -79,6 +81,8 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
 
                 appointments.Single(x => x.Id == existingAppointment.Id).Should().BeEquivalentTo(existingAppointment);
             }
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
 
         [Fact]
@@ -112,6 +116,8 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
 
                 updateAppointmentResponse.Should().BeNull();
             }
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
     }
 }
