@@ -7,8 +7,8 @@ namespace FactroApiClient.UnitTests.PackageApi
     using System.Net.Http;
     using System.Threading.Tasks;
 
-    using FactroApiClient.Package.Contracts;
     using FactroApiClient.Package.Contracts.AccessRights;
+    using FactroApiClient.Package.Contracts.Base;
     using FactroApiClient.Project.Contracts.Base;
     using FactroApiClient.SharedContracts;
 

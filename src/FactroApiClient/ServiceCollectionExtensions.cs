@@ -7,7 +7,6 @@ namespace FactroApiClient
     using FactroApiClient.Appointment;
     using FactroApiClient.Company;
     using FactroApiClient.Contact;
-    using FactroApiClient.Endpoints;
     using FactroApiClient.Package;
     using FactroApiClient.Project;
 

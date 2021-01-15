@@ -6,8 +6,8 @@ namespace FactroApiClient.UnitTests.PackageApi
     using System.Threading.Tasks;
 
     using FactroApiClient.Company.Contracts.Basic;
-    using FactroApiClient.Package.Contracts;
     using FactroApiClient.Package.Contracts.Association;
+    using FactroApiClient.Package.Contracts.Base;
     using FactroApiClient.Project.Contracts.Base;
     using FactroApiClient.SharedContracts;
 
