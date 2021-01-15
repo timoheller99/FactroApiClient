@@ -18,6 +18,8 @@ namespace FactroApiClient.IntegrationTests.ProjectApi
         public async Task GetProjectsAsync_ExistingProjects_ShouldReturnExistingProjects()
         {
             // Arrange
+            await this.fixture.ClearFactroInstanceAsync();
+
             var projectApi = this.fixture.GetService<IProjectApi>();
 
             var existingProjects = new List<CreateProjectResponse>();
@@ -41,6 +43,8 @@ namespace FactroApiClient.IntegrationTests.ProjectApi
             {
                 getProjectsResponse.Should().ContainEquivalentOf(existingProject);
             }
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
     }
 }

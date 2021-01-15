@@ -17,6 +17,8 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
         public async Task DeleteAppointmentAsync_ExistingAppointment_ShouldDeleteExistingAppointment()
         {
             // Arrange
+            await this.fixture.ClearFactroInstanceAsync();
+
             var appointmentApi = this.fixture.GetService<IAppointmentApi>();
 
             var existingAppointment = await this.fixture.CreateTestAppointmentAsync(appointmentApi);
@@ -30,12 +32,16 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
             await act.Should().NotThrowAsync();
 
             deleteAppointmentResponse.Should().BeEquivalentTo(existingAppointment);
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
 
         [Fact]
         public async Task DeleteAppointmentAsync_NotExistingAppointment_ShouldThrowFactroApiException()
         {
             // Arrange
+            await this.fixture.ClearFactroInstanceAsync();
+
             var appointmentApi = this.fixture.GetService<IAppointmentApi>();
 
             var deleteAppointmentResponse = default(DeleteAppointmentResponse);
@@ -47,6 +53,8 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
             await act.Should().ThrowAsync<FactroApiException>();
 
             deleteAppointmentResponse.Should().BeNull();
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
     }
 }

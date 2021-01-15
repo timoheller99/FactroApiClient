@@ -1,6 +1,9 @@
 |Stable|Beta|Alpha|
 |---|---|---|
-|![stable-ci]|![beta-ci]|![alpha-ci]|
+|![release-stable-ci]|![release-beta-ci]|![release-alpha-ci]|
+|![unit-test-stable-ci]|![unit-test-beta-ci]|![unit-test-alpha-ci]|
+|![integration-test-stable-ci]|![integration-test-beta-ci]|![integration-test-alpha-ci]|
+|![nightly-test-stable-ci]|![nightly-test-beta-ci]|![nightly-test-alpha-ci]|
 
 # FactroApiClient
 The **FactroApiClient** is a simple API wrapper written in C# to interact with the [Factro REST API][factro-api-url].
@@ -53,6 +56,7 @@ To install the package, the custom feed is needed.
 This feed can be added via the Nuget.config file or the .NET CLI.
 
 **Config file**
+
 Create a new file called `nuget.config` (this name is case insensitive).
 The content of the file should have following structure:
 ```xml
@@ -88,7 +92,10 @@ You can now add the package to your project.
 ```
 
 ### Use the FactroApiClient
-To use the package, you have to setup dependency injection.
+To use the package, you don't theoretically have to use dependency injection.
+
+Unfortunately there is currently no support for using this package without dependency injection, but it's planned.
+(There are some hacky procedures and workarounds but it should be supported natively of course ;) )
 
 #### Store the Factro API token
 You have to store you Factro API token to pass it to the client.
@@ -121,7 +128,7 @@ private static IConfigurationRoot CreateConfigurationRoot()
 ```
 
 #### Register the services
-After creating the `IconfigurationRoot` it can be passed to the `services.AddFactroApiClientServices()` method to register all necessary services for the `FactroApiClient`.
+After creating the `IConfigurationRoot` it can be passed to the `services.AddFactroApiClientServices()` method to register all necessary services for the `FactroApiClient`.
 You can optionally setup logging too.
 ```csharp
 public static IServiceCollection ConfigureServices(IServiceCollection services)
@@ -160,11 +167,23 @@ var appointmentApi = serviceProvider.GetRequiredService<IAppointmentApi>();
 [bug-report-issue-template-url]: https://github.com/timoheller99/FactroApiClient/issues/new?assignees=timoheller99&labels=bug&template=bug_report.md&title=
 [feature-request-issue-template-url]: https://github.com/timoheller99/FactroApiClient/issues/new?assignees=timoheller99&labels=enhancement&template=feature_request.md&title=
 
-[alpha-ci]: https://github.com/timoheller99/FactroApiClient/workflows/FactroApiClient%20CI/badge.svg?branch=develop
-[beta-ci]: https://github.com/timoheller99/FactroApiClient/workflows/FactroApiClient%20CI/badge.svg?branch=beta
-[stable-ci]: https://github.com/timoheller99/FactroApiClient/workflows/FactroApiClient%20CI/badge.svg?branch=main
-
 [projects-url]: https://github.com/timoheller99/FactroApiClient/projects
 [roadmap-project-url]: https://github.com/timoheller99/FactroApiClient/projects/1
 [development-project-url]: https://github.com/timoheller99/FactroApiClient/projects/2
 [bug-tracker-project-url]: https://github.com/timoheller99/FactroApiClient/projects/3
+
+[release-alpha-ci]: https://github.com/timoheller99/FactroApiClient/workflows/Release%20CI/badge.svg?branch=develop
+[release-beta-ci]: https://github.com/timoheller99/FactroApiClient/workflows/Release%20CI/badge.svg?branch=beta
+[release-stable-ci]: https://github.com/timoheller99/FactroApiClient/workflows/Release%20CI/badge.svg?branch=main
+
+[unit-test-alpha-ci]: https://github.com/timoheller99/FactroApiClient/workflows/Unit%20Tests/badge.svg?branch=develop
+[unit-test-beta-ci]: https://github.com/timoheller99/FactroApiClient/workflows/Unit%20Tests/badge.svg?branch=beta
+[unit-test-stable-ci]: https://github.com/timoheller99/FactroApiClient/workflows/Unit%20Tests/badge.svg?branch=main
+
+[integration-test-alpha-ci]: https://github.com/timoheller99/FactroApiClient/workflows/Integration%20Tests/badge.svg?branch=develop
+[integration-test-beta-ci]: https://github.com/timoheller99/FactroApiClient/workflows/Integration%20Tests/badge.svg?branch=beta
+[integration-test-stable-ci]: https://github.com/timoheller99/FactroApiClient/workflows/Integration%20Tests/badge.svg?branch=stable
+
+[nightly-test-alpha-ci]: https://github.com/timoheller99/FactroApiClient/workflows/Nightly%20Tests/badge.svg?branch=develop
+[nightly-test-beta-ci]: https://github.com/timoheller99/FactroApiClient/workflows/Nightly%20Tests/badge.svg?branch=beta
+[nightly-test-stable-ci]: https://github.com/timoheller99/FactroApiClient/workflows/Nightly%20Tests/badge.svg?branch=main

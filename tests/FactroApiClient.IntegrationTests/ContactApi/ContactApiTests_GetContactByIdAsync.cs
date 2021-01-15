@@ -17,6 +17,8 @@ namespace FactroApiClient.IntegrationTests.ContactApi
         public async Task GetContactAsync_ExistingContact_ShouldReturnExpectedContact()
         {
             // Arrange
+            await this.fixture.ClearFactroInstanceAsync();
+
             var contactApi = this.fixture.GetService<IContactApi>();
 
             var existingContact = await this.fixture.CreateTestContactAsync(contactApi);
@@ -30,12 +32,16 @@ namespace FactroApiClient.IntegrationTests.ContactApi
             await act.Should().NotThrowAsync();
 
             getContactByIdResponse.Should().BeEquivalentTo(existingContact);
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
 
         [Fact]
         public async Task GetContactAsync_NotExistingContact_ResultThrowFactroApiException()
         {
             // Arrange
+            await this.fixture.ClearFactroInstanceAsync();
+
             var contactApi = this.fixture.GetService<IContactApi>();
 
             var getContactByIdResponse = default(GetContactByIdResponse);
@@ -47,6 +53,8 @@ namespace FactroApiClient.IntegrationTests.ContactApi
             await act.Should().ThrowAsync<FactroApiException>();
 
             getContactByIdResponse.Should().BeNull();
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
     }
 }

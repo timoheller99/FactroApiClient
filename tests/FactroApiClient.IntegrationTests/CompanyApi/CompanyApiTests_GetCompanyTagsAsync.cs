@@ -19,6 +19,8 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
         public async Task GetCompanyTagsAsync_ExistingCompanyTags_ShouldReturnExistingCompanyTags()
         {
             // Arrange
+            await this.fixture.ClearFactroInstanceAsync();
+
             var companyApi = this.fixture.GetService<ICompanyApi>();
 
             var existingCompanyTags = new List<CreateCompanyTagResponse>();
@@ -45,6 +47,8 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
                     getCompanyTagsResponse.Should().ContainEquivalentOf(existingCompanyTag);
                 }
             }
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
     }
 }

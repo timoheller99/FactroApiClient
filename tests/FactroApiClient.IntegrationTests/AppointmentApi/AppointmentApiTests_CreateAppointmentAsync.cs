@@ -19,6 +19,8 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
         public async Task CreateAppointmentAsync_ValidAppointment_ShouldStoreAppointment()
         {
             // Arrange
+            await this.fixture.ClearFactroInstanceAsync();
+
             var appointmentApi = this.fixture.GetService<IAppointmentApi>();
 
             const string employeeId = BaseTestFixture.ValidEmployeeId;
@@ -43,12 +45,16 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
 
                 appointments.Should().ContainEquivalentOf(createAppointmentResponse);
             }
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
 
         [Fact]
         public async Task CreateAppointmentAsync_NotExistingEmployeeId_ShouldThrowFactroApiException()
         {
             // Arrange
+            await this.fixture.ClearFactroInstanceAsync();
+
             var appointmentApi = this.fixture.GetService<IAppointmentApi>();
 
             var employeeId = Guid.NewGuid().ToString();
@@ -74,12 +80,16 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
                 appointments.Should().NotContain(x => x.EmployeeId == employeeId && x.Subject == subject);
                 createAppointmentResponse.Should().BeNull();
             }
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
 
         [Fact]
         public async Task CreateAppointmentAsync_TwoIdenticalAppointments_ShouldStoreBothAppointments()
         {
             // Arrange
+            await this.fixture.ClearFactroInstanceAsync();
+
             var appointmentApi = this.fixture.GetService<IAppointmentApi>();
 
             const string employeeId = BaseTestFixture.ValidEmployeeId;
@@ -105,12 +115,16 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
                 var matchingAppointments = appointments.Where(x => x.Subject == subject);
                 matchingAppointments.Should().HaveCount(2);
             }
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
 
         [Fact]
         public async Task CreateAppointmentAsync_EndTimeBeforeStartTime_ShouldNotStoreAppointmentAndThrowFactroApiException()
         {
             // Arrange
+            await this.fixture.ClearFactroInstanceAsync();
+
             var appointmentApi = this.fixture.GetService<IAppointmentApi>();
 
             const string employeeId = BaseTestFixture.ValidEmployeeId;
@@ -137,6 +151,8 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
 
                 createAppointmentResponse.Should().BeNull();
             }
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
     }
 }

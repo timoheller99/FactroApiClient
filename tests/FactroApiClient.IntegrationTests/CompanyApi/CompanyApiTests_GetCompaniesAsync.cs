@@ -18,6 +18,8 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
         public async Task GetCompaniesAsync_ExistingCompanies_ShouldReturnExistingCompanies()
         {
             // Arrange
+            await this.fixture.ClearFactroInstanceAsync();
+
             var companyApi = this.fixture.GetService<ICompanyApi>();
 
             var existingCompanies = new List<CreateCompanyResponse>();
@@ -41,6 +43,8 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
             {
                 getCompaniesResponse.Should().ContainEquivalentOf(existingCompany);
             }
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
     }
 }

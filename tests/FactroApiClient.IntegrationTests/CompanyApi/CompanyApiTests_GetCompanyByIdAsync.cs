@@ -17,6 +17,8 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
         public async Task GetCompanyAsync_ExistingCompany_ShouldReturnExpectedCompany()
         {
             // Arrange
+            await this.fixture.ClearFactroInstanceAsync();
+
             var companyApi = this.fixture.GetService<ICompanyApi>();
 
             var existingCompany = await this.fixture.CreateTestCompanyAsync(companyApi);
@@ -30,12 +32,16 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
             await act.Should().NotThrowAsync();
 
             getCompanyByIdResponse.Should().BeEquivalentTo(existingCompany);
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
 
         [Fact]
         public async Task GetCompanyAsync_NotExistingCompany_ShouldThrowFactroApiException()
         {
             // Arrange
+            await this.fixture.ClearFactroInstanceAsync();
+
             var companyApi = this.fixture.GetService<ICompanyApi>();
 
             var getCompanyByIdResponse = default(GetCompanyByIdResponse);
@@ -47,6 +53,8 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
             await act.Should().ThrowAsync<FactroApiException>();
 
             getCompanyByIdResponse.Should().BeNull();
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
     }
 }

@@ -11,11 +11,6 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
 
     public sealed class CompanyApiTestFixture : BaseTestFixture
     {
-        public CompanyApiTestFixture()
-        {
-            this.ClearFactroInstanceAsync().GetAwaiter().GetResult();
-        }
-
         public async Task<CreateCompanyResponse> CreateTestCompanyAsync(ICompanyApi companyApi)
         {
             var name = $"{TestPrefix}{Guid.NewGuid().ToString()}";
@@ -43,7 +38,7 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
             return (await companyApi.GetCompanyTagsAsync()).Where(x => x.Name.StartsWith(TestPrefix));
         }
 
-        protected override async Task ClearFactroInstanceAsync()
+        public override async Task ClearFactroInstanceAsync()
         {
             var tasks = new[]
             {

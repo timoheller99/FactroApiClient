@@ -31,7 +31,7 @@ namespace FactroApiClient.IntegrationTests.Setup
 
             config.WriteTo.Console(outputTemplate: logMessageFormatting, theme: SystemConsoleTheme.Colored);
 
-            config.MinimumLevel.Verbose();
+            config.MinimumLevel.Information();
 
             return config;
         }

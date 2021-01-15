@@ -18,6 +18,8 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
         public async Task CreateCompanyAsync_ValidCompany_ShouldStoreCompany()
         {
             // Arrange
+            await this.fixture.ClearFactroInstanceAsync();
+
             var companyApi = this.fixture.GetService<ICompanyApi>();
 
             var name = $"{BaseTestFixture.TestPrefix}{Guid.NewGuid().ToString()}";
@@ -39,12 +41,16 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
 
                 companies.Should().ContainEquivalentOf(createCompanyResponse);
             }
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
 
         [Fact]
         public async Task CreateCompanyAsync_TwoCompaniesWithSameName_ShouldStoreBothCompanies()
         {
             // Arrange
+            await this.fixture.ClearFactroInstanceAsync();
+
             var companyApi = this.fixture.GetService<ICompanyApi>();
 
             var name = $"{BaseTestFixture.TestPrefix}{Guid.NewGuid().ToString()}";

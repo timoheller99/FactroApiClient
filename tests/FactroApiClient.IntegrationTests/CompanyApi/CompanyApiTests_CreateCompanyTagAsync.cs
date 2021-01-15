@@ -17,6 +17,8 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
         public async Task CreateCompanyTagAsync_ValidCompanyTag_ShouldCreateCompanyTag()
         {
             // Arrange
+            await this.fixture.ClearFactroInstanceAsync();
+
             var companyApi = this.fixture.GetService<ICompanyApi>();
 
             var name = $"{BaseTestFixture.TestPrefix}{Guid.NewGuid().ToString()}";
@@ -34,12 +36,16 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
             var companyTags = await this.fixture.GetCompanyTagsAsync(companyApi);
 
             companyTags.Should().ContainEquivalentOf(createCompanyTagResponse);
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
 
         [Fact]
         public async Task CreateCompanyTagAsync_TwoCompanyTagsWithSameName_ShouldStoreBothCompanyTags()
         {
             // Arrange
+            await this.fixture.ClearFactroInstanceAsync();
+
             var companyApi = this.fixture.GetService<ICompanyApi>();
 
             var name = $"{BaseTestFixture.TestPrefix}{Guid.NewGuid().ToString()}";
@@ -66,6 +72,8 @@ namespace FactroApiClient.IntegrationTests.CompanyApi
                     .Contain(x => x.Id == firstCreatedCompanyTag.Id).And
                     .Contain(x => x.Id == secondCreatedCompanyTag.Id);
             }
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
     }
 }

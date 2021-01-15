@@ -9,11 +9,6 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
 
     public sealed class AppointmentApiTestFixture : BaseTestFixture
     {
-        public AppointmentApiTestFixture()
-        {
-            this.ClearFactroInstanceAsync().GetAwaiter().GetResult();
-        }
-
         public async Task<CreateAppointmentResponse> CreateTestAppointmentAsync(IAppointmentApi appointmentApi)
         {
             const string employeeId = ValidEmployeeId;
@@ -28,7 +23,7 @@ namespace FactroApiClient.IntegrationTests.AppointmentApi
             return createAppointmentResponse;
         }
 
-        protected override async Task ClearFactroInstanceAsync()
+        public override async Task ClearFactroInstanceAsync()
         {
             await this.ClearAppointmentsAsync();
         }

@@ -1,0 +1,44 @@
+name: Nightly Tests
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+
+env:
+  CI_TOOLS_VERSION: "3.2.0-beta.2"
+
+jobs:
+  run-tests:
+    env:
+      DOTNET_NOLOGO: true
+      DOTNET_CLI_TELEMETRY_OPTOUT: 1
+    name: Run tests
+    runs-on: ubuntu-18.04
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Setup .NET Core 3.1.x
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.300
+
+      - name: Add nuget source
+        run: dotnet nuget add source "${{ secrets.NUGET_PUSH_SOURCE }}" -n "github" -u "${{ secrets.PACKAGES_USER }}" -p "${{ secrets.PACKAGES_TOKEN }}" --store-password-in-clear-text
+
+      - name: Restore dependencies
+        run: dotnet restore ./FactroApiClient.sln
+
+      - name: Build sources
+        run: dotnet build -c Release --no-restore
+
+      - name: Test sources (Unit Tests)
+        run: dotnet test -c Release --no-restore --no-build
+        working-directory: ./tests/FactroApiClient.UnitTests
+
+      - name: Test sources (Integration Tests)
+        timeout-minutes: 5
+        run: dotnet test -c Release --no-restore --no-build
+        working-directory: ./tests/FactroApiClient.IntegrationTests
+        env:
+          FactroApiClient__ApiToken: ${{ secrets.FACTRO_API_TOKEN }}

@@ -18,6 +18,8 @@ namespace FactroApiClient.IntegrationTests.ProjectApi
         public async Task CreateProjectAsync_ValidProject_ShouldCreateProject()
         {
             // Arrange
+            await this.fixture.ClearFactroInstanceAsync();
+
             var projectApi = this.fixture.GetService<IProjectApi>();
 
             var title = $"{BaseTestFixture.TestPrefix}{Guid.NewGuid().ToString()}";
@@ -38,12 +40,16 @@ namespace FactroApiClient.IntegrationTests.ProjectApi
 
                 projects.Should().ContainEquivalentOf(createProjectResponse);
             }
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
 
         [Fact]
         public async Task CreateProjectAsync_TwoProjectsWithSameTitle_ShouldCreateProjectTwice()
         {
             // Arrange
+            await this.fixture.ClearFactroInstanceAsync();
+
             var projectApi = this.fixture.GetService<IProjectApi>();
 
             var title = $"{BaseTestFixture.TestPrefix}{Guid.NewGuid().ToString()}";
@@ -64,6 +70,8 @@ namespace FactroApiClient.IntegrationTests.ProjectApi
 
                 projects.Where(project => project.Title == title).Should().HaveCount(2);
             }
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
     }
 }

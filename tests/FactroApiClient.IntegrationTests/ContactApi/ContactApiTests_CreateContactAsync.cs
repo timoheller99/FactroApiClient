@@ -18,6 +18,8 @@ namespace FactroApiClient.IntegrationTests.ContactApi
         public async Task CreateContactAsync_ValidContact_ShouldStoreContact()
         {
             // Arrange
+            await this.fixture.ClearFactroInstanceAsync();
+
             var contactApi = this.fixture.GetService<IContactApi>();
 
             var firstName = Guid.NewGuid().ToString();
@@ -44,12 +46,16 @@ namespace FactroApiClient.IntegrationTests.ContactApi
 
                 contacts.Should().ContainEquivalentOf(createContactResponse);
             }
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
 
         [Fact]
         public async Task CreateContactAsync_TwoIdenticalContacts_ShouldStoreBothContacts()
         {
             // Arrange
+            await this.fixture.ClearFactroInstanceAsync();
+
             var contactApi = this.fixture.GetService<IContactApi>();
 
             var firstName = Guid.NewGuid().ToString();
@@ -77,6 +83,8 @@ namespace FactroApiClient.IntegrationTests.ContactApi
                 var matchingContacts = contacts.Where(x => x.Description == description);
                 matchingContacts.Should().HaveCount(2);
             }
+
+            await this.fixture.ClearFactroInstanceAsync();
         }
     }
 }
