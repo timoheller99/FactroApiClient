@@ -16,18 +16,15 @@ namespace FactroApiClient.Company
     {
         private const string BaseClientName = "BaseClient";
 
-        private readonly IHttpClientFactory httpClientFactory;
-
         private readonly JsonSerializerSettings jsonSerializerSettings;
 
         private readonly HttpClient httpClient;
 
         public CompanyApi(IHttpClientFactory httpClientFactory)
         {
-            this.httpClientFactory = httpClientFactory;
             this.jsonSerializerSettings = SerializerSettings.JsonSerializerSettings;
 
-            this.httpClient = this.httpClientFactory.CreateClient(BaseClientName);
+            this.httpClient = httpClientFactory.CreateClient(BaseClientName);
         }
 
         public async Task<CreateCompanyResponse> CreateCompanyAsync(CreateCompanyRequest createCompanyRequest)

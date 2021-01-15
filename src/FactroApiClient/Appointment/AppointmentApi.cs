@@ -15,18 +15,15 @@ namespace FactroApiClient.Appointment
     {
         private const string BaseClientName = "BaseClient";
 
-        private readonly IHttpClientFactory httpClientFactory;
-
         private readonly JsonSerializerSettings jsonSerializerSettings;
 
         private readonly HttpClient httpClient;
 
         public AppointmentApi(IHttpClientFactory httpClientFactory)
         {
-            this.httpClientFactory = httpClientFactory;
             this.jsonSerializerSettings = SerializerSettings.JsonSerializerSettings;
 
-            this.httpClient = this.httpClientFactory.CreateClient(BaseClientName);
+            this.httpClient = httpClientFactory.CreateClient(BaseClientName);
         }
 
         /// <inheritdoc/>
