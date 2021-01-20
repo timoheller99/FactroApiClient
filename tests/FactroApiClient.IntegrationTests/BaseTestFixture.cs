@@ -6,7 +6,7 @@ namespace FactroApiClient.IntegrationTests
 
     public class BaseTestFixture
     {
-        public const string ValidEmployeeId = "5d82d596-308e-4df1-b199-9b62ae7458f2";
+        public const string ValidEmployeeId = "2151d5e7-4f51-4ab5-9b8f-7b9c2321bb92";
 
         public const string TestPrefix = "AUTOTEST_";
 
