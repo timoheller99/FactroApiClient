@@ -1,5 +1,8 @@
 namespace FactroApiClient.Project.Contracts.Base
 {
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+
     public class UpdateProjectRequest
     {
         public string Description { get; set; }
@@ -14,6 +17,7 @@ namespace FactroApiClient.Project.Contracts.Base
 
         public double Priority { get; set; }
 
+        [JsonConverter(typeof(StringEnumConverter))]
         public ProjectState ProjectState { get; set; }
     }
 }
