@@ -4,6 +4,9 @@ namespace FactroApiClient.Project.Contracts.Document
 
     using FactroApiClient.SharedContracts;
 
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+
     public class RemoveProjectDocumentResponse : IDocumentPayload
     {
         public DateTime ChangeDate { get; set; }
@@ -18,6 +21,7 @@ namespace FactroApiClient.Project.Contracts.Document
 
         public string ReferenceId { get; set; }
 
+        [JsonConverter(typeof(StringEnumConverter))]
         public DocumentReferenceType ReferenceType { get; set; }
 
         public double Size { get; set; }

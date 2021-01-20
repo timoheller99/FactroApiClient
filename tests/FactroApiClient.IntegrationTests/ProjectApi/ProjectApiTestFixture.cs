@@ -6,6 +6,7 @@ namespace FactroApiClient.IntegrationTests.ProjectApi
     using System.Threading.Tasks;
 
     using FactroApiClient.Project;
+    using FactroApiClient.Project.Contracts;
     using FactroApiClient.Project.Contracts.Base;
 
     public sealed class ProjectApiTestFixture : BaseTestFixture
@@ -14,7 +15,10 @@ namespace FactroApiClient.IntegrationTests.ProjectApi
         {
             var title = $"{TestPrefix}{Guid.NewGuid().ToString()}";
 
-            var createProjectRequest = new CreateProjectRequest(title);
+            var createProjectRequest = new CreateProjectRequest(title)
+            {
+                ProjectState = ProjectState.Planned,
+            };
 
             var createProjectResponse = await projectApi.CreateProjectAsync(createProjectRequest);
 

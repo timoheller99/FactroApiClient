@@ -1,5 +1,8 @@
 namespace FactroApiClient.Contact.Contracts
 {
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+
     public class UpdateContactResponse : IGetContactPayload
     {
         public string Description { get; set; }
@@ -22,6 +25,7 @@ namespace FactroApiClient.Contact.Contracts
 
         public string MobilePhone { get; set; }
 
+        [JsonConverter(typeof(StringEnumConverter))]
         public Salutation Salutation { get; set; }
     }
 }

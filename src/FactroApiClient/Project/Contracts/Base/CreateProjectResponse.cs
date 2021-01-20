@@ -2,6 +2,9 @@ namespace FactroApiClient.Project.Contracts.Base
 {
     using System;
 
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+
     public class CreateProjectResponse : IGetProjectPayload
     {
         public double Number { get; set; }
@@ -42,6 +45,7 @@ namespace FactroApiClient.Project.Contracts.Base
 
         public double Priority { get; set; }
 
+        [JsonConverter(typeof(StringEnumConverter))]
         public ProjectState ProjectState { get; set; }
     }
 }

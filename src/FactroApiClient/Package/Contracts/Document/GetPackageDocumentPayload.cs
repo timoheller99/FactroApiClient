@@ -4,6 +4,9 @@ namespace FactroApiClient.Package.Contracts.Document
 
     using FactroApiClient.SharedContracts;
 
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+
     public class GetPackageDocumentPayload : IDocumentPayload
     {
         public DateTime ChangeDate
@@ -21,6 +24,7 @@ namespace FactroApiClient.Package.Contracts.Document
 
         public string ReferenceId { get; set; }
 
+        [JsonConverter(typeof(StringEnumConverter))]
         public DocumentReferenceType ReferenceType { get; set; }
 
         public double Size { get; set; }
